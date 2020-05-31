@@ -1,38 +1,81 @@
 .App {
-  text-align: center;
-}
-
-.App-logo {
-  height: 40vmin;
-  pointer-events: none;
-}
-
-@media (prefers-reduced-motion: no-preference) {
-  .App-logo {
-    animation: App-logo-spin infinite 20s linear;
-  }
-}
-
-.App-header {
-  background-color: #282c34;
-  min-height: 100vh;
+  margin: 0 auto;
+  align-items: center;
   display: flex;
   flex-direction: column;
-  align-items: center;
-  justify-content: center;
-  font-size: calc(10px + 2vmin);
-  color: white;
 }
-
-.App-link {
-  color: #61dafb;
+.boardGame {
+  padding: 50px;
+  padding-top: 10px;
+  width: 1200px;
+  margin: 0 auto;
 }
-
-@keyframes App-logo-spin {
-  from {
-    transform: rotate(0deg);
-  }
-  to {
-    transform: rotate(360deg);
-  }
+.dashboard {
+  margin: 50px;
+  font-size: 17px;
+  display: flex;
+  justify-content: space-between;
+  align-items: baseline;
+  align-content: stretch;
+  width: 1030px;
+}
+.bottomDashboard {
+  display: flex;
+  flex-direction: row;
+  flex-wrap: nowrap;
+  justify-content: space-around;
+  align-items: baseline;
+  align-content: stretch;
+  width: 300px;
+}
+.clue {
+  height: 100px;
+  background:  #cccccc;
+  justify-content:  center;
+  align-items:  center;
+  display:  flex;
+  text-transform:  uppercase;
+  font-weight: 500;
+  font-size: 17px;
+  cursor: pointer;
+}
+.selected {
+  background: #f7f0de;
+  cursor: default;
+}
+.blue {
+  background: #0f80ff;
+  color: #eee;
+}
+.red {
+  background: #fd6666;
+  color: #eee;
+}
+.assassin {
+  background: #2d2d26;
+  color: #eee;
+}
+.visible {
+  font-weight: 700;
+}
+.visible-blue {
+  background: #c5e0ff;
+  color: #0f80ff;
+}
+.visible-red {
+  background: #fdc5c5;
+  color: #fd6666;
+}
+.visible-assassin {
+  background: #525252;
+  color: #eee;
+}
+.blueCount { 
+  color: #0f80ff;
+}
+.redCount {
+ color: #fd6666;
+}
+.currentTurn {
+  text-transform: capitalize;
 }
