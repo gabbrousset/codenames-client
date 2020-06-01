@@ -1,81 +1,124 @@
 .App {
-  margin: 0 auto;
-  align-items: center;
-  display: flex;
-  flex-direction: column;
+	margin: 0 auto;
+	align-items: center;
+	display: flex;
+	flex-direction: column;
+}
+.columnButtons {
+	height: 200px;
+	margin: 200px;
+	display: flex;
+	flex-direction: column;
+	flex-wrap: nowrap;
+	justify-content: space-around;
+	align-items: center;
+	align-content: stretch;
+}
+.rowButtons {
+	height: 200px;
+	padding: 570px;
+	margin: 50px;
+	margin-top: 0px;
+	padding-top: 10px;
+	padding-bottom: 10px;
+	display: flex;
+	flex-direction: row;
+	flex-wrap: nowrap;
+	justify-content: space-around;
+	align-items: center;
+	align-content: stretch;
+}
+.input-top {
+	margin-top: 200px;
+	display: flex;
+	flex-direction: row;
+	flex-wrap: nowrap;
+	justify-content: space-around;
+	align-items: center;
+	align-content: stretch;
+}
+.input-bottom {
+	margin-top: 20px;
+	display: flex;
+	flex-direction: row;
+	flex-wrap: nowrap;
+	justify-content: space-around;
+	align-items: center;
+	align-content: stretch;
 }
 .boardGame {
-  padding: 50px;
-  padding-top: 10px;
-  width: 1200px;
-  margin: 0 auto;
+	padding: 50px;
+	padding-top: 10px;
+	width: 1200px;
+	margin: 0 auto;
 }
 .dashboard {
-  margin: 50px;
-  font-size: 17px;
-  display: flex;
-  justify-content: space-between;
-  align-items: baseline;
-  align-content: stretch;
-  width: 1030px;
+	margin: 50px;
+	font-size: 17px;
+	display: flex;
+	justify-content: space-between;
+	align-items: baseline;
+	align-content: stretch;
+	width: 1030px;
 }
 .bottomDashboard {
-  display: flex;
-  flex-direction: row;
-  flex-wrap: nowrap;
-  justify-content: space-around;
-  align-items: baseline;
-  align-content: stretch;
-  width: 300px;
+	display: flex;
+	flex-direction: row;
+	flex-wrap: nowrap;
+	justify-content: space-around;
+	align-items: baseline;
+	align-content: stretch;
+	width: 300px;
 }
 .clue {
-  height: 100px;
-  background:  #cccccc;
-  justify-content:  center;
-  align-items:  center;
-  display:  flex;
-  text-transform:  uppercase;
-  font-weight: 500;
-  font-size: 17px;
-  cursor: pointer;
+	height: 100px;
+	background:  #cccccc;
+	justify-content:  center;
+	align-items:  center;
+	display:  flex;
+	text-transform:  uppercase;
+	font-weight: 500;
+	font-size: 17px;
+	cursor: pointer;
 }
 .selected {
-  background: #f7f0de;
-  cursor: default;
+	background: #f7f0de;
+	cursor: default;
 }
 .blue {
-  background: #0f80ff;
-  color: #eee;
+	background: #0f80ff;
+	color: #eee;
 }
 .red {
-  background: #fd6666;
-  color: #eee;
+	background: #fd6666;
+	color: #eee;
 }
 .assassin {
-  background: #2d2d26;
-  color: #eee;
+	background: #2d2d26;
+	color: #eee;
 }
 .visible {
-  font-weight: 700;
+	font-weight: 700;
+	cursor: default;
 }
 .visible-blue {
-  background: #c5e0ff;
-  color: #0f80ff;
+	background: #c5e0ff;
+	color: #0f80ff;
 }
 .visible-red {
-  background: #fdc5c5;
-  color: #fd6666;
+	background: #fdc5c5;
+	color: #fd6666;
 }
 .visible-assassin {
-  background: #525252;
-  color: #eee;
+	background: #525252;
+	color: #eee;
 }
 .blueCount { 
-  color: #0f80ff;
+	color: #0f80ff;
 }
 .redCount {
  color: #fd6666;
 }
 .currentTurn {
-  text-transform: capitalize;
+	text-transform: capitalize;
 }
