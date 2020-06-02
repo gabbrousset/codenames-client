@@ -2,7 +2,6 @@ import React, { Component } from "react";
 import LandingButtons from "./LandingButtons";
 import NewGame from "./NewGame";
 import JoinGame from "./JoinGame";
-import { Button } from "semantic-ui-react";
 
 export default class LandingPage extends Component {
 	state={
