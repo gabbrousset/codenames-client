@@ -25,7 +25,6 @@ export default class Lobby extends Component {
 	render(){
 		return(
 			<div>
-				<p>Showing room: {this.props.roomId}</p>
 				<div className="rowButtons">
 					<Button
 						color="blue"

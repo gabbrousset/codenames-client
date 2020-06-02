@@ -4,14 +4,14 @@ const buyUsACoffee = '<style>.bmc-button img{height: 34px !important;width: 35px
 export default class Footer extends Component {
 	render(){
 		return(
-			<div className="buyCoffeeHolder">
-				<a target="_blank" href="https://www.buymeacoffee.com/gabrieletdiego">
+			<a target="_blank" href="https://www.buymeacoffee.com/gabrieletdiego">
+				<div className="buyCoffeeHolder">
 					<img className="buyCoffeeImage" src="https://cdn.buymeacoffee.com/buttons/bmc-new-btn-logo.svg" alt="Buy us a Coffee" />
 					<span className="buyCoffeeText">
 						Buy us a Coffee
 					</span>
-				</a>
-			</div>
+				</div>
+			</a>
 		);
 	};
 };

@@ -9,7 +9,7 @@ export default class Room extends Component {
 		showOpenGame: false,
 		game: {
 			clues:[]
-		}
+		 }
 	};
 
 	// Toggle between game and lobby
@@ -27,59 +27,53 @@ export default class Room extends Component {
 		this.newGame();
 	};
 	newGame = () => {
-		const game = newGame();
+		const gameInfo = newGame();
 		this.setState({
-			game : {
-				clues: game.clues,
-				turn: game.firstTurn,
-				gameActive: true,
-				blueCount: game.blueCount,
-				redCount: game.redCount,
-				spymasterView: false,
-			}
+			game: {
+				clues: gameInfo.clues,
+			},
+			turn: gameInfo.firstTurn,
+			gameActive: true,
+			blueCount: gameInfo.blueCount,
+			redCount: gameInfo.redCount,
+			spymasterView: false,
 		});
 	};
 	endGame = () => {
 		this.toggleVisibility();
 		this.setState({
-			game: {
-				gameActive: false,
-			}
+			gameActive: false,
 		})
 	};
 	handleEndTurn = () => {
-		this.endTurn();
+			this.endTurn();
 	};
 	endTurn = () => {
-		if (this.state.game.turn === "red") {
+		if (this.state.turn === "red") {
 			this.setState({
-				game: {
-					turn: "blue",
-				}
+			turn: "blue",
 		})
 		} else {
 			this.setState({
-				game: {
-					turn: "red",
-				}
+			turn: "red",
 			})
 		}
 	};
 	reduceCount = (clueTeam) => {
 		const teamCount = clueTeam + "Count";
 		this.setState({
-				[teamCount]: this.state.game[teamCount] - 1},
-				() => this.shouldGameEnd(teamCount)
+			[teamCount]: this.state[teamCount] - 1},
+			() => this.shouldGameEnd(teamCount)
 		)
 	};
 	shouldGameEnd = (teamCount) => {
-		if (this.state.game[teamCount]===0) {
+		if (this.state[teamCount]===0) {
 			this.endGame();
 		}
 	};
 	handleSelectClick = (clueId, clueTeam, isAssassin) => {		
 		// Revisa si no eres spymaster
-		if (!this.state.game.spymasterView && this.state.game.gameActive ) {
+		if (!this.state.spymasterView && this.state.gameActive ) {
 		// Entonces muestras la pista
 			this.revealClue(clueId);
 			// count
@@ -95,7 +89,7 @@ export default class Room extends Component {
 			if (isAssassin) {
 				this.endGame();
 			}
-			if (clueTeam !== this.state.game.turn) {
+			if (clueTeam !== this.state.turn) {
 				this.endTurn();
 			}			
 		}
@@ -121,10 +115,10 @@ export default class Room extends Component {
 	 };
 	 toggleVisibility = () =>{
 	 	this.setState({
-	 		game: {
+	 		game:{
 		 		clues: this.state.game.clues.map((clue) => {
 		 			return Object.assign({}, clue, {
-		 				visible: !this.state.game.spymasterView
+		 				visible: !this.state.spymasterView
 		 			})
 		 		})
 		 	}
@@ -139,12 +133,12 @@ export default class Room extends Component {
 			return(
 				<Game
 					handleNewGame={this.handleNewGame}
-					turn={this.state.game.turn}
+					turn={this.state.turn}
 					endTurn={this.endTurn}
-					blueCount={this.state.game.blueCount}
-					redCount={this.state.game.redCount}
-					gameActive={this.state.game.gameActive}
-					spymasterView={this.state.game.spymasterView}
+					blueCount={this.state.blueCount}
+					redCount={this.state.redCount}
+					gameActive={this.state.gameActive}
+					spymasterView={this.state.spymasterView}
 					clues={this.state.game.clues}
 					onSelectClick={this.handleSelectClick}
 					handleViewToggle={this.handleViewToggle}
