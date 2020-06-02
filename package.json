@@ -6,12 +6,16 @@
     "@testing-library/jest-dom": "^4.2.4",
     "@testing-library/react": "^9.3.2",
     "@testing-library/user-event": "^7.1.2",
+    "express": "^4.17.1",
     "random-words": "^1.1.1",
     "react": "^16.13.1",
     "react-dom": "^16.13.1",
+    "react-router-dom": "^5.2.0",
     "react-scripts": "3.4.1",
     "semantic-ui-css": "^2.4.1",
     "semantic-ui-react": "^0.88.2",
+    "socket.io": "^2.3.0",
+    "socket.io-client": "^2.3.0",
     "uuidv4": "^6.1.0"
   },
   "scripts": {
@@ -21,6 +25,7 @@
     "eject": "react-scripts eject",
     "heroku-postbuild": "npm run build"
   },
+  "proxy": "http://localhost:8080",
   "eslintConfig": {
     "extends": "react-app"
   },

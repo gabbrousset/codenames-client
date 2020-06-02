@@ -2,6 +2,7 @@ import React, { Component } from "react";
 import { Button, Input } from "semantic-ui-react";
 
 export default class NewGame extends Component {
+	
 	state={
 	};
 	render(){

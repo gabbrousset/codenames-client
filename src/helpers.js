@@ -2,6 +2,24 @@ import uuid from "uuid";
 import words from "./words";
 //import randomWords from "random-words";
 
+const generateRoomId = () => {
+	const roomId = getRandomInt(1000) + "-" + getRandomInt(1000)
+	return roomId;
+}
+const getRandomInt = (max) => {
+	return Math.floor(Math.random() * Math.floor(max));
+}
+const newRoom = () => {
+	const room ={
+		id: generateRoomId(),
+		gameCount:0,
+		redWinCount:0,
+		blueWinCount:0,
+		game:{
+		}
+	}
+	return room;
+}
 const newGame = () => {
 	const firstTurn =  decideFirstTurn();
 	let blueCount = 8;
@@ -49,4 +67,4 @@ const createClues = (team, count, assassin, clues) => {
 	return clues;
 }
 
-export  {newGame, createClues};
+export  {newGame, createClues, newRoom};

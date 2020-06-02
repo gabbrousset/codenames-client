@@ -23,7 +23,6 @@ export default class JoinGame extends Component {
 					<Button
 						color="blue"
 						size="massive"
-						onClick={this.props.clickCreateGameSession}
 					>
 						Join
 					</Button>

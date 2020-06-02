@@ -8,6 +8,8 @@ export default class LandingPage extends Component {
 	state={
 		show:"landing buttons",
 	};
+	
+	//Toggle between landing, join and create buttons
 	handleClickNewGame= () => {
 		this.newGame();
 	};
@@ -45,6 +47,7 @@ export default class LandingPage extends Component {
 			return(
 				<NewGame
 					clickLandingButtons={this.handleClickLandingButtons}
+					clickCreateGameSession={this.props.clickCreateGameSession}
 				>
 				</NewGame>
 			);

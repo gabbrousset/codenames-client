@@ -18,15 +18,15 @@ export default class Lobby extends Component {
 	// add user to users
 		//  add user to team?
 
-
+// if ! this.state.user.name muestra input para nombre
+				// 	clickHandler, save user name
+				// Lista de usuarios con map, para mostrar el nombre, el color del equipo, y si es spymaster un icono
 
 	render(){
 		return(
 			<div>
-				// if ! this.state.user.name muestra input para nombre
-					//clickHandler, save user name
-				// Lista de usuarios con map, para mostrar el nombre, el color del equipo, y si es spymaster un icono
-				<div className="landingButtons">
+				<p>Showing room: {this.props.roomId}</p>
+				<div className="rowButtons">
 					<Button
 						color="blue"
 						size="massive"
