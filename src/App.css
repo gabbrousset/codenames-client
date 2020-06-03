@@ -166,3 +166,13 @@
 	font-size: 40px;
 	font-weight: 600;
 }
+.joinGameError {
+	display: flex;
+	flex-direction: row;
+	flex-wrap: nowrap;
+	justify-content: center;
+	align-items: center;
+	font-size: 20px;
+	color: #d43030;
+	margin-top: 25px;
+}

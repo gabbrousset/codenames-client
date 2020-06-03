@@ -107,6 +107,7 @@ export default class Room extends Component {
 	 };
 
 	render(){
+		console.log(this.props)
 		if (this.state.showOpenGame){
 			return(
 				<Game

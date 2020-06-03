@@ -3,11 +3,11 @@ import words from "./words";
 //import randomWords from "random-words";
 
 const generateRoomId = () => {
-	const roomId = getRandomInt(1000) + "-" + getRandomInt(1000)
+	const roomId = getRandomInt(100, 1000) + "-" + getRandomInt(100, 1000)
 	return roomId;
 }
-const getRandomInt = (max) => {
-	return Math.floor(Math.random() * Math.floor(max));
+const getRandomInt = (min, max) => {
+	return Math.floor(Math.random() * (max - min) + min);
 }
 const newRoom = () => {
 	const room ={
