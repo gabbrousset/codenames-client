@@ -28,6 +28,9 @@ export default class Game extends Component {
 					<Button onClick={this.props.handleNewGame}>
 						New Game
 					</Button>
+					<Button onClick={this.props.handleBackLobby}>
+						Back to Lobby
+					</Button>
 				</div>
 			</div>
 		)

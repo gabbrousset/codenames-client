@@ -5,6 +5,7 @@ import { BrowserRouter, Route, } from "react-router-dom";
 import LandingPage from "./components/LandingPage";
 import Room from "./components/Room";
 import Footer from "./components/Footer";
+import Header from "./components/Header";
 import {newRoom} from "./helpers"
 
 import socketIOClient from "socket.io-client";
@@ -30,6 +31,7 @@ export default class App extends Component {
 		console.log(this.state.rooms);
 		return (
 				<BrowserRouter>
+					<Header />
 					<div>
 						<Route
 							exact path="/"

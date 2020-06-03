@@ -15,12 +15,19 @@ export default class Room extends Component {
 	handleOpenNewGame = () => {
 		this.openGame();
 	};
-	openGame =() => {
+	openGame = () => {
 		this.setState({
 			showOpenGame: true,
 		});
 	};
-
+	handleBackLobby = () => {
+		this.openLobby();
+	}
+	openLobby = () => {
+		this.setState({
+			showOpenGame: false,
+		})
+	}
 	// Imported from game
 	handleNewGame = () => {
 		this.newGame();
@@ -114,6 +121,7 @@ export default class Room extends Component {
 					clues={this.state.game.clues}
 					onSelectClick={this.handleSelectClick}
 					handleViewToggle={this.handleViewToggle}
+					handleBackLobby={this.handleBackLobby}
 				>
 				</Game>
 			);

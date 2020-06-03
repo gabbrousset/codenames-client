@@ -68,7 +68,7 @@
 	justify-content: space-around;
 	align-items: baseline;
 	align-content: stretch;
-	width: 300px;
+	width: 430px;
 }
 .clue {
 	height: 100px;
@@ -122,9 +122,6 @@
 .currentTurn {
 	text-transform: capitalize;
 }
-.buyCoffeeButton {
-
-}
 .buyCoffeeHolder {
 	display: flex;
 	flex-direction: row;
@@ -132,19 +129,19 @@
 	justify-content: center;
 	align-items: flex-end;
 	align-content: center;
-	padding: 9px 15px 9px 10px;
+	padding: 8px 12px 8px 8px;
 	line-height: 35px;
-	height:60px;
+	height: 55px;
 	background-color:#FF813F;
 	border-radius: 5px;
 	border: 1px solid transparent;
-	font-size: 20px;
+	font-size: 18px;
 	letter-spacing:-0.08px;
 	box-shadow: 0px 1px 2px;
 	margin: 0 auto;
 	margin-top: 100px;
 	margin-bottom: 40px;
-	width: 250px;
+	width: 230px;
 }
 .buyCoffeeText {
 	margin-left:5px;
@@ -157,4 +154,15 @@
 	box-shadow: none;
 	border: none;
 	vertical-align: middle;
+}
+.header {
+	display: flex;
+	flex-direction: row;
+	flex-wrap: nowrap;
+	justify-content: center;
+	align-items: center;
+	align-content: center;
+	margin-top: 60px;
+	font-size: 40px;
+	font-weight: 600;
 }
