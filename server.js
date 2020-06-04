@@ -29,13 +29,10 @@ app.get('/ping', function (req, res) {
 //recibe un id 
 app.get('/room/:id', function (req, res) {
 	res.setHeader('Content-Type', 'application/json');
-	// console.log('hola',req.params.id);
 	 var id = req.params.id;
 		rooms.map((room)=>{
-			// console.log(room, id)
 			if(room.id === id) {
-				console.log(room)
-			    res.json(room);
+			    res.json(room.id);
 				// return res.send(JSON.stringify(room));
 			}
 		})
@@ -43,7 +40,7 @@ app.get('/room/:id', function (req, res) {
 });
 
 app.post('/room/create', function(req, res) {
-
+	saveRoom(req.body);
 })
 
 app.get('/', function (req, res) {
@@ -58,24 +55,30 @@ const rooms = []
 //Setting up a socket with the namespace "connection" for new sockets
 io.on("connection", (socket) => {
 	console.log("New client connected");
-	socket.on("created room", (room)=>{
-		saveRoom(room);
-	})
-	socket.on('new game', (r)=> {		
+	
+	// Cuando se crea un nuevo cuarto
+	// socket.on("created room", (room)=>{
+	// 	saveRoom(room);
+	// })
 
+	// Cuando un usuario se conecta al cuarto
+	socket.on('joined room', (id) => {
+		socket.join(id)
+		rooms.map((room) => {
+			if (room.id === id) {
+				socket.emit('update room', room);
+			}
+		})
+	})
+
+	// Cuando se crea un nuevo juego
+	socket.on('new game', (r)=> {
 		var i = rooms.findIndex(o => o.id === r.id);
 		if (rooms[i]) { rooms[i] = r} else { rooms.push(r)}
-		// rooms.map((room) => {
-			// if (room.id === r.id) {
-				// console.log(typeof(r))
-				// CAMBIAR CERO!!!!
-				// rooms.concat({...r})
-				// rooms[0] = {...r};
-			// };
-		// })
-		console.log(rooms)
-		// rooms[0].game = game;
+			socket.broadcast.to(r.id).emit('update room', r)
 	})
+	
+	
 });
 const saveRoom = (room) => {
 	rooms.push(room)

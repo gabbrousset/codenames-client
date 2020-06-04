@@ -1,4 +1,4 @@
-import React, { Component } from "react";
+import React, { Component, useEffect } from "react";
 import Game from "./Game";
 import Lobby from "./Lobby";
 import { newGame } from '../helpers';
@@ -10,14 +10,17 @@ import { useLocation, useParams, withRouter } from 'react-router-dom'
 const ENDPOINT = "http://127.0.0.1:8080";
 const socket = socketIOClient(ENDPOINT);
 
+
+
 class Room extends Component {
 	state={
-		gameId: this.props.match.params.id,
+		id: this.props.match.params.id,
 		// showOpenGame: false,
 		// game: {
 		// 	clues:[]
 		//  }
 	};
+
 	// Toggle between game and lobby
 	handleOpenNewGame = () => {
 		this.openGame();
@@ -60,7 +63,7 @@ class Room extends Component {
 		this.setState({game});
 	};
 	handleEndTurn = () => {
-		this.endTurn();
+		this.endTurn(this.state.game)
 	};
 	endTurn = (game) => {
 		game.turn === "red" ? game.turn = "blue" : game.turn = "red"
@@ -115,23 +118,24 @@ class Room extends Component {
 
 	findRoom = (roomId) => {
 		findRoomById(roomId).then((result) => {
-			console.log(result)
 			this.setState({...result})
 		});
 	};
 
 	 componentDidMount(){
-			this.findRoom(this.state.gameId)	 	
+	 	socket.emit('joined room', this.state.id)
+	 	socket.on('update room', (room) => {
+			this.setState({...room})
+		})
 	 };
 
 	render(){
-		console.log(this.state)
 		if (this.state.showOpenGame){
 			return(
 				<Game
 					{...this.state.game}
 					handleNewGame={this.handleNewGame}
-					endTurn={this.endTurn}
+					endTurn={this.handleEndTurn}
 					spymasterView={this.state.spymasterView}
 					onSelectClick={this.handleSelectClick}
 					handleViewToggle={this.handleViewToggle}

@@ -14,7 +14,6 @@ export default class JoinGame extends Component {
 	handleChangeRoomInput = (roomId) => {
 		this.setState({inputRoomId: roomId.target.value});
 	};
-
 	findRoom = (roomId) => {
 		findRoomById(roomId).then((result) => {
 			 this.handleRedirect(result)
@@ -22,9 +21,8 @@ export default class JoinGame extends Component {
 	};
 
 	handleRedirect = (result) => {
-		console.log(result)
 		 this.props.history.push({
-		 	pathname: result.id,
+		 	pathname: result,
 		 })
 	}
 

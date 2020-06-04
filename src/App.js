@@ -6,7 +6,7 @@ import LandingPage from "./components/LandingPage";
 import Room from "./components/Room";
 import Footer from "./components/Footer";
 import Header from "./components/Header";
-import data from './data';
+import { createRoom } from './client';
 import socketIOClient from "socket.io-client";
 
 const ENDPOINT = "http://127.0.0.1:8080";
@@ -22,7 +22,7 @@ export default class App extends Component {
 		this.setState({
 			rooms: this.state.rooms.concat(room),
 		// }, () => socket.emit("created room", room));
-			}, () => socket.emit("created room", room));		
+			}, () => createRoom(room));		
 	};
 	// createNewRoom = () => {
 	// 	const room = newRoom();
