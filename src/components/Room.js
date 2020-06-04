@@ -2,6 +2,11 @@ import React, { Component } from "react";
 import Game from "./Game";
 import Lobby from "./Lobby";
 import { newGame } from '../helpers';
+import socketIOClient from "socket.io-client";
+import { useLocation } from 'react-router-dom'
+
+const ENDPOINT = "http://127.0.0.1:8080";
+const socket = socketIOClient(ENDPOINT);
 
 export default class Room extends Component {
 	state={
@@ -42,7 +47,9 @@ export default class Room extends Component {
 				redCount: gameInfo.redCount,
 			},
 			spymasterView: false,			
-		});
+		},  () => socket.emit("new game", this.state.game));
+		// },  () => console.log('hola'));
+
 	};
 	endGame = (game) => {
 		this.toggleVisibility();
@@ -103,6 +110,9 @@ export default class Room extends Component {
 		this.setState({game});
 	 };
 	 componentDidMount(){
+  		// let location = useLocation();
+	  	// console.log(location.pathname);
+
 		this.newGame();
 	 };
 

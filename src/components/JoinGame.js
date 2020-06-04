@@ -1,5 +1,6 @@
 import React, { Component } from "react";
 import { Button, Input } from "semantic-ui-react";
+import {findRoomById} from '../client'
 
 export default class JoinGame extends Component {
 	state={
@@ -13,17 +14,30 @@ export default class JoinGame extends Component {
 	handleChangeRoomInput = (roomId) => {
 		this.setState({inputRoomId: roomId.target.value});
 	};
+
+	findRoom = (roomId) => {
+		findRoomById(roomId).then((result)=>{
+			 this.handleRedirect(result.id)
+		});
+	};
+
+	handleRedirect = (id) => {
+		 this.props.history.push(id)
+	}
+
 	handleClickJoinGameSession = () => {
 		if (this.state.username) {
-			this.props.rooms.map((room) => {
-				if (room.id === this.state.inputRoomId) {
-					this.props.history.push(room.id)
-				} else {
-				this.setState({
-					errorMsg: "Room does not exist"
-				})
-			}
-			})
+			this.findRoom(this.state.inputRoomId)
+
+			// this.props.rooms.map((room) => {
+			// 	if (room.id === this.state.inputRoomId) {
+			// 		 this.props.history.push(room.id)
+			// 	} else {
+			// 	this.setState({
+			// 		errorMsg: "Room does not exist"
+			// 	})
+			// }
+			// })
 		} else {
 			this.setState({
 				errorMsg: "Please enter a name"
