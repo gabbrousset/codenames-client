@@ -60,7 +60,7 @@ class Room extends Component {
 	endGame = (game) => {
 		this.toggleVisibility();
 		game.gameActive = false
-		this.setState({game});
+		this.setState({game}, () => socket.emit('game update', this.state));
 	};
 	handleEndTurn = () => {
 		this.endTurn(this.state.game)
@@ -68,11 +68,13 @@ class Room extends Component {
 	endTurn = (game) => {
 		game.turn === "red" ? game.turn = "blue" : game.turn = "red"
 		this.setState({game})
+		this.setState({game}, () => socket.emit('game update', this.state));
 	};
 	reduceCount = (game, clueTeam) => {
 		const teamCount = clueTeam + "Count";
 		game[teamCount] = this.state.game[teamCount] -1;
 		this.setState({game},()=> this.shouldGameEnd(game,teamCount))
+		this.setState({game}, () => socket.emit('game update', this.state));
 	};
 	shouldGameEnd = (game,teamCount) => {
 		if (game[teamCount]===0) {
@@ -114,20 +116,26 @@ class Room extends Component {
 	 		clue.visible= !this.state.spymasterView
 		})
 		this.setState({game});
+		// this.setState({game}, () => socket.emit('game update', this.state));
 	 };
 
-	findRoom = (roomId) => {
-		findRoomById(roomId).then((result) => {
-			this.setState({...result})
-		});
-	};
+	// findRoom = (roomId) => {
+	// 	findRoomById(roomId).then((result) => {
+	// 		this.setState({...result})
+	// 	});
+	// };
 
 	 componentDidMount(){
 	 	socket.emit('joined room', this.state.id)
 	 	socket.on('update room', (room) => {
 			this.setState({...room})
 		})
+	 	socket.on('update game', (game) => {
+			this.setState({game})
+		})
 	 };
+
+
 
 	render(){
 		if (this.state.showOpenGame){

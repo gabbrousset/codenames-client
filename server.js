@@ -78,7 +78,12 @@ io.on("connection", (socket) => {
 			socket.broadcast.to(r.id).emit('update room', r)
 	})
 	
-	
+	socket.on('game update', (room)=> {
+		var i = rooms.findIndex(o => o.id === room.id);
+		if (rooms[i]) { rooms[i] = room} else { rooms.push(room)}
+			socket.broadcast.to(room.id).emit('update game', room.game)
+	})
+
 });
 const saveRoom = (room) => {
 	rooms.push(room)
