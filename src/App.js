@@ -41,7 +41,7 @@ export default class App extends Component {
 							render={(props) => <LandingPage {...props} clickCreateGameSession={this.handleClickCreateGameSession} rooms={this.state.rooms}/>}
 						/>
 						<Route
-							exact path="/:ids"
+							exact path="/:id"
 							render={(props)=> <Room {...props} room={this.state.room}  />}
 							// component={Room}
 						/>

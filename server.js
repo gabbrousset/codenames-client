@@ -34,7 +34,7 @@ app.get('/room/:id', function (req, res) {
 		rooms.map((room)=>{
 			// console.log(room, id)
 			if(room.id === id) {
-				// console.log('siiiiuuu')
+				console.log(room)
 			    res.json(room);
 				// return res.send(JSON.stringify(room));
 			}
@@ -61,9 +61,20 @@ io.on("connection", (socket) => {
 	socket.on("created room", (room)=>{
 		saveRoom(room);
 	})
-	socket.on('new game', (game)=> {
+	socket.on('new game', (r)=> {		
+
+		var i = rooms.findIndex(o => o.id === r.id);
+		if (rooms[i]) { rooms[i] = r} else { rooms.push(r)}
+		// rooms.map((room) => {
+			// if (room.id === r.id) {
+				// console.log(typeof(r))
+				// CAMBIAR CERO!!!!
+				// rooms.concat({...r})
+				// rooms[0] = {...r};
+			// };
+		// })
 		console.log(rooms)
-		rooms[0].game = game;
+		// rooms[0].game = game;
 	})
 });
 const saveRoom = (room) => {

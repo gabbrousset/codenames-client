@@ -2,22 +2,26 @@ import React, { Component } from "react";
 import Game from "./Game";
 import Lobby from "./Lobby";
 import { newGame } from '../helpers';
+import {findRoomById} from '../client'
+
 import socketIOClient from "socket.io-client";
-import { useLocation } from 'react-router-dom'
+import { useLocation, useParams, withRouter } from 'react-router-dom'
 
 const ENDPOINT = "http://127.0.0.1:8080";
 const socket = socketIOClient(ENDPOINT);
 
-export default class Room extends Component {
+class Room extends Component {
 	state={
-		showOpenGame: false,
-		game: {
-			clues:[]
-		 }
+		gameId: this.props.match.params.id,
+		// showOpenGame: false,
+		// game: {
+		// 	clues:[]
+		//  }
 	};
 	// Toggle between game and lobby
 	handleOpenNewGame = () => {
 		this.openGame();
+		this.newGame();
 	};
 	openGame = () => {
 		this.setState({
@@ -47,8 +51,7 @@ export default class Room extends Component {
 				redCount: gameInfo.redCount,
 			},
 			spymasterView: false,			
-		},  () => socket.emit("new game", this.state.game));
-		// },  () => console.log('hola'));
+		},  () => socket.emit("new game", this.state));
 
 	};
 	endGame = (game) => {
@@ -109,15 +112,20 @@ export default class Room extends Component {
 		})
 		this.setState({game});
 	 };
-	 componentDidMount(){
-  		// let location = useLocation();
-	  	// console.log(location.pathname);
 
-		this.newGame();
+	findRoom = (roomId) => {
+		findRoomById(roomId).then((result) => {
+			console.log(result)
+			this.setState({...result})
+		});
+	};
+
+	 componentDidMount(){
+			this.findRoom(this.state.gameId)	 	
 	 };
 
 	render(){
-		console.log(this.props)
+		console.log(this.state)
 		if (this.state.showOpenGame){
 			return(
 				<Game
@@ -142,3 +150,5 @@ export default class Room extends Component {
 		}
 	}
 }
+
+export default withRouter(Room);

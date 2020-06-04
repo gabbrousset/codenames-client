@@ -16,13 +16,16 @@ export default class JoinGame extends Component {
 	};
 
 	findRoom = (roomId) => {
-		findRoomById(roomId).then((result)=>{
-			 this.handleRedirect(result.id)
+		findRoomById(roomId).then((result) => {
+			 this.handleRedirect(result)
 		});
 	};
 
-	handleRedirect = (id) => {
-		 this.props.history.push(id)
+	handleRedirect = (result) => {
+		console.log(result)
+		 this.props.history.push({
+		 	pathname: result.id,
+		 })
 	}
 
 	handleClickJoinGameSession = () => {
