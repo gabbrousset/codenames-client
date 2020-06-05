@@ -28,14 +28,11 @@ app.get('/ping', function (req, res) {
  return res.send('pong');
 });
 
-app.get('/123-456', function (req, res) {
-	return res.send('pong');
-   });
    
 
 app.get('/:id', function (req, res) {
 	console.log(':/id')
-	return res.send('pong');
+	return res.send(req.params.id);
 
 	// res.setHeader('Content-Type', 'application/json');
 		// var id = req.params.id;
