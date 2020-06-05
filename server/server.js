@@ -33,14 +33,16 @@ app.get('/ping', function (req, res) {
 app.get('/:id', function (req, res) {
 	console.log(':/id')
 	// return res.send(req.params.id);
-	res.setHeader('Content-Type', 'application/json');
-	 var id = req.params.id;
-		rooms.map((room)=>{
-			if(room.id === id) {
-			    // res.json(room.id);
-				return res.send(room);
-			}
-		})
+	// res.setHeader('Content-Type', 'application/json');
+	//  var id = req.params.id;
+	// 	rooms.map((room)=>{
+	// 		if(room.id === id) {
+	// 		    // res.json(room.id);
+	// 			return res.send(room);
+	// 		}
+	// 	})
+	console.log(path.join(__dirname, '../react-ui/build'))
+	res.sendFile(path.join(__dirname, '../react-ui/build/index.html'));
 });
 
 //recibe un id 
@@ -62,8 +64,13 @@ app.post('/room/create', function(req, res) {
 })
 
 app.get('/', function (req, res) {
-	res.sendFile(path.join(__dirname, 'build', 'index.html'));
+	console.log(path.join(__dirname, '../react-ui/build'))
+	res.sendFile(path.join(__dirname, '../react-ui/build/index.html'));
 });
+
+
+
+
 
 // app.listen(port);
 let interval;
