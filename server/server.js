@@ -27,8 +27,19 @@ app.get('/ping', function (req, res) {
  return res.send('pong');
 });
 
+app.get('/:id'), function (req, res) {
+	console.log('id')
+	// res.setHeader('Content-Type', 'application/json');
+	 var id = req.params.id;
+		rooms.map((room)=>{
+			if(room.id === id) {
+			    res.json(room.id);
+			}
+		})
+}
 //recibe un id 
 app.get('/room/:id', function (req, res) {
+	console.log('room/id')	
 	res.setHeader('Content-Type', 'application/json');
 	 var id = req.params.id;
 		rooms.map((room)=>{
@@ -64,6 +75,7 @@ io.on("connection", (socket) => {
 
 	// Cuando un usuario se conecta al cuarto
 	socket.on('joined room', (id) => {
+		console.log('sockt join')
 		socket.join(id)
 		rooms.map((room) => {
 			if (room.id === id) {
