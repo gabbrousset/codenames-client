@@ -7,7 +7,7 @@ import {findRoomById} from '../client'
 import socketIOClient from "socket.io-client";
 import { useLocation, useParams, withRouter } from 'react-router-dom'
 
-const ENDPOINT = "http://127.0.0.1:8080";
+const ENDPOINT = "http://127.0.0.1:5000";
 const socket = socketIOClient(ENDPOINT);
 
 
