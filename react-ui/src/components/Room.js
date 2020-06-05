@@ -7,13 +7,13 @@ import {findRoomById} from '../client'
 import socketIOClient from "socket.io-client";
 import { useLocation, useParams, withRouter } from 'react-router-dom'
 
-let ENDPOINT = "http://127.0.0.1:5000";
+let ENDPOINT;
 
 if (!process.env.NODE_ENV || process.env.NODE_ENV === 'development') {
-	let ENDPOINT = "http://127.0.0.1:5000";
+	ENDPOINT = "http://127.0.0.1:5000";
 		console.log(ENDPOINT)
 } else {
-	 let ENDPOINT = "https://codename-online.herokuapp.com/";
+	 ENDPOINT = "https://codename-online.herokuapp.com/";
 	 console.log('prod')
 }
 console.log(ENDPOINT)
