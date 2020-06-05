@@ -28,16 +28,24 @@ app.get('/ping', function (req, res) {
  return res.send('pong');
 });
 
-app.get('/:id'), function (req, res) {
-	console.log('id')
+app.get('/123-456', function (req, res) {
+	return res.send('pong');
+   });
+   
+
+app.get('/:id', function (req, res) {
+	console.log(':/id')
+	return res.send('pong');
+
 	// res.setHeader('Content-Type', 'application/json');
-	 var id = req.params.id;
-		rooms.map((room)=>{
-			if(room.id === id) {
-			    res.json(room.id);
-			}
-		})
-}
+		// var id = req.params.id;
+		// 	rooms.map((room)=>{
+		// 		if(room.id === id) {
+		// 		return  res.json(room.id);
+		// 		}
+		// 	})
+});
+
 //recibe un id 
 app.get('/room/:id', function (req, res) {
 	console.log('room/id')	

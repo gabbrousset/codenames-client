@@ -7,8 +7,15 @@ import {findRoomById} from '../client'
 import socketIOClient from "socket.io-client";
 import { useLocation, useParams, withRouter } from 'react-router-dom'
 
-const ENDPOINT = "http://127.0.0.1:5000";
-// const ENDPOINT = "https://codename-online.herokuapp.com/";
+let ENDPOINT;
+
+if (!process.env.NODE_ENV || process.env.NODE_ENV === 'development') {
+	let ENDPOINT = "http://127.0.0.1:5000";
+	console.log('dev')
+} else {
+	 let ENDPOINT = "https://codename-online.herokuapp.com/";
+	 console.log('prod')	 
+}
 
 const socket = socketIOClient(ENDPOINT);
 
