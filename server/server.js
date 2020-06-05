@@ -32,15 +32,15 @@ app.get('/ping', function (req, res) {
 
 app.get('/:id', function (req, res) {
 	console.log(':/id')
-	return res.send(req.params.id);
-
-	// res.setHeader('Content-Type', 'application/json');
-		// var id = req.params.id;
-		// 	rooms.map((room)=>{
-		// 		if(room.id === id) {
-		// 		return  res.json(room.id);
-		// 		}
-		// 	})
+	// return res.send(req.params.id);
+	res.setHeader('Content-Type', 'application/json');
+	 var id = req.params.id;
+		rooms.map((room)=>{
+			if(room.id === id) {
+			    // res.json(room.id);
+				return res.send(room);
+			}
+		})
 });
 
 //recibe un id 
