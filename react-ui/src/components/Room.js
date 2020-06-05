@@ -7,7 +7,9 @@ import {findRoomById} from '../client'
 import socketIOClient from "socket.io-client";
 import { useLocation, useParams, withRouter } from 'react-router-dom'
 
-const ENDPOINT = "http://127.0.0.1";
+// const ENDPOINT = "http://127.0.0.1";
+const ENDPOINT = "https://codename-online.herokuapp.com/726-466";
+
 const socket = socketIOClient(ENDPOINT);
 
 
