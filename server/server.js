@@ -11,7 +11,8 @@ const app = express();
 const server = http.createServer(app);
 const io = socketIo(server);
 
-app.use(express.static(path.resolve(__dirname, '../react-ui/build')));
+// app.use(express.static(path.resolve(__dirname, '../react-ui/build')));
+app.use(express.static(path.join(__dirname, '../react-ui/build')));
 
 app.use(bodyParser.json());
 app.use(bodyParser.urlencoded({ extended: true }));

@@ -9,8 +9,8 @@ import Header from "./components/Header";
 import { createRoom } from './client';
 import socketIOClient from "socket.io-client";
 
-const ENDPOINT = "http://127.0.0.1:8080";
-const socket = socketIOClient(ENDPOINT);
+// const ENDPOINT = "http://127.0.0.1:8080";
+// const socket = socketIOClient(ENDPOINT);
 
 export default class App extends Component {
 	state={
