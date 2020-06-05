@@ -6,8 +6,10 @@ import {findRoomById} from '../client'
 
 import socketIOClient from "socket.io-client";
 import { useLocation, useParams, withRouter } from 'react-router-dom'
+const port = process.env.PORT || 5000;
 
-const ENDPOINT = "http://127.0.0.1:5000";
+
+const ENDPOINT = "http://127.0.0.1:"+port;
 const socket = socketIOClient(ENDPOINT);
 
 

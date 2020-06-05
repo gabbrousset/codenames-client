@@ -1,4 +1,8 @@
 # See https://help.github.com/articles/ignoring-files/ for more about ignoring files.
+package-lock.json
+react-ui/build/
+react-ui/node_modules/
+react-ui/package-lock.json
 
 # dependencies
 /node_modules
