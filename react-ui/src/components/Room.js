@@ -9,7 +9,7 @@ import { useLocation, useParams, withRouter } from 'react-router-dom'
 const port = process.env.PORT || 5000;
 
 
-const ENDPOINT = "http://127.0.0.1:"+port;
+const ENDPOINT = "https://codename-online.herokuapp.com/:"+port;
 const socket = socketIOClient(ENDPOINT);
 
 
