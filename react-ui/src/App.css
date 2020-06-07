@@ -15,8 +15,7 @@
 	align-content: stretch;
 }
 .rowButtons {
-	height: 200px;
-	padding: 570px;
+	padding: 500px;
 	margin: 50px;
 	margin-top: 0px;
 	padding-top: 10px;
@@ -59,7 +58,7 @@
 	justify-content: space-between;
 	align-items: baseline;
 	align-content: stretch;
-	width: 1030px;
+	width: 70%;
 }
 .bottomDashboard {
 	display: flex;
@@ -175,4 +174,87 @@
 	font-size: 20px;
 	color: #d43030;
 	margin-top: 25px;
+}
+.centerText {
+	margin-top: 50px;
+	margin-bottom: 25px;
+	font-size: 25px;
+	display: flex;
+	justify-content: center;
+	align-items: baseline;
+	align-content: stretch;
+}
+.teams {
+	font-size: 20px;
+	display: flex;
+	flex-direction: row;
+	flex-wrap: nowrap;
+	justify-content: center;
+	align-items: stretch;
+	align-content: center;
+}
+.blueTitle {
+	border-style: solid;
+	border-color: black;
+	border-width: 2px;
+	border-right-width: 1px;
+	color: #0f80ff;
+	padding-top: 10px;
+	padding-bottom: 10px;
+	padding-right: 80px;
+	padding-left: 80px;
+}
+.redTitle {
+	border-style: solid;
+	border-color: black;
+	border-width: 2px;
+	border-left-width: 1px;
+	color: #fd6666;
+	padding-top: 10px;
+	padding-bottom: 10px;
+	padding-right: 80px;
+	padding-left: 80px;
+}
+.blueTeam {
+	display: flex;
+	flex-direction: column;
+	flex-wrap: nowrap;
+	justify-content: flex-start;
+	align-items: center;
+	align-content: stretch;
+}
+.redTeam {
+	display: flex;
+	flex-direction: column;
+	flex-wrap: nowrap;
+	justify-content: flex-start;
+	align-items: center;
+	align-content: stretch;
+}
+.teamUsers {
+	display: flex;
+	flex-direction: column;
+	flex-wrap: nowrap;
+	justify-content: center;
+	align-items: center;
+	align-content: stretch;
+}
+.joinTeamButtons {
+	height: 200px;
+	margin: 0 auto;
+	width: 500px;	
+	display: flex;
+	flex-direction: row;
+	flex-wrap: nowrap;
+	justify-content: space-around;
+	align-items: center;
+	align-content: stretch;
+}
+#nameLobby {
+	display: flex;
+	flex-direction: row;
+	flex-wrap: nowrap;
+	justify-content: center;
+	align-content: stretch;
+	margin: 0 auto;
 }

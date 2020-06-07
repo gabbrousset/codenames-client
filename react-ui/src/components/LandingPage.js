@@ -39,6 +39,8 @@ export default class LandingPage extends Component {
 				<LandingButtons
 					clickNewGame={this.handleClickNewGame}
 					clickJoinGame={this.handleClickJoinGame}
+					clickCreateGameSession={this.props.clickCreateGameSession}
+					history={this.props.history}
 				>
 				</LandingButtons>
 			);

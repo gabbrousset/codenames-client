@@ -1,43 +1,55 @@
-import React, { Component, useEffect } from "react";
+import React, { Component } from "react";
 import Game from "./Game";
 import Lobby from "./Lobby";
-import { newGame } from '../helpers';
-import {findRoomById} from '../client'
+import { newGame, createUserId } from '../helpers';
 
 import socketIOClient from "socket.io-client";
-import { useLocation, useParams, withRouter } from 'react-router-dom'
+import { withRouter } from 'react-router-dom'
 
 let ENDPOINT;
 
 if (!process.env.NODE_ENV || process.env.NODE_ENV === 'development') {
 	ENDPOINT = "http://127.0.0.1:5000";
-		console.log(ENDPOINT)
 } else {
 	 ENDPOINT = "https://codename-online.herokuapp.com/";
-	 console.log('prod')
 }
-console.log(ENDPOINT)
 const socket = socketIOClient(ENDPOINT);
 
 
 
 class Room extends Component {
 	state={
+		user: {
+			userId: '',
+			name: '',
+			team: '',
+			isSpymaster: false
+		},
+		room: {
+			id: this.props.match.params.id,
+			users:[],
+			//redWin: 
+			//blueWin:2
+			//timer: false
+			blueSpymaster: '',
+			redSpymaster: '',
+		},
 		id: this.props.match.params.id,
-		// showOpenGame: false,
-		// game: {
-		// 	clues:[]
-		//  }
+		showGame: true,
+		spymasterView: false
 	};
 
 	// Toggle between game and lobby
 	handleOpenNewGame = () => {
-		this.openGame();
+		// this.openGame();
 		this.newGame();
+	};
+	handleShowGame = () => {
+		this.openGame();
 	};
 	openGame = () => {
 		this.setState({
-			showOpenGame: true,
+			showGame: true,
 		});
 	};
 	handleBackLobby = () => {
@@ -45,7 +57,7 @@ class Room extends Component {
 	};
 	openLobby = () => {
 		this.setState({
-			showOpenGame: false,
+			showGame: false,
 		})
 	};
 	// Imported from game
@@ -54,117 +66,227 @@ class Room extends Component {
 	};
 	newGame = () => {
 		const gameInfo = newGame();
-		this.setState({
-			game: {
-				clues: gameInfo.clues,
-				turn: gameInfo.firstTurn,
-				blueCount: gameInfo.blueCount,
-				gameActive : true,
-				redCount: gameInfo.redCount,
-			},
-			spymasterView: false,			
-		},  () => socket.emit("new game", this.state));
 
+		this.setState(prevState => {
+		  let room = Object.assign({}, prevState.room); 
+		  room.game = gameInfo;
+		  return { room };
+		}, () => socket.emit("new game", this.state.room))
 	};
-	endGame = (game) => {
+	handleEndGame = () => {
+		this.endGame(this.state.room);
+	};
+	endGame = (room) => {
 		this.toggleVisibility();
-		game.gameActive = false
-		this.setState({game}, () => socket.emit('game update', this.state));
+		room.game.gameActive = false
+		this.setState({room}, () => socket.emit('game update', this.state.room));
 	};
 	handleEndTurn = () => {
-		this.endTurn(this.state.game)
+		if (this.state.user.team===this.state.room.game.turn) {
+			this.endTurn(this.state.room)
+		}
 	};
-	endTurn = (game) => {
-		game.turn === "red" ? game.turn = "blue" : game.turn = "red"
-		this.setState({game})
-		this.setState({game}, () => socket.emit('game update', this.state));
+	endTurn = (room) => {
+		room.game.turn === "red" ? room.game.turn = "blue" : room.game.turn = "red"
+		// this.setState({room})
+		this.setState({room}, () => socket.emit('game update', this.state.room));
 	};
-	reduceCount = (game, clueTeam) => {
+	reduceCount = (room, clueTeam) => {
 		const teamCount = clueTeam + "Count";
-		game[teamCount] = this.state.game[teamCount] -1;
-		this.setState({game},()=> this.shouldGameEnd(game,teamCount))
-		this.setState({game}, () => socket.emit('game update', this.state));
+		room.game[teamCount] = this.state.room.game[teamCount] -1;
+		this.setState({room},()=> this.shouldGameEnd(room,teamCount))
+		this.setState({room}, () => socket.emit('game update', this.state.room));
 	};
-	shouldGameEnd = (game,teamCount) => {
-		if (game[teamCount]===0) {
-			this.endGame(game);
+	shouldGameEnd = (room,teamCount) => {
+		if (room.game[teamCount]===0) {
+			this.endGame(room);
 		}
 	};
 	handleSelectClick = (clueId, clueTeam, isAssassin) => {		
 		// Revisa si no eres spymaster
-		if (!this.state.spymasterView && this.state.game.gameActive ) {
+		if (!this.state.user.isSpymaster && this.state.room.game.gameActive && this.state.user.team===this.state.room.game.turn) {
 		// Entonces muestras la pista
-			const game = this.revealClue(clueId);
+			const room = this.revealClue(clueId);
 			if(clueTeam) {
-				this.reduceCount(game,clueTeam);
+				this.reduceCount(room,clueTeam);
 			}	
 			if (isAssassin) {
-				this.endGame(game);
+				this.endGame(room);
 			}
-			if (clueTeam !== this.state.game.turn) {
-				this.endTurn(game);
+			if (clueTeam !== this.state.room.game.turn) {
+				this.endTurn(room);
 			}			
 		}
 	};
 	revealClue = (clueId) => {
-		const game = {...this.state.game}
-		game.clues.map((clue) => {
+		const room = {...this.state.room}
+		room.game.clues.map((clue) => {
 			if (clueId === clue.id) {
 				clue.selected=true
 			}
 		})
-		return game;
+		return room;
 	};
 	handleViewToggle = () =>{
 		this.toggleVisibility();
 	 	this.setState((prevState) => ({ spymasterView: !prevState.spymasterView }));
 	 };
 	 toggleVisibility = () =>{
-	 	const game = {...this.state.game}
-	 	this.state.game.clues.map((clue) => {
+	 	const room = {...this.state.room}
+	 	this.state.room.game.clues.map((clue) => {
 	 		clue.visible= !this.state.spymasterView
 		})
-		this.setState({game});
+		this.setState({room});
 		// this.setState({game}, () => socket.emit('game update', this.state));
 	 };
-
-	// findRoom = (roomId) => {
-	// 	findRoomById(roomId).then((result) => {
-	// 		this.setState({...result})
-	// 	});
-	// };
-
-	 componentDidMount(){
-	 	socket.emit('joined room', this.state.id)
-	 	socket.on('update room', (room) => {
-			this.setState({...room})
-		})
-	 	socket.on('update game', (game) => {
-			this.setState({game})
-		})
+	 handleBecomeSpymaster = () => {
+		this.becomeSpymaster(this.state.user.team);
 	 };
+	 becomeSpymaster= (team) => {
+	 	const spyTeam = team + "Spymaster"
+	 	// if (!spyTeam) {
+			this.setState(prevState => {
+				let stateCopy = Object.assign({}, prevState); 
+				stateCopy.user.isSpymaster = true;
+				stateCopy.room[spyTeam] = this.state.user.userId
+				var i = stateCopy.room.users.findIndex(o => o.userId === stateCopy.user.userId);
+				if (stateCopy.room.users[i]) { stateCopy.room.users[i] = stateCopy.user} else { stateCopy.room.users.push(stateCopy.user)}
+				return {...stateCopy};
+			}, ()=> socket.emit('update user list', this.state.room));
+	 	// }
+	 };
+	userId = () => {
+		const userId = createUserId()
+		localStorage.setItem('userId', userId)
+		localStorage.setItem('userIdSaved', "true")
+		return userId;
+	};
+	handleJoinTeam = (team, name) => {
+		this.joinTeam(team, name);
+	};
+	joinTeam = (team, name) => {
+		const spyTeam = this.state.user.team + "Spymaster"
+		this.setState(prevState => {
+			let stateCopy = Object.assign({}, prevState); 
+			stateCopy.user.team = team;
+			stateCopy.user.name = name;
+			if (this.state.user.isSpymaster) {
+				stateCopy.user.isSpymaster=false;
+				stateCopy.room[spyTeam] = '';
+			}
+			var i = stateCopy.room.users.findIndex(o => o.userId === stateCopy.user.userId);
+			if (stateCopy.room.users[i]) { stateCopy.room.users[i] = stateCopy.user} else { stateCopy.room.users.push(stateCopy.user)}
+			return {...stateCopy};
+		}, ()=> socket.emit('update user list', this.state.room));
+	};
+	handleSwitchTeam = () => {
+		this.switchTeam()
+	};
+	switchTeam = () => {
+		let team;
+		this.state.user.team === "blue" ? team = "red" :  team = "blue"
+		this.joinTeam(team, this.state.user.name);
+	};
+	handleChangeNameInput = (name) => {
+		// this.changeNameInput(name)
+		this.joinTeam(this.state.user.team, name)
+	};
 
+	changeNameInput = (name) => {
+		// localStorage.setItem('name', name)
+		this.setState({
+			user: Object.assign({}, this.state.user, {
+				name
+			})
+		}, ()=> socket.emit('update user list', this.state.room))
 
+		// this.setState(prevState => {
+		// 	let stateCopy = Object.assign({}, prevState); 
+		// 	stateCopy.user.name = name;
+		// 	var i = stateCopy.room.users.findIndex(o => o.userId === stateCopy.user.userId);
+		// 	if (stateCopy.room.users[i]) { stateCopy.room.users[i] = stateCopy.user}
+		// 	return {...stateCopy};
+		// }, ()=> socket.emit('update user list', this.state.room));
 
+	};
+
+	getUserInfo = (userId, room) => {
+		let u = this.state.user;
+		room.users.map((user) => {
+			if (user.userId === userId){
+				u = user;
+			}
+		})
+
+		return u;
+	};
+
+	getUserFromLocalStorage = () => {
+		const user = {
+			name: '',
+			team: '',
+		}
+		user.userId = localStorage.getItem('userIdSaved') === "true" ? localStorage.getItem('userId') : this.userId();
+		// const user = this.getUserInfo(userId);
+		// console.log('useri',user);
+		// user.name = localStorage.getItem('name')  ? localStorage.getItem('name') : '';
+		this.setState({user}, () => socket.emit('join room', this.state));
+	};
+
+	componentDidMount(){
+
+		this.getUserFromLocalStorage();
+
+		socket.on('joined room', (room) => {
+			const user = this.getUserInfo(this.state.user.userId, room);
+			this.setState(prevState => {
+				let stateCopy = Object.assign({}, prevState);
+				stateCopy.room = room;
+				stateCopy.user = user;
+				return {...stateCopy};
+			})
+		})
+		socket.on('update room', (room) => {
+			this.setState({room})
+		})
+		socket.on('update game', (room) => {
+			this.setState({room})
+		})
+
+	};
 	render(){
-		if (this.state.showOpenGame){
+		console.log("state", this.state)
+		if (this.state.showGame && this.state.room.game){
 			return(
 				<Game
-					{...this.state.game}
+					{...this.state.room.game}
+					user={this.state.user}
 					handleNewGame={this.handleNewGame}
 					endTurn={this.handleEndTurn}
 					spymasterView={this.state.spymasterView}
 					onSelectClick={this.handleSelectClick}
 					handleViewToggle={this.handleViewToggle}
 					handleBackLobby={this.handleBackLobby}
+					handleEndGame={this.handleEndGame}
 				>
 				</Game>
 			);
 		} else {
 			return(
 				<Lobby
+					room={this.state.room}
+					becomeSpymaster={this.handleBecomeSpymaster}
+					blueSpymaster={this.state.room.blueSpymaster}
+					redSpymaster={this.state.room.redSpymaster}
+					game={this.state.room.game}
+					users={this.state.room.users}
+					user={this.state.user}
+					showGame={this.handleShowGame}
 					openNewGame={this.handleOpenNewGame}
 					roomId={this.props.match.params.id}
+					joinTeam={this.handleJoinTeam}
+					switchTeam={this.handleSwitchTeam}
+					changeNameInput = {this.handleChangeNameInput}
 				>
 				</Lobby>
 			);

@@ -17,6 +17,7 @@ export default class Clue extends Component{
 			return(
 				<ClueUnselected
 					{...this.props}
+	     			spymasterView={this.props.spymasterView}					
 					onSelectClick={this.handleSelectClick}
 				/>
 			);

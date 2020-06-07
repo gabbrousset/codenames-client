@@ -12,6 +12,7 @@ const getRandomInt = (min, max) => {
 const newRoom = () => {
 	const room ={
 		id: generateRoomId(),
+		users:[],
 		gameCount:0,
 		redWinCount:0,
 		blueWinCount:0,
@@ -34,10 +35,11 @@ const newGame = () => {
 	shuffle(clues);
 
 	const game = {
-		firstTurn : firstTurn,
+		turn : firstTurn,
 		clues: clues,
 		blueCount: blueCount,
 		redCount: redCount,
+		gameActive: true
 	}
 	return game;
 };
@@ -66,5 +68,8 @@ const createClues = (team, count, assassin, clues) => {
 	}
 	return clues;
 }
+const createUserId = () => {
+	return 	uuid.v4()
+}
 
-export  {newGame, createClues, newRoom};
+export  {newGame, createClues, newRoom, createUserId};

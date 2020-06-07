@@ -12,6 +12,7 @@ export default class ClueBoard extends Component {
 			     		<Clue
 			     			{...clue}
 			     			onSelectClick={this.props.onSelectClick}
+			     			spymasterView={this.props.spymasterView}
 			     		/>
 			     	</Grid.Column>
 			    ))}

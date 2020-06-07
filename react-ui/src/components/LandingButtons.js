@@ -1,8 +1,12 @@
 import React, { Component } from "react";
 import { Button } from "semantic-ui-react";
+import {newRoom} from "../helpers";
 
 export default class LandingButtons extends Component {
-	state={
+	handleClickCreateGameSession = () => {
+		const room = newRoom();
+		this.props.history.push(room.id)
+		this.props.clickCreateGameSession(room)
 	};
 	render(){
 		return(
@@ -10,7 +14,7 @@ export default class LandingButtons extends Component {
 				<Button
 					color="blue"
 					size="massive"
-					onClick={this.props.clickNewGame}
+					onClick={this.handleClickCreateGameSession}
 				>
 					New Game
 				</Button>

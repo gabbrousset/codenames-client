@@ -7,29 +7,18 @@ import Room from "./components/Room";
 import Footer from "./components/Footer";
 import Header from "./components/Header";
 import { createRoom } from './client';
-import socketIOClient from "socket.io-client";
 
-// const ENDPOINT = "http://127.0.0.1:8080";
-// const socket = socketIOClient(ENDPOINT);
 
 export default class App extends Component {
 	state={
 		rooms: [],
 	};
 	//clicked landing new game
-	// cambiar a http
 	handleClickCreateGameSession = (room) => {
 		this.setState({
 			rooms: this.state.rooms.concat(room),
-		// }, () => socket.emit("created room", room));
 			}, () => createRoom(room));		
 	};
-	// createNewRoom = () => {
-	// 	const room = newRoom();
-	// 	this.setState({
-	// 		rooms: this.state.rooms.concat(room),
-	// 	});
-	// };
 	render(){
 		// console.log(this.state.rooms);
 		return (
@@ -43,7 +32,6 @@ export default class App extends Component {
 						<Route
 							exact path="/:id"
 							render={(props)=> <Room {...props} room={this.state.room}  />}
-							// component={Room}
 						/>
 					</div>
 					<Footer />					

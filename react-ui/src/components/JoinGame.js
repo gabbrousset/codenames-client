@@ -14,50 +14,47 @@ export default class JoinGame extends Component {
 	handleChangeRoomInput = (roomId) => {
 		this.setState({inputRoomId: roomId.target.value});
 	};
-	findRoom = (roomId) => {
-		findRoomById(roomId).then((result) => {
-			 this.handleRedirect(result)
-		});
-	};
-
+	// findRoom = (roomId) => {
+	// 	findRoomById(roomId).then((result) => {
+	// 		 this.handleRedirect(result)
+	// 	});
+	// };
 	handleRedirect = (result) => {
 		 this.props.history.push({
 		 	pathname: result,
 		 })
-	}
-
-	handleClickJoinGameSession = () => {
-		if (this.state.username) {
-			this.findRoom(this.state.inputRoomId)
-
-			// this.props.rooms.map((room) => {
-			// 	if (room.id === this.state.inputRoomId) {
-			// 		 this.props.history.push(room.id)
-			// 	} else {
-			// 	this.setState({
-			// 		errorMsg: "Room does not exist"
-			// 	})
-			// }
-			// })
-		} else {
-			this.setState({
-				errorMsg: "Please enter a name"
-			})
-		}
 	};
+	handleClickJoinGameSession = () => {
+		this.handleRedirect(this.state.inputRoomId)
+		// if (this.state.username) {
+		// 	this.findRoom(this.state.inputRoomId)
 
-
+		// 	this.props.rooms.map((room) => {
+		// 		if (room.id === this.state.inputRoomId) {
+		// 			 this.props.history.push(room.id)
+		// 		} else {
+		// 		this.setState({
+		// 			errorMsg: "Room does not exist"
+		// 		})
+		// 	}
+		// 	})
+		// } else {
+		// 	this.setState({
+		// 		errorMsg: "Please enter a name"
+		// 	})
+	};
 	render(){
 		return(
+			// <div>
+			// 	<div className="input-top">
+			// 		<Input
+			// 			placeholder="Name"
+			// 			size="massive"
+			// 			onChange={this.handleChangeNameInput}
+			// 		/>
+			// 	</div>
 			<div>
 				<div className="input-top">
-					<Input
-						placeholder="Name"
-						size="massive"
-						onChange={this.handleChangeNameInput}
-					/>
-				</div>
-				<div className="input-bottom">
 					<Input
 						placeholder="Room ID"
 						size="massive"

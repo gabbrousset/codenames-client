@@ -87,29 +87,54 @@ io.on("connection", (socket) => {
 	// })
 
 	// Cuando un usuario se conecta al cuarto
-	socket.on('joined room', (id) => {
-		console.log('sockt join')
-		socket.join(id)
-		rooms.map((room) => {
-			if (room.id === id) {
-				socket.emit('update room', room);
+	socket.on('join room', (state) => {
+		console.log('sockt join', state.id)
+		socket.join(state.id)
+		console.log(rooms)
+		var i = rooms.findIndex(o => o.id === state.room.id);
+		if (rooms[i]) {
+				console.log('if')
+				socket.emit('joined room', rooms[i]);
+			} else {
+				 rooms.push(state.room)
+				console.log('else', state.room)				 
+				 socket.emit('joined room', state.room)
 			}
-		})
+		
+		// rooms.map((room) => {
+		// 		console.log('maps')			
+		// 	if (room.id === id) {
+		// 		console.log('si existio el cuarto',room)
+		// 		socket.emit('joined room', room);
+		// 	}
+		// })
 	})
 
 	// Cuando se crea un nuevo juego
 	socket.on('new game', (r)=> {
+		console.log('game update', r)		
 		var i = rooms.findIndex(o => o.id === r.id);
+			// console.log('new game >>>>', r)
 		if (rooms[i]) { rooms[i] = r} else { rooms.push(r)}
+			console.log('new game >>>>', r)
 			socket.broadcast.to(r.id).emit('update room', r)
+			console.log(rooms)
 	})
 	
 	socket.on('game update', (room)=> {
+		console.log('game update', room)
 		var i = rooms.findIndex(o => o.id === room.id);
 		if (rooms[i]) { rooms[i] = room} else { rooms.push(room)}
-			socket.broadcast.to(room.id).emit('update game', room.game)
+			console.log('room', room)
+			socket.broadcast.to(room.id).emit('update game', room)
 	})
-
+	socket.on('update user list', (room)=> {
+		// console.log('room', room)		
+		// console.log('user', user)
+		var i = rooms.findIndex(o => o.id === room.id);
+		if (rooms[i]) { rooms[i] = room} else { rooms.push(room)}
+			socket.broadcast.to(room.id).emit('update game', room)
+	})
 });
 const saveRoom = (room) => {
 	rooms.push(room)

@@ -1,23 +1,23 @@
-const findRoomById2 = (id) => {
-	let status; 
-	fetch('/room/'+id)
-		.then((res)=> {
-			// console.log(res)
-			status = res.status;
-			console.log('res');
-			console.log(res);				
-			return res.json()
-		})
-		.then((jsonData) => {
-			console.log('jsonData');
-			console.log(jsonData);
-			console.log('status');
-			console.log(status);
-		})
-		.catch((err) => {
-			console.error(err);
-		})
-}
+// const findRoomById2 = (id) => {
+// 	let status; 
+// 	fetch('/room/'+id)
+// 		.then((res)=> {
+// 			// console.log(res)
+// 			status = res.status;
+// 			console.log('res');
+// 			console.log(res);				
+// 			return res.json()
+// 		})
+// 		.then((jsonData) => {
+// 			console.log('jsonData');
+// 			console.log(jsonData);
+// 			console.log('status');
+// 			console.log(status);
+// 		})
+// 		.catch((err) => {
+// 			console.error(err);
+// 		})
+// }
 
 const findRoomById = (id) => {
 	return fetch('/room/'+id, {
