@@ -1,6 +1,6 @@
 import React, { Component } from "react";
 import { Button, Input } from "semantic-ui-react";
-import {findRoomById} from '../client'
+// import {findRoomById} from '../client'
 
 export default class JoinGame extends Component {
 	state={

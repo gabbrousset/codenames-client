@@ -166,8 +166,8 @@ class Room extends Component {
 			} else {
 				stateCopy.user.isSpymaster = true;
 				stateCopy.room[spyTeam] = this.state.user.userId;
-				var i = stateCopy.room.users.findIndex(o => o.userId === stateCopy.user.userId);
-				if (stateCopy.room.users[i]) { stateCopy.room.users[i] = stateCopy.user} else { stateCopy.room.users.push(stateCopy.user)}
+				var j = stateCopy.room.users.findIndex(o => o.userId === stateCopy.user.userId);
+				if (stateCopy.room.users[j]) { stateCopy.room.users[j] = stateCopy.user} else { stateCopy.room.users.push(stateCopy.user)}
 			}
 			return {...stateCopy};
 		}, ()=> socket.emit('update user list', this.state.room));
@@ -190,10 +190,8 @@ class Room extends Component {
 		return room;
 	};
 	splitTeams = (room) => {
-		console.log("splitTeams", room)		
 		const firstTeam = Math.random() <0.5 ? "blue" : "red";
 		const secondTeam = firstTeam === "blue" ? "red" : "blue";
-		console.log("splitTeams", room)
 		room.users.map((user, i) => {
 			user.team = i & 1 ? secondTeam : firstTeam;
 			user.isSpymaster = (i ===0 || i === 1)? true : false;
@@ -201,7 +199,6 @@ class Room extends Component {
 		room[firstTeam+"Spymaster"]=room.users[0];
 		room[secondTeam+"Spymaster"]=room.users[1];
 		this.setState({room}, ()=> socket.emit('update user list', this.state.room))
-		console.log("final", this.state)
 	};
 	handleJoinTeam = (team, name) => {
 		this.joinTeam(team, name);
@@ -302,7 +299,6 @@ class Room extends Component {
 
 	};
 	render(){
-		console.log("state", this.state);
 		if (this.state.showGame && this.state.room.game){
 			return(
 				<div>

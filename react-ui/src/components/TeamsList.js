@@ -4,7 +4,7 @@ export default class TeamsList extends Component {
 	addNameToItem = (user) => {
 		return (
 			<div className="item" key={user.userId}>
-			    {user.isSpymaster ? <img className="ui avatar image" src="/eye.png"/> : <img className="ui avatar image" src="/user.png"/>}
+			    {user.isSpymaster ? <img className="ui avatar image" src="/eye.png" alt="spyemaster"/> : <img className="ui avatar image" src="/user.png" alt="user"/>}
 				<div className="content">
 					{user.name}
 				</div>

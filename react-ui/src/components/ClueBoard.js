@@ -20,7 +20,7 @@ export default class ClueBoard extends Component {
 
 	render(){
 		return(
-		<div  className="boardGame">
+		<div  className="boardGame sixteen wide column">
 			  <div className="ui centered grid">
 			    {this.props.clues.map((clue) => (
 					<div className="eight wide mobile three wide tablet three wide computer column" key={clue.id}>

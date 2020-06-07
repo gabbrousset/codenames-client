@@ -3,6 +3,7 @@ import GameDashboard from "./GameDashboard";
 import ClueBoard from "./ClueBoard";
 import { Button } from "semantic-ui-react";
 import Confetti from 'react-dom-confetti';
+// import Lobby from "./Lobby";
 
 // let config = {
 // 	angle: "90",
@@ -36,12 +37,9 @@ export default class Game extends Component {
 
 	componentDidMount() {
 		let config = this.state.config;
-		console.log("winner", this.props.currentWinner);
 		if (this.props.user.team==="blue") {
-			console.log("blue");
 			config.colors = ['#154360', '#21618C', '#3498DB' ,'#58CCED', '#12261A0']
 		} else {
-			console.log("red");
 			config.colors = ['#8B0000', '#FA8072', '#FF0000', '#EA3C53', '#CD5C5C']
 		}
 		this.setState({config})
@@ -58,7 +56,6 @@ export default class Game extends Component {
 		}
 		return (
 			<div className="App">
-				<div className="container">
 					<GameDashboard
 						team={this.props.user.team}
 						turn={this.props.turn}
@@ -69,11 +66,13 @@ export default class Game extends Component {
 						spymasterView={this.props.spymasterView}
 					>
 					</GameDashboard>
-					<ClueBoard
-						spymasterView={this.props.spymasterView}
-						clues={this.props.clues}
-						onSelectClick={this.props.onSelectClick}
-					/>
+					<div className="ui grid game">
+						<ClueBoard
+							spymasterView={this.props.spymasterView}
+							clues={this.props.clues}
+							onSelectClick={this.props.onSelectClick}
+						/>
+					</div>
 					<Confetti active={ !this.props?.gameActive && (this.props.user.team === this.props.currentWinner)} config={ this.state.config }/>
 					<div className="bottomDashboard">
 						{button}
@@ -87,7 +86,6 @@ export default class Game extends Component {
 							Show Lobby
 						</Button>
 					</div>
-				</div>
 			</div>
 		)
 	}
