@@ -3,10 +3,15 @@
 	align-items: center;
 	display: flex;
 	flex-direction: column;
+	padding:  0px 10px;
+}
+.container {
+	display: flex;
+	align-items: center;
+	flex-direction: column;
 }
 .columnButtons {
 	height: 200px;
-	margin: 200px;
 	display: flex;
 	flex-direction: column;
 	flex-wrap: nowrap;
@@ -15,26 +20,19 @@
 	align-content: stretch;
 }
 .rowButtons {
-	padding: 500px;
-	margin: 50px;
+	max-width: 600px;
 	margin-top: 0px;
-	padding-top: 10px;
-	padding-bottom: 10px;
+	padding-top: 30px;
+	padding-bottom: 30px;
 	display: flex;
-	flex-direction: row;
-	flex-wrap: nowrap;
 	justify-content: space-around;
 	align-items: center;
-	align-content: stretch;
+    margin: 0 auto;	
 }
 .input-top {
-	margin-top: 200px;
+	margin-top: 20px;
 	display: flex;
-	flex-direction: row;
-	flex-wrap: nowrap;
-	justify-content: space-around;
-	align-items: center;
-	align-content: stretch;
+	justify-content: center;
 }
 .input-bottom {
 	margin-top: 20px;
@@ -46,28 +44,30 @@
 	align-content: stretch;
 }
 .boardGame {
-	padding: 50px;
-	padding-top: 10px;
-	width: 1200px;
+	padding-top: 50px;
+	max-width: 1200px;
 	margin: 0 auto;
 }
 .dashboard {
-	margin: 50px;
 	font-size: 17px;
 	display: flex;
 	justify-content: space-between;
 	align-items: baseline;
 	align-content: stretch;
-	width: 70%;
+    max-width: 1120px;
+    margin: 0 auto;	
+}
+.dashboardItems {
+	width: 200px;
+	text-align: center;
 }
 .bottomDashboard {
 	display: flex;
 	flex-direction: row;
-	flex-wrap: nowrap;
 	justify-content: space-around;
-	align-items: baseline;
-	align-content: stretch;
-	width: 430px;
+	padding-top: 50px;
+	max-width: 600px;
+	margin: 0 auto;
 }
 .clue {
 	height: 100px;
@@ -162,6 +162,7 @@
 	align-items: center;
 	align-content: center;
 	margin-top: 60px;
+	margin-bottom: 40px;
 	font-size: 40px;
 	font-weight: 600;
 }
@@ -185,51 +186,46 @@
 	align-content: stretch;
 }
 .teams {
+	max-width: 600px;
 	font-size: 20px;
 	display: flex;
-	flex-direction: row;
-	flex-wrap: nowrap;
 	justify-content: center;
-	align-items: stretch;
-	align-content: center;
+	margin: 0 auto;
+	padding-bottom: 40px;
 }
 .blueTitle {
-	border-style: solid;
-	border-color: black;
-	border-width: 2px;
-	border-right-width: 1px;
 	color: #0f80ff;
 	padding-top: 10px;
 	padding-bottom: 10px;
-	padding-right: 80px;
-	padding-left: 80px;
+	padding-right: 30px;
+	padding-left: 20px;
+	background: #f3f3f3;
 }
 .redTitle {
-	border-style: solid;
-	border-color: black;
-	border-width: 2px;
-	border-left-width: 1px;
 	color: #fd6666;
 	padding-top: 10px;
 	padding-bottom: 10px;
-	padding-right: 80px;
-	padding-left: 80px;
+	padding-right: 30px;
+	padding-left: 20px;
+	background: #eaeaea;
 }
 .blueTeam {
 	display: flex;
 	flex-direction: column;
 	flex-wrap: nowrap;
 	justify-content: flex-start;
-	align-items: center;
+	/*align-items: center;*/
 	align-content: stretch;
+	width: 50%;
 }
 .redTeam {
 	display: flex;
 	flex-direction: column;
 	flex-wrap: nowrap;
 	justify-content: flex-start;
-	align-items: center;
+	/*align-items: center;*/
 	align-content: stretch;
+	width: 50%;
 }
 .teamUsers {
 	display: flex;
@@ -240,21 +236,23 @@
 	align-content: stretch;
 }
 .joinTeamButtons {
-	height: 200px;
+	/*height: 200px;*/
 	margin: 0 auto;
-	width: 500px;	
 	display: flex;
 	flex-direction: row;
-	flex-wrap: nowrap;
-	justify-content: space-around;
-	align-items: center;
-	align-content: stretch;
+	max-width: 600px;
+	justify-content: center;
+	padding-top: 40px;
 }
 #nameLobby {
+	padding-top: 30px;
 	display: flex;
 	flex-direction: row;
 	flex-wrap: nowrap;
 	justify-content: center;
 	align-content: stretch;
 	margin: 0 auto;
+}
+.ui.middle.aligned.divided.list {
+    padding-left: 20px;
 }

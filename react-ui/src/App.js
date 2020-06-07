@@ -23,8 +23,8 @@ export default class App extends Component {
 		// console.log(this.state.rooms);
 		return (
 				<BrowserRouter>
-					<Header />
 					<div>
+						<Header />
 						<Route
 							exact path="/"
 							render={(props) => <LandingPage {...props} clickCreateGameSession={this.handleClickCreateGameSession} rooms={this.state.rooms}/>}
@@ -33,8 +33,8 @@ export default class App extends Component {
 							exact path="/:id"
 							render={(props)=> <Room {...props} room={this.state.room}  />}
 						/>
+						<Footer />					
 					</div>
-					<Footer />					
 				</BrowserRouter>
 		)
 	}

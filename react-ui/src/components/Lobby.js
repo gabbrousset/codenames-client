@@ -21,7 +21,7 @@ export default class Lobby extends Component {
 					<div className="rowButtons">
 						<Button
 							color="red"
-							size="massive"
+							size="big"
 							onClick={this.props.showGame}
 						>
 							Show Game
@@ -33,7 +33,7 @@ export default class Lobby extends Component {
 					<div className="rowButtons">
 						<Button
 							color="blue"
-							size="massive"
+							size="big"
 							onClick={this.props.openNewGame}
 						>
 							Start

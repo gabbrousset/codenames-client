@@ -26,9 +26,6 @@ export default class TeamsList extends Component {
 	// console.log("blueList", blueList)
 		return(
 			<div>
-				<span className="centerText">
-					Teams
-				</span>
 				<div className="teams">
 					<div className="blueTeam">
 						<span className="blueTitle">Blue Team</span>

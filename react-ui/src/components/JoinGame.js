@@ -53,7 +53,7 @@ export default class JoinGame extends Component {
 			// 			onChange={this.handleChangeNameInput}
 			// 		/>
 			// 	</div>
-			<div>
+			<div className="container">
 				<div className="input-top">
 					<Input
 						placeholder="Room ID"
