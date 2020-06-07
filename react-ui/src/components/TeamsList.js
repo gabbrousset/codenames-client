@@ -4,6 +4,7 @@ export default class TeamsList extends Component {
 	addNameToItem = (user) => {
 		return (
 			<div className="item" key={user.userId}>
+			    {user.isSpymaster ? <img className="ui avatar image" src="/eye.png"/> : <img className="ui avatar image" src="/user.png"/>}
 				<div className="content">
 					{user.name}
 				</div>
@@ -28,13 +29,23 @@ export default class TeamsList extends Component {
 			<div>
 				<div className="teams">
 					<div className="blueTeam">
-						<span className="blueTitle">Blue Team</span>
+						<span className="blueTitle">
+							Blue Team
+							<span className="teamWins">
+								{this.props.blueWins}
+							</span>
+						</span>
 						<div className="ui middle aligned divided list">
 							{blueList}
 						</div>
 					</div>
 					<div className="redTeam">
-						<span  className="redTitle">Red Team</span>
+						<span  className="redTitle">
+							Red Team
+							<span className="teamWins">
+								{this.props.redWins}
+							</span>
+						</span>
 						<div className="ui middle aligned divided list">
 							{redList}
 						</div>

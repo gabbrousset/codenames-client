@@ -28,8 +28,8 @@ class Room extends Component {
 		room: {
 			id: this.props.match.params.id,
 			users:[],
-			//redWin: 
-			//blueWin:2
+			redWins: 0,
+			blueWins: 0,
 			//timer: false
 			blueSpymaster: '',
 			redSpymaster: '',
@@ -43,6 +43,7 @@ class Room extends Component {
 	handleOpenNewGame = () => {
 		// this.openGame();
 		this.newGame();
+		this.openGame();
 	};
 	handleShowGame = () => {
 		this.openGame();
@@ -56,8 +57,12 @@ class Room extends Component {
 		this.openLobby();
 	};
 	openLobby = () => {
+		if (this.state.user.spymasterView) {
+			this.toggleVisibility();
+		}
 		this.setState({
 			showGame: false,
+			spymasterView: false,
 		})
 	};
 	// Imported from game
@@ -76,8 +81,13 @@ class Room extends Component {
 	handleEndGame = () => {
 		this.endGame(this.state.room);
 	};
-	endGame = (room) => {
+	endGame = (room, team) => {
 		this.toggleVisibility();
+		if (team) {
+			const teamWins = team + "Wins";
+			room[teamWins]++;
+			room.game.currentWinner = team;
+		}
 		room.game.gameActive = false
 		this.setState({room}, () => socket.emit('game update', this.state.room));
 	};
@@ -94,12 +104,12 @@ class Room extends Component {
 	reduceCount = (room, clueTeam) => {
 		const teamCount = clueTeam + "Count";
 		room.game[teamCount] = this.state.room.game[teamCount] -1;
-		this.setState({room},()=> this.shouldGameEnd(room,teamCount))
+		this.setState({room},()=> this.shouldGameEnd(room,teamCount, clueTeam))
 		this.setState({room}, () => socket.emit('game update', this.state.room));
 	};
-	shouldGameEnd = (room,teamCount) => {
+	shouldGameEnd = (room, teamCount, team) => {
 		if (room.game[teamCount]===0) {
-			this.endGame(room);
+			this.endGame(room, team);
 		}
 	};
 	handleSelectClick = (clueId, clueTeam, isAssassin) => {		
@@ -111,7 +121,9 @@ class Room extends Component {
 				this.reduceCount(room,clueTeam);
 			}	
 			if (isAssassin) {
-				this.endGame(room);
+				let team;
+				this.state.room.game.turn === "red" ? team = "blue" : team = "red";
+				this.endGame(room, team);
 			}
 			if (clueTeam !== this.state.room.game.turn) {
 				this.endTurn(room);
@@ -139,27 +151,57 @@ class Room extends Component {
 		this.setState({room});
 		// this.setState({game}, () => socket.emit('game update', this.state));
 	 };
-	 handleBecomeSpymaster = () => {
-		this.becomeSpymaster(this.state.user.team);
+	 handleToggleSpymaster = () => {
+		this.toggleSpymaster(this.state.user.team);
 	 };
-	 becomeSpymaster= (team) => {
+	 toggleSpymaster= (team) => {
 	 	const spyTeam = team + "Spymaster"
-	 	// if (!spyTeam) {
-			this.setState(prevState => {
-				let stateCopy = Object.assign({}, prevState); 
-				stateCopy.user.isSpymaster = true;
-				stateCopy.room[spyTeam] = this.state.user.userId
+		this.setState(prevState => {
+			let stateCopy = Object.assign({}, prevState); 
+			if (this.state.user.isSpymaster) {
+				stateCopy.user.isSpymaster = false;
+				stateCopy.room[spyTeam] = '';
 				var i = stateCopy.room.users.findIndex(o => o.userId === stateCopy.user.userId);
 				if (stateCopy.room.users[i]) { stateCopy.room.users[i] = stateCopy.user} else { stateCopy.room.users.push(stateCopy.user)}
-				return {...stateCopy};
-			}, ()=> socket.emit('update user list', this.state.room));
-	 	// }
+			} else {
+				stateCopy.user.isSpymaster = true;
+				stateCopy.room[spyTeam] = this.state.user.userId;
+				var i = stateCopy.room.users.findIndex(o => o.userId === stateCopy.user.userId);
+				if (stateCopy.room.users[i]) { stateCopy.room.users[i] = stateCopy.user} else { stateCopy.room.users.push(stateCopy.user)}
+			}
+			return {...stateCopy};
+		}, ()=> socket.emit('update user list', this.state.room));
 	 };
 	userId = () => {
 		const userId = createUserId()
 		localStorage.setItem('userId', userId)
 		localStorage.setItem('userIdSaved', "true")
 		return userId;
+	};
+	handleShuffleTeams = () => {
+		const room = this.state.room;
+		// console.log("handle", users)
+		this.splitTeams(this.shuffleTeams(room));
+	};
+	shuffleTeams = (room) => {
+		// console.log("shuffle team", users)
+		let users = room.users;
+		room.users = users.sort(() => 0.5 - Math.random());
+		return room;
+	};
+	splitTeams = (room) => {
+		console.log("splitTeams", room)		
+		const firstTeam = Math.random() <0.5 ? "blue" : "red";
+		const secondTeam = firstTeam === "blue" ? "red" : "blue";
+		console.log("splitTeams", room)
+		room.users.map((user, i) => {
+			user.team = i & 1 ? secondTeam : firstTeam;
+			user.isSpymaster = (i ===0 || i === 1)? true : false;
+		})
+		room[firstTeam+"Spymaster"]=room.users[0];
+		room[secondTeam+"Spymaster"]=room.users[1];
+		this.setState({room}, ()=> socket.emit('update user list', this.state.room))
+		console.log("final", this.state)
 	};
 	handleJoinTeam = (team, name) => {
 		this.joinTeam(team, name);
@@ -234,7 +276,6 @@ class Room extends Component {
 	};
 
 	componentDidMount(){
-
 		this.getUserFromLocalStorage();
 
 		socket.on('joined room', (room) => {
@@ -250,45 +291,66 @@ class Room extends Component {
 			this.setState({room})
 		})
 		socket.on('update game', (room) => {
-			this.setState({room})
+			let user = this.state.user
+			room.users.map((u)=> {
+				if (u.userId === user.userId){
+					user = u;
+				};
+			})
+			this.setState({user,room})
 		})
 
 	};
 	render(){
-		console.log("state", this.state)
+		console.log("state", this.state);
 		if (this.state.showGame && this.state.room.game){
 			return(
-				<Game
-					{...this.state.room.game}
-					user={this.state.user}
-					handleNewGame={this.handleNewGame}
-					endTurn={this.handleEndTurn}
-					spymasterView={this.state.spymasterView}
-					onSelectClick={this.handleSelectClick}
-					handleViewToggle={this.handleViewToggle}
-					handleBackLobby={this.handleBackLobby}
-					handleEndGame={this.handleEndGame}
-				>
-				</Game>
+				<div>
+					<div className="shareLink">
+						<span>Share this link to play with your friends: <a href="google.com">https://codename-online.herokuapp.com{this.props.history.location.pathname}</a></span>
+					</div>
+					<Game
+						{...this.state.room.game}
+						user={this.state.user}
+						handleNewGame={this.handleNewGame}
+						endTurn={this.handleEndTurn}
+						spymasterView={this.state.spymasterView}
+						onSelectClick={this.handleSelectClick}
+						handleViewToggle={this.handleViewToggle}
+						handleBackLobby={this.handleBackLobby}
+						handleEndGame={this.handleEndGame}
+						currentWinner={this.state.room.game.currentWinner}
+					>
+					</Game>
+				</div>
 			);
 		} else {
 			return(
-				<Lobby
-					room={this.state.room}
-					becomeSpymaster={this.handleBecomeSpymaster}
-					blueSpymaster={this.state.room.blueSpymaster}
-					redSpymaster={this.state.room.redSpymaster}
-					game={this.state.room.game}
-					users={this.state.room.users}
-					user={this.state.user}
-					showGame={this.handleShowGame}
-					openNewGame={this.handleOpenNewGame}
-					roomId={this.props.match.params.id}
-					joinTeam={this.handleJoinTeam}
-					switchTeam={this.handleSwitchTeam}
-					changeNameInput = {this.handleChangeNameInput}
-				>
-				</Lobby>
+				<div>
+					<div className="shareLink">
+						<span>Share this link to play with your friends: <a href={"https://codename-online.herokuapp.com"+this.props.history.location.pathname}>codename-online.herokuapp.com{this.props.history.location.pathname}</a></span>
+					</div>
+					<Lobby
+						shuffleTeams={this.handleShuffleTeams}
+						toggleSpymaster={this.handleToggleSpymaster}
+						history={this.props.history}
+						room={this.state.room}
+						blueSpymaster={this.state.room.blueSpymaster}
+						redSpymaster={this.state.room.redSpymaster}
+						game={this.state.room.game}
+						users={this.state.room.users}
+						user={this.state.user}
+						showGame={this.handleShowGame}
+						openNewGame={this.handleOpenNewGame}
+						roomId={this.props.match.params.id}
+						joinTeam={this.handleJoinTeam}
+						switchTeam={this.handleSwitchTeam}
+						changeNameInput = {this.handleChangeNameInput}
+						blueWins = {this.state.room.blueWins}
+						redWins = {this.state.room.redWins}
+					>
+					</Lobby>
+				</div>
 			);
 		}
 	}

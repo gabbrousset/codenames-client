@@ -3,7 +3,11 @@ import { Button } from "semantic-ui-react";
 import Teams from "./Teams";
 
 export default class Lobby extends Component {
-	
+	leaveRoom = () => {
+		 this.props.history.push({
+		 	pathname: '/',
+		 })
+	};
 	// update user name
 
 	// add user to users
@@ -34,6 +38,13 @@ export default class Lobby extends Component {
 						<Button
 							color="blue"
 							size="big"
+							onClick={this.props.shuffleTeams}
+						>
+							Shuffle
+						</Button>
+						<Button
+							color="blue"
+							size="big"
 							onClick={this.props.openNewGame}
 						>
 							Start
@@ -45,6 +56,7 @@ export default class Lobby extends Component {
 		return (
 			<div>
 				<Teams
+					toggleSpymaster={this.props.toggleSpymaster}
 					becomeSpymaster={this.props.becomeSpymaster}
 					blueSpymaster={this.props.blueSpymaster}
 					redSpymaster={this.props.redSpymaster}
@@ -54,8 +66,19 @@ export default class Lobby extends Component {
 					switchTeam={this.props.switchTeam}
 					changeNameInput ={this.props.changeNameInput}
 					game={this.props.room.game}
+					blueWins={this.props.blueWins}
+					redWins={this.props.redWins}
 				/>
 				{button}
+				<div className="rowButtons">
+					<Button
+						color="grey"
+						size="mini"
+						onClick={this.leaveRoom}
+					>
+						Leave Room
+					</Button>
+				</div>
 			</div>
 		)
 	}

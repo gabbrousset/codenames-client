@@ -1,5 +1,7 @@
 import uuid from "uuid";
-import words from "./words";
+import palabrasRandom from "./palabras";
+
+// import words from "./words";
 //import randomWords from "random-words";
 
 const generateRoomId = () => {
@@ -54,10 +56,11 @@ const decideFirstTurn = () => {
 	return Math.random() <0.5 ? "blue" : "red";
 }
 const createClues = (team, count, assassin, clues) => {
+	let palabras = palabrasRandom();
 	for(let i = 0; i < count; i++){
 		const clue = {
 			id: uuid.v4(),
-			title: words.shift(),
+			title: palabras.shift(),
 		}
 		if (assassin) {
 			clue.assassin = true;

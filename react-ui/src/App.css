@@ -54,11 +54,12 @@
 	justify-content: space-between;
 	align-items: baseline;
 	align-content: stretch;
+	width: 100%;
     max-width: 1120px;
     margin: 0 auto;	
 }
 .dashboardItems {
-	width: 200px;
+	max-width: 200px;
 	text-align: center;
 }
 .bottomDashboard {
@@ -120,6 +121,12 @@
 }
 .currentTurn {
 	text-transform: capitalize;
+}
+.shareLink {
+	font-size: 16px;
+	text-align: center;
+	padding-top: 10px;
+	padding-bottom: 40px;
 }
 .buyCoffeeHolder {
 	display: flex;
@@ -197,7 +204,7 @@
 	color: #0f80ff;
 	padding-top: 10px;
 	padding-bottom: 10px;
-	padding-right: 30px;
+	padding-right: 20px;
 	padding-left: 20px;
 	background: #f3f3f3;
 }
@@ -205,9 +212,13 @@
 	color: #fd6666;
 	padding-top: 10px;
 	padding-bottom: 10px;
-	padding-right: 30px;
+	padding-right: 20px;
 	padding-left: 20px;
 	background: #eaeaea;
+}
+.teamWins {
+	color: black;
+	padding-left: 30px;
 }
 .blueTeam {
 	display: flex;
@@ -254,5 +265,5 @@
 	margin: 0 auto;
 }
 .ui.middle.aligned.divided.list {
-    padding-left: 20px;
+    padding-left: 5px;
 }

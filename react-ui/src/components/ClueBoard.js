@@ -1,5 +1,4 @@
 import React, { Component } from "react";
-import { Grid } from "semantic-ui-react";
 import Clue from "./Clue";
 
 export default class ClueBoard extends Component {

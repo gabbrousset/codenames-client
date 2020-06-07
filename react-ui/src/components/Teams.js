@@ -33,8 +33,8 @@ export default class Teams extends Component {
 			changeName: true,
 		})
 	};
-	becomeSpymaster = () => {
-		this.props.becomeSpymaster();
+	toggleSpymaster = () => {
+		this.props.toggleSpymaster();
 	};
 	// teamSpymaster = () => {
 	// 	const teamSpy = this.props.user.team + "Spymaster";
@@ -47,8 +47,6 @@ export default class Teams extends Component {
 	render(){
 
 		const teamSpy = this.props.user.team + "Spymaster";
-		console.log('hank',this.props)
-		console.log('hank',this.props.room?.game?.gameActive)
 		let button;
 			if(this.props.user.team) {
 				if (this.state.changeName){
@@ -68,7 +66,9 @@ export default class Teams extends Component {
 								<Button color="grey" size="large" onClick={this.props.switchTeam} >Switch Team</Button>
 							</div>
 							<div>
-								<Button color={this.props.user.team} size="large" onClick={this.becomeSpymaster} disabled={this.props[teamSpy]} >Become Spymaster</Button>
+								<Button color={this.props.user.isSpymaster? 'grey' : this.props.user.team} size="large" onClick={this.toggleSpymaster} disabled={this.props[teamSpy] && !this.props.user.isSpymaster} >
+									{ this.props.user.isSpymaster ? 'User Role' : 'Spymaster Role' }
+								</Button>
 							</div>
 							<div>
 								<Button color="grey" size="large" onClick={this.openChangeName} >Change Name</Button>
@@ -95,6 +95,8 @@ export default class Teams extends Component {
 			<div>
 				<TeamsList
 					users = {this.props.users}
+					blueWins={this.props.blueWins}
+					redWins={this.props.redWins}
 				>
 				</TeamsList>
 				{button}
