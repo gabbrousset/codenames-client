@@ -23,7 +23,7 @@ export default class ClueBoard extends Component {
 		<div  className="boardGame sixteen wide column">
 			  <div className="ui centered grid">
 			    {this.props.clues.map((clue) => (
-					<div className="eight wide mobile three wide tablet three wide computer column" key={clue.id}>
+					<div className="three wide column" key={clue.id}>
 			     		<Clue
 			     			{...clue}
 			     			onSelectClick={this.props.onSelectClick}

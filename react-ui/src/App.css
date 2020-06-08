@@ -268,7 +268,10 @@
     padding-left: 5px;
 }
 .eight.wide.mobile.three.wide.tablet.three.wide.computer.column {
-    padding: 2px;
+	padding: 2px;
+}
+.three.wide.column{
+	padding: 2px !important;
 }
 .ui.grid.game {
     width: 100%;
