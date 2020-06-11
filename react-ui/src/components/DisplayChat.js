@@ -4,8 +4,9 @@ import uuid from "uuid";
 export default class DisplayChat extends Component {
 	formatMessage = (message) => {
 		return (
-			<div className={"messageText " + message.color} key={uuid.v4()}>
-				{message.name}: {message.message}
+			<div className="messageText " key={uuid.v4()}>
+				<span className={message.color}>{message.name}:</span>
+				<span> {message.message}</span>
 			</div>
 		);
 	}
