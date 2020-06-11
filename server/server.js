@@ -120,7 +120,6 @@ io.on("connection", (socket) => {
 			socket.broadcast.to(r.id).emit('update room', r)
 			console.log(rooms)
 	})
-	
 	socket.on('game update', (room)=> {
 		console.log('game update', room)
 		var i = rooms.findIndex(o => o.id === room.id);

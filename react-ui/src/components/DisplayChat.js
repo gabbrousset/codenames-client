@@ -15,6 +15,12 @@ export default class DisplayChat extends Component {
 					<span className={message.color+"Count"}>Clue:</span> {message.message}
 				</div>
 			);
+		} else if (message.type==="select clue") {
+			return(
+				<div className="messageText" key={uuid.v4()}>
+					<span className={message.color+"Count"}>{message.name}</span> clicked <span className={message.clueColor+"Count"}>{message.message}</span>
+				</div>
+			);
 		}
 	}
 	scrollToBottom = () => {

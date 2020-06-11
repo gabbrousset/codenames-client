@@ -72,7 +72,6 @@ class Room extends Component {
 	};
 	newGame = () => {
 		const gameInfo = newGame();
-
 		this.setState(prevState => {
 		  let room = Object.assign({}, prevState.room); 
 		  room.game = gameInfo;
@@ -92,7 +91,7 @@ class Room extends Component {
 		}
 		room.game.gameActive = false
 		room.game.spymasterClue=""
-		this.setState({room}, () => socket.emit('game update', this.state.room));
+		this.setState({room}, () => socket.emit('game update', room));
 	};
 	handleEndTurn = () => {
 		if (this.state.user.team===this.state.room.game.turn) {
@@ -104,7 +103,7 @@ class Room extends Component {
 		room.game.turn === "red" ? room.game.turn = "blue" : room.game.turn = "red"
 		room.game.spymasterClue=""
 		// this.setState({room})
-		this.setState({room}, () => socket.emit('game update', this.state.room));
+		this.setState({room}, () => socket.emit('game update', room));
 	};
 	reduceCount = (room, clueTeam) => {
 		const teamCount = clueTeam + "Count";
@@ -117,9 +116,20 @@ class Room extends Component {
 			this.endGame(room, team);
 		}
 	};
-	handleSelectClick = (clueId, clueTeam, isAssassin) => {		
+	clueName = (clueId, clueTeam) => {
+		let clueName;
+		const clues = this.state.room.game.clues;
+		clues.map((clue) => {
+			if (clue.id === clueId) {
+				clueName = clue.title
+			};
+		});
+		this.sendMessage("select clue", clueName, this.state.user.team, this.state.user.name, this.state.user.userId, clueTeam);
+	};
+	handleSelectClick = (clueId, clueTeam, isAssassin) => {
 		// Revisa si no eres spymaster
 		if (!this.state.user.isSpymaster && this.state.room.game.gameActive && this.state.user.team===this.state.room.game.turn) {
+			this.clueName(clueId, clueTeam)
 		// Entonces muestras la pista
 			const room = this.revealClue(clueId);
 			if(clueTeam) {
@@ -245,7 +255,7 @@ class Room extends Component {
 	handleSendMessage = (message) => {
 		this.sendMessage("message", message, this.state.user.team, this.state.user.name, this.state.user.userId);
 	};
-	sendMessage = (type, message, color, name, userId) => {
+	sendMessage = (type, message, color, name, userId, clueColor) => {
 		const text = {
 			type: type,
 			message: message,
@@ -253,6 +263,7 @@ class Room extends Component {
 			name: name,
 			userId: userId,
 			timestamp: Date.now(),
+			clueColor: clueColor,
 		}
 		socket.emit('send message', this.state.room.id, text);
 	};
