@@ -42,7 +42,8 @@ const newGame = () => {
 		clues: clues,
 		blueCount: blueCount,
 		redCount: redCount,
-		gameActive: true
+		gameActive: true,
+		spymasterClue: "",
 	}
 	return game;
 };

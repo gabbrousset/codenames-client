@@ -43,10 +43,17 @@
 	align-items: center;
 	align-content: stretch;
 }
-.boardGame {
+.boardGame{
 	padding-top: 50px;
 	max-width: 1200px;
 	margin: 0 auto;
+}
+.spymasterClue{
+	width: 450px;
+	margin-top: 30px;
+}
+.clueInput{
+	width: 100%;
 }
 .chat{
 	padding-top: 50px;

@@ -27,8 +27,8 @@ export default class Chat extends Component {
 				</div>
 				<div>
 					<form  onSubmit={this.handleSendMessage}  className="message ui action input">
-						<Input type="text" placeholder="Message" className="inputChat" onChange={this.handleChangeMessage} value={this.state.message}></Input>
-						<Button type="submit" className="ui button">Send</Button>
+						<Input type="text" placeholder="Message" className="inputChat" onChange={this.handleChangeMessage} value={this.state.message} disabled={!this.props.user.name}></Input>
+						<Button type="submit" className="ui button" disabled={!this.props.user.name} >Send</Button>
 					</form>
 				</div>
 			</div>

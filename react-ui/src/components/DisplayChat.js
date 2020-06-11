@@ -3,11 +3,19 @@ import uuid from "uuid";
 
 export default class DisplayChat extends Component {
 	formatMessage = (message) => {
-		return (
-			<div className="messageText " key={uuid.v4()}>
-				<span className={message.color+"Count"}>{message.name}:</span> {message.message}
-			</div>
-		);
+		if (message.type==="message") {
+			return(
+				<div className="messageText" key={uuid.v4()}>
+					<span className={message.color+"Count"}>{message.name}:</span> {message.message}
+				</div>
+			);
+		} else if (message.type==="spymasterClue") {
+			return(
+				<div className="messageText" key={uuid.v4()}>
+					<span className={message.color+"Count"}>Clue:</span> {message.message}
+				</div>
+			);
+		}
 	}
 	scrollToBottom = () => {
 		this.messagesEnd.scrollIntoView({ behavior: "smooth" });

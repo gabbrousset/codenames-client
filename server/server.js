@@ -138,6 +138,9 @@ io.on("connection", (socket) => {
 	socket.on('send message', (roomId, text)=> {
 		io.sockets.in(roomId).emit('receive message', text)
 	})
+	socket.on('send clue', (roomId, spymasterClue)=> {
+		io.sockets.in(roomId).emit('receive clue', spymasterClue)
+	})
 });
 const saveRoom = (room) => {
 	rooms.push(room)

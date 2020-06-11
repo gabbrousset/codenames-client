@@ -1,5 +1,6 @@
 import React, { Component } from "react";
 import GameDashboard from "./GameDashboard";
+import SpymasterClue from "./SpymasterClue"
 import ClueBoard from "./ClueBoard";
 import Chat from "./Chat";
 import { Button } from "semantic-ui-react";
@@ -34,8 +35,6 @@ export default class Game extends Component {
 			colors: ["#f00", "#00f"],
 		}
 	};
-
-
 	componentDidMount() {
 		let config = this.state.config;
 		if (this.props.user.team==="blue") {
@@ -67,6 +66,13 @@ export default class Game extends Component {
 						spymasterView={this.props.spymasterView}
 					>
 					</GameDashboard>
+					<SpymasterClue
+						user={this.props.user}
+						sendClue={this.props.sendClue}
+						spymasterClue={this.props.spymasterClue}
+						turn={this.props.turn}
+						gameActive={this.props.gameActive}
+					/>
 					<div className="ui grid game stackable">
 						<ClueBoard
 							spymasterView={this.props.spymasterView}
@@ -76,6 +82,7 @@ export default class Game extends Component {
 						<Chat
 							sendMessage={this.props.sendMessage}
 							messages={this.props.messages}
+							user={this.props.user}
 						>
 						</Chat>
 					</div>

@@ -80,7 +80,8 @@ class Room extends Component {
 		}, () => socket.emit("new game", this.state.room))
 	};
 	handleEndGame = () => {
-		this.endGame(this.state.room);
+		const room = this.state.room
+		this.endGame(room);
 	};
 	endGame = (room, team) => {
 		this.toggleVisibility();
@@ -90,15 +91,18 @@ class Room extends Component {
 			room.game.currentWinner = team;
 		}
 		room.game.gameActive = false
+		room.game.spymasterClue=""
 		this.setState({room}, () => socket.emit('game update', this.state.room));
 	};
 	handleEndTurn = () => {
 		if (this.state.user.team===this.state.room.game.turn) {
-			this.endTurn(this.state.room)
+			const room = this.state.room
+			this.endTurn(room)
 		}
 	};
 	endTurn = (room) => {
 		room.game.turn === "red" ? room.game.turn = "blue" : room.game.turn = "red"
+		room.game.spymasterClue=""
 		// this.setState({room})
 		this.setState({room}, () => socket.emit('game update', this.state.room));
 	};
@@ -227,6 +231,17 @@ class Room extends Component {
 		this.state.user.team === "blue" ? team = "red" :  team = "blue"
 		this.joinTeam(team, this.state.user.name);
 	};
+	handleSendClue = (clue) => {
+		this.sendClue(clue, this.state.user.team);
+		this.sendMessage("spymasterClue", clue, this.state.user.team, this.state.userId)
+	};
+	sendClue = (clue, color) => {
+		const spymasterClue = {
+			clue: clue,
+			color: color,
+		}
+		socket.emit('send clue', this.state.room.id, spymasterClue)
+	};
 	handleSendMessage = (message) => {
 		this.sendMessage("message", message, this.state.user.team, this.state.user.name, this.state.user.userId);
 	};
@@ -239,7 +254,6 @@ class Room extends Component {
 			userId: userId,
 			timestamp: Date.now(),
 		}
-		console.log(text);
 		socket.emit('send message', this.state.room.id, text);
 	};
 	handleChangeNameInput = (name) => {
@@ -316,12 +330,14 @@ class Room extends Component {
 				let room = Object.assign({}, prevState.room);
 				room.messages.push(text)
 				return { room };
+			  })
+		})
+		socket.on('receive clue', (spymasterClue) => {
+			this.setState(prevState => {
+				let room = Object.assign({}, prevState.room);
+				room.game.spymasterClue = spymasterClue;
+				return { room };
 			  }, () => console.log("state", this.state))
-			  
-			// this.setState(prevState => {
-			// 	let stateCopy = Object.assign({}, prevState);
-			// 	stateCopy.room.messages = this.state.room.messages.concat(text)
-			// }, () => console.log("state", this.state))
 		})
 	};
 	render(){
@@ -334,6 +350,8 @@ class Room extends Component {
 					<Game
 						{...this.state.room.game}
 						user={this.state.user}
+						sendClue={this.handleSendClue}
+						spymasterClue={this.state.room.game.spymasterClue}
 						messages={this.state.room.messages}
 						sendMessage={this.handleSendMessage}
 						handleNewGame={this.handleNewGame}
