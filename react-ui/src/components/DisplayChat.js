@@ -5,8 +5,7 @@ export default class DisplayChat extends Component {
 	formatMessage = (message) => {
 		return (
 			<div className="messageText " key={uuid.v4()}>
-				<span className={message.color}>{message.name}:</span>
-				<span> {message.message}</span>
+				<span className={message.color+"Count"}>{message.name}:</span> {message.message}
 			</div>
 		);
 	}
