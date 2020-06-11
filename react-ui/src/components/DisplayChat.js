@@ -1,6 +1,5 @@
 import React, { Component } from "react";
 import uuid from "uuid";
-import { Button, Input } from "semantic-ui-react";
 
 export default class DisplayChat extends Component {
 	formatMessage = (message) => {
@@ -10,6 +9,15 @@ export default class DisplayChat extends Component {
 			</div>
 		);
 	}
+	scrollToBottom = () => {
+		this.messagesEnd.scrollIntoView({ behavior: "smooth" });
+	}
+	componentDidMount() {
+		this.scrollToBottom();
+	}
+	componentDidUpdate() {
+		this.scrollToBottom();
+	}
 	render(){
 		let messages = [];
 		this.props.messages.map((message)=> {
@@ -18,6 +26,9 @@ export default class DisplayChat extends Component {
 		return(
 			<div className="chatWindow">
 				{messages}
+				<div style={{ float:"left", clear: "both" }}
+					ref={(el) => { this.messagesEnd = el; }}>
+				</div>
 			</div>
 		);
 	};

@@ -67,7 +67,7 @@ export default class Game extends Component {
 						spymasterView={this.props.spymasterView}
 					>
 					</GameDashboard>
-					<div className="ui grid game">
+					<div className="ui grid game stackable">
 						<ClueBoard
 							spymasterView={this.props.spymasterView}
 							clues={this.props.clues}
