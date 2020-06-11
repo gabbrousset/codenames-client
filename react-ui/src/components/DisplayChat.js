@@ -11,7 +11,6 @@ export default class DisplayChat extends Component {
 		);
 	}
 	render(){
-		console.log(this.props.messages)
 		let messages = [];
 		this.props.messages.map((message)=> {
 			messages.push(this.formatMessage(message))

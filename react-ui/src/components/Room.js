@@ -313,9 +313,15 @@ class Room extends Component {
 		})
 		socket.on('receive message', (text) => {
 			this.setState(prevState => {
-				let stateCopy = Object.assign({}, prevState);
-				stateCopy.room.messages = this.state.room.messages.concat(text)
-			}, () => console.log("state", this.state))
+				let room = Object.assign({}, prevState.room);
+				room.messages.push(text)
+				return { room };
+			  }, () => console.log("state", this.state))
+			  
+			// this.setState(prevState => {
+			// 	let stateCopy = Object.assign({}, prevState);
+			// 	stateCopy.room.messages = this.state.room.messages.concat(text)
+			// }, () => console.log("state", this.state))
 		})
 	};
 	render(){
