@@ -48,6 +48,33 @@
 	max-width: 1200px;
 	margin: 0 auto;
 }
+.chat{
+	padding-top: 50px;
+	margin: 0 auto;
+	max-width: 600px;
+	border: 1px solid #ddd;
+	box-shadow: 1px 3px 5px rgba(0,0,0,0.05);
+	border-radius: 2px;
+}
+.chatWindow{
+    height: 400px;
+    overflow: auto;
+    background: #f8f8f9;
+    border: 1px solid #ddd;
+	box-shadow: 1px 3px 5px rgba(0,0,0,0.05);
+	border-radius: 2px;
+/*	padding-top: 5px;*/
+}
+.messageText{
+	padding: 3px 10px;
+}
+.message{
+	width: 100%;
+	margin: 0 auto;
+}
+.inputChat{
+	width: 90%;
+}
 .dashboard {
 	font-size: 17px;
 	display: flex;
@@ -273,7 +300,10 @@
 .three.wide.column{
 	padding: 2px !important;
 }
-.ui.grid.game {
+.ui.grid.game{
     width: 100%;
-    margin-top: 1rem;
+    margin-top: 2rem;
+}
+.ui.message:first-child {
+	margin-top: 1em !important;
 }

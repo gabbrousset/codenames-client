@@ -5,7 +5,8 @@ import palabrasRandom from "./palabras";
 //import randomWords from "random-words";
 
 const generateRoomId = () => {
-	const roomId = getRandomInt(100, 1000) + "-" + getRandomInt(100, 1000)
+	// const roomId = getRandomInt(100, 1000) + "-" + getRandomInt(100, 1000)
+	const roomId = getRandomInt(100, 1000000).toString();
 	return roomId;
 }
 const getRandomInt = (min, max) => {

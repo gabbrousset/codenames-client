@@ -1,6 +1,7 @@
 import React, { Component } from "react";
 import GameDashboard from "./GameDashboard";
 import ClueBoard from "./ClueBoard";
+import Chat from "./Chat";
 import { Button } from "semantic-ui-react";
 import Confetti from 'react-dom-confetti';
 // import Lobby from "./Lobby";
@@ -72,6 +73,11 @@ export default class Game extends Component {
 							clues={this.props.clues}
 							onSelectClick={this.props.onSelectClick}
 						/>
+						<Chat
+							sendMessage={this.props.sendMessage}
+							messages={this.props.messages}
+						>
+						</Chat>
 					</div>
 					<Confetti active={ !this.props?.gameActive && (this.props.user.team === this.props.currentWinner)} config={ this.state.config }/>
 					<div className="bottomDashboard">

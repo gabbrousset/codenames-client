@@ -24,7 +24,8 @@ export default class JoinGame extends Component {
 		 	pathname: result,
 		 })
 	};
-	handleClickJoinGameSession = () => {
+	handleClickJoinGameSession = (e) => {
+		e.preventDefault();
 		this.handleRedirect(this.state.inputRoomId)
 		// if (this.state.username) {
 		// 	this.findRoom(this.state.inputRoomId)
@@ -54,32 +55,34 @@ export default class JoinGame extends Component {
 			// 		/>
 			// 	</div>
 			<div className="container">
-				<div className="input-top">
-					<Input
-						placeholder="Room ID"
-						size="massive"
-						onChange={this.handleChangeRoomInput}
-					/>
-				</div>
-				<div className="joinGameError">
-					{this.state.errorMsg ? <span>{this.state.errorMsg}</span> : '' }
-				</div>
-				<div className="rowButtons">
-					<Button
-						color="blue"
-						size="massive"
-						onClick={this.handleClickJoinGameSession}
-					>
-						Join
-					</Button>
-					<Button
-						color="grey"
-						size="massive"
-						onClick={this.props.clickLandingButtons}
-					>
-						Back
-					</Button>
-				</div>
+				<form onSubmit={this.handleClickJoinGameSession}>
+					<div className="input-top">
+						<Input
+							placeholder="Room ID"
+							size="massive"
+							onChange={this.handleChangeRoomInput}
+						/>
+					</div>
+					<div className="joinGameError">
+						{this.state.errorMsg ? <span>{this.state.errorMsg}</span> : '' }
+					</div>
+					<div className="rowButtons">
+						<Button
+							color="blue"
+							size="massive"
+							type="submit"
+						>
+							Join
+						</Button>
+						<Button
+							color="grey"
+							size="massive"
+							onClick={this.props.clickLandingButtons}
+						>
+							Back
+						</Button>
+					</div>
+				</form>
 			</div>
 		);
 	}

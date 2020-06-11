@@ -4,7 +4,7 @@ import TeamsList from "./TeamsList"
 
 export default class Teams extends Component {
 	state ={
-		name: '',
+		name: this.props.user.name,
 		changeName: false,
 	};
 	handleJoinBlue = () => {
@@ -22,7 +22,8 @@ export default class Teams extends Component {
 	handleChangeNameInput = (name) => {
 		this.setState({name: name.target.value})
 	};
-	handleSubmitNameInput = () => {
+	handleSubmitNameInput = (e) => {
+		e.preventDefault();
 		this.setState({
 			changeName: false,
 		})
@@ -52,9 +53,11 @@ export default class Teams extends Component {
 				if (this.state.changeName){
 				// change name (cuando ya tienes equipo)
 					button = (
-						<div className=" ui action input" id="nameLobby">
-				 			<Input type="text" placeholder="name" value={this.state.name} size="big" onChange={this.handleChangeNameInput} />
-				 			<Button className="ui button" onClick={this.handleSubmitNameInput} disabled={!this.state.name}>Submit</Button>
+						<div>
+							<form className=" ui action input" id="nameLobby" onSubmit={this.handleSubmitNameInput}>
+					 			<Input type="text" placeholder="Name" value={this.state.name} size="big" onChange={this.handleChangeNameInput} />
+					 			<Button  type="submit" className="ui button" disabled={!this.state.name}>Submit</Button>
+				 			</form>
 				 		</div>
 				 	);
 				} else {

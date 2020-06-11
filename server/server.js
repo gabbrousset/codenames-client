@@ -135,10 +135,16 @@ io.on("connection", (socket) => {
 		if (rooms[i]) { rooms[i] = room} else { rooms.push(room)}
 			socket.broadcast.to(room.id).emit('update game', room)
 	})
+	socket.on('send message', (roomId, text)=> {
+		io.sockets.in(roomId).emit('receive message', text)
+	})
 });
 const saveRoom = (room) => {
 	rooms.push(room)
 };
+// const addMessage = () => {
+	
+// };
 
 // const getApiAndEmit = socket => {
 // 	const response = new Date();

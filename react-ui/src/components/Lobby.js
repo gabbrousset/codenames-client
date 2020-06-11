@@ -8,15 +8,6 @@ export default class Lobby extends Component {
 		 	pathname: '/',
 		 })
 	};
-	// update user name
-
-	// add user to users
-		//  add user to team?
-
-// if ! this.state.user.name muestra input para nombre
-				// 	clickHandler, save user name
-				// Lista de usuarios con map, para mostrar el nombre, el color del equipo, y si es spymaster un icono
-
 	render(){
 		let button;
 		if (this.props.user.team) {

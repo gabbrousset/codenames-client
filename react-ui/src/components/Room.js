@@ -33,6 +33,7 @@ class Room extends Component {
 			//timer: false
 			blueSpymaster: '',
 			redSpymaster: '',
+			messages: [],
 		},
 		id: this.props.match.params.id,
 		showGame: true,
@@ -226,6 +227,21 @@ class Room extends Component {
 		this.state.user.team === "blue" ? team = "red" :  team = "blue"
 		this.joinTeam(team, this.state.user.name);
 	};
+	handleSendMessage = (message) => {
+		this.sendMessage("message", message, this.state.user.team, this.state.user.name, this.state.user.userId);
+	};
+	sendMessage = (type, message, color, name, userId) => {
+		const text = {
+			type: type,
+			message: message,
+			color: color,
+			name: name,
+			userId: userId,
+			timestamp: Date.now(),
+		}
+		console.log(text);
+		socket.emit('send message', this.state.room.id, text);
+	};
 	handleChangeNameInput = (name) => {
 		// this.changeNameInput(name)
 		this.joinTeam(this.state.user.team, name)
@@ -256,7 +272,6 @@ class Room extends Component {
 				u = user;
 			}
 		})
-
 		return u;
 	};
 
@@ -296,7 +311,12 @@ class Room extends Component {
 			})
 			this.setState({user,room})
 		})
-
+		socket.on('receive message', (text) => {
+			this.setState(prevState => {
+				let stateCopy = Object.assign({}, prevState);
+				stateCopy.room.messages = this.state.room.messages.concat(text)
+			}, () => console.log("state", this.state))
+		})
 	};
 	render(){
 		if (this.state.showGame && this.state.room.game){
@@ -308,6 +328,8 @@ class Room extends Component {
 					<Game
 						{...this.state.room.game}
 						user={this.state.user}
+						messages={this.state.room.messages}
+						sendMessage={this.handleSendMessage}
 						handleNewGame={this.handleNewGame}
 						endTurn={this.handleEndTurn}
 						spymasterView={this.state.spymasterView}
