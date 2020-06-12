@@ -48,9 +48,16 @@
 	max-width: 1200px;
 	margin: 0 auto;
 }
-.spymasterClue{
+.spymasterClueInput{
+	margin-top: -38.33px;
 	width: 450px;
-	margin-top: 30px;
+}
+.spymasterClue{
+	margin-top: -20px;
+	font-size: 17px;
+}
+.spymasterClueNothing{
+	margin-top: 68.33px;
 }
 .clueInput{
 	width: 100%;

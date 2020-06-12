@@ -18,9 +18,21 @@ export default class DisplayChat extends Component {
 		} else if (message.type==="select clue") {
 			return(
 				<div className="messageText" key={uuid.v4()}>
-					<span className={message.color+"Count"}>{message.name}</span> clicked <span className={message.clueColor+"Count"}>{message.message}</span>
+					<span className={message.color+"Count"}>{message.name}</span> <em>clicked</em> <span className={message.clueColor+"Count"}>{message.message}</span>
 				</div>
 			);
+		} else if (message.type==="end game") {
+			return(
+				<div className="messageText" key={uuid.v4()}>
+					<b><span className={message.color+"Count"}>{message.name}</span> ended the Game</b>
+				</div>
+			)
+		} else if (message.type==="end turn") {
+			return(
+				<div className="messageText" key={uuid.v4()}>
+					<span className={message.color+"Count"}>{message.name}</span><span> ended his team's turn</span>
+				</div>
+			)
 		}
 	}
 	scrollToBottom = () => {

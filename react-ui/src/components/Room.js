@@ -81,6 +81,7 @@ class Room extends Component {
 	handleEndGame = () => {
 		let room = this.state.room
 		this.endGame(room);
+		this.sendMessage("end game", "", this.state.user.team, this.state.user.name, this.state.user.userId);
 	};
 	endGame = (room, team) => {
 		room.game.gameActive = false;
@@ -100,6 +101,7 @@ class Room extends Component {
 			const room = this.state.room
 			this.endTurn(room)
 		}
+		this.sendMessage("end turn", "", this.state.user.team, this.state.user.name, this.state.user.userId);
 	};
 	endTurn = (room) => {
 		room.game.turn === "red" ? room.game.turn = "blue" : room.game.turn = "red"

@@ -23,12 +23,12 @@ export default class SpymasterClue extends Component {
 		let content;
 		 if (this.props.spymasterClue) {
 		 	content =
-			<div className="">
-				<span className={spymasterClue.color+"Count"}>Current clue: {spymasterClue.clue}</span>
+			<div className="spymasterClue">
+				<span className={spymasterClue.color+"Count"}>Current Clue: {spymasterClue.clue}</span>
 			</div>
 		} else if (this.props.user.isSpymaster && (this.props.user.team===this.props.turn) && this.props.gameActive) {
 			content =
-			<div className="spymasterClue">
+			<div className="spymasterClueInput">
 				<form  onSubmit={this.handleSendClue}  className="clueInput ui action input">
 					<Input type="text" placeholder="Message" className="inputChat" onChange={this.handleChangeClue} value={this.state.clue}></Input>
 					<Button type="submit" className="ui button">Send</Button>
@@ -36,7 +36,7 @@ export default class SpymasterClue extends Component {
 			</div>
 		}
 		return(
-			<div>
+			<div className="spymasterClueNothing">
 				{content}
 			</div>
 		);

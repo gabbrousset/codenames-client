@@ -46,11 +46,25 @@ export default class Game extends Component {
 	}
 
 	render(){
-		let button;
+		let spymasterButton;
 		if (this.props.user.isSpymaster) {
-			button = (
+			spymasterButton = (
 				<Button toggle active={this.props.spymasterView} onClick={this.props.handleViewToggle} disabled={!this.props.gameActive}>
 					Spymaster
+				</Button>
+			);
+		}
+		let button;
+		if (this.props.gameActive) {
+			button = (
+				<Button onClick={this.props.handleEndGame} disabled={!this.props.user.team} >
+					End Game
+				</Button>
+			);
+		} else {
+			button = (
+				<Button onClick={this.props.handleNewGame} disabled={!this.props.user.team} >
+					New Game
 				</Button>
 			);
 		}
@@ -88,13 +102,8 @@ export default class Game extends Component {
 					</div>
 					<Confetti active={ !this.props?.gameActive && (this.props.user.team === this.props.currentWinner)} config={ this.state.config }/>
 					<div className="bottomDashboard">
+						{spymasterButton}
 						{button}
-						<Button onClick={this.props.handleNewGame} disabled={!this.props.user.team} >
-							New Game
-						</Button>
-						<Button onClick={this.props.handleEndGame} disabled={!this.props.user.team} >
-							End Game
-						</Button>
 						<Button onClick={this.props.handleBackLobby} >
 							Show Lobby
 						</Button>
