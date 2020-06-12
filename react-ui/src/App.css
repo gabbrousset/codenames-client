@@ -76,6 +76,22 @@
 .messageText{
 	padding: 7px 15px;
 }
+.messageClue-blue{
+	background: #4696fe;
+	width: 170px;
+	margin: 10px auto;
+	color: white;
+	text-align: center;
+	border-radius: 25px;
+}
+.messageClue-red{
+	background: #fd6666;
+	width: 170px;
+	margin: 10px auto;
+	color: white;
+	text-align: center;
+	border-radius: 25px;
+}
 .message{
 	width: 100%;
 	margin: 0 auto;

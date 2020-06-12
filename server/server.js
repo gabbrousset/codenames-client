@@ -117,10 +117,10 @@ io.on("connection", (socket) => {
 			io.sockets.in(room.id).emit('game', room.game)
 			console.log(rooms)
 	})
-	socket.on('end game', (room, team)=> {
+	socket.on('end game', (room)=> {
 		var i = rooms.findIndex(o => o.id === room.id);
 		if (rooms[i]) { rooms[i] = room} else { rooms.push(room)}
-			io.sockets.in(room.id).emit('receive end game', team)
+			io.sockets.in(room.id).emit('receive end game', room.info, room.game)
 	})
 	socket.on('update user list', (room)=> {
 		var i = rooms.findIndex(o => o.id === room.id);

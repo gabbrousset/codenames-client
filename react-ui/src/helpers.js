@@ -62,7 +62,7 @@ const createClues = (team, count, assassin, clues) => {
 	for(let i = 0; i < count; i++){
 		const clue = {
 			id: uuid.v4(),
-			title: palabras.shift(),
+			title: palabras[i]
 		}
 		if (assassin) {
 			clue.assassin = true;

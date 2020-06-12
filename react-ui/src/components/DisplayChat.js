@@ -11,8 +11,8 @@ export default class DisplayChat extends Component {
 			);
 		} else if (message.type==="spymasterClue") {
 			return(
-				<div className="messageText" key={uuid.v4()}>
-					<span className={message.color+"Count"}>Clue:</span> {message.message}
+				<div className={"messageClue-" + message.color} key={uuid.v4()}>
+					{message.message}
 				</div>
 			);
 		} else if (message.type==="select clue") {
@@ -24,18 +24,17 @@ export default class DisplayChat extends Component {
 		}
 	}
 	scrollToBottom = () => {
-		this.messagesEnd.scrollIntoView({ behavior: "smooth" });
+		// this.messagesEnd.scrollIntoView({ behavior: "smooth" });
+		// this.messagesEnd.current.scrollTop = this.messagesEnd.current.scrollHeight;
 	}
 	componentDidMount() {
-		this.scrollToBottom();
-	}
-	componentDidUpdate() {
 		this.scrollToBottom();
 	}
 	render(){
 		let messages = [];
 		this.props.messages.map((message)=> {
-			messages.push(this.formatMessage(message))
+			messages.unshift(this.formatMessage(message))
+			// messages.push(this.formatMessage(message))
 		})
 		return(
 			<div className="chatWindow">

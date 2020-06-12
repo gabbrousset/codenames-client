@@ -28,11 +28,13 @@ class Room extends Component {
 		room: {
 			id: this.props.match.params.id,
 			users:[],
-			redWins: 0,
-			blueWins: 0,
+			info: {
+				redWins: 0,
+				blueWins: 0,
+				blueSpymaster: '',
+				redSpymaster: '',
+			},
 			//timer: false
-			blueSpymaster: '',
-			redSpymaster: '',
 			messages: [],
 		},
 		id: this.props.match.params.id,
@@ -77,11 +79,21 @@ class Room extends Component {
 		socket.emit("update game", room)
 	};
 	handleEndGame = () => {
-		const room = this.state.room
+		let room = this.state.room
 		this.endGame(room);
 	};
 	endGame = (room, team) => {
-		socket.emit('end game', room, team);
+		room.game.gameActive = false;
+		room.game.spymasterClue="";
+		room.game.clues.map((clue) => {
+			clue.visible = true;
+		})
+		if (team) {
+			const teamWins = team + "Wins";
+			room.info[teamWins]++;
+			room.game.currentWinner = team;
+		}
+		socket.emit('end game', room);
 	};
 	handleEndTurn = () => {
 		if (this.state.user.team===this.state.room.game.turn) {
@@ -166,12 +178,12 @@ class Room extends Component {
 			let stateCopy = Object.assign({}, prevState); 
 			if (this.state.user.isSpymaster) {
 				stateCopy.user.isSpymaster = false;
-				stateCopy.room[spyTeam] = '';
+				stateCopy.room.info[spyTeam] = '';
 				var i = stateCopy.room.users.findIndex(o => o.userId === stateCopy.user.userId);
 				if (stateCopy.room.users[i]) { stateCopy.room.users[i] = stateCopy.user} else { stateCopy.room.users.push(stateCopy.user)}
 			} else {
 				stateCopy.user.isSpymaster = true;
-				stateCopy.room[spyTeam] = this.state.user.userId;
+				stateCopy.room.info[spyTeam] = this.state.user.userId;
 				var j = stateCopy.room.users.findIndex(o => o.userId === stateCopy.user.userId);
 				if (stateCopy.room.users[j]) { stateCopy.room.users[j] = stateCopy.user} else { stateCopy.room.users.push(stateCopy.user)}
 			}
@@ -202,8 +214,8 @@ class Room extends Component {
 			user.team = i & 1 ? secondTeam : firstTeam;
 			user.isSpymaster = (i ===0 || i === 1)? true : false;
 		})
-		room[firstTeam+"Spymaster"]=room.users[0];
-		room[secondTeam+"Spymaster"]=room.users[1];
+		room.info[firstTeam+"Spymaster"]=room.users[0];
+		room.info[secondTeam+"Spymaster"]=room.users[1];
 		this.setState({room}, ()=> socket.emit('update user list', this.state.room))
 	};
 	handleJoinTeam = (team, name) => {
@@ -217,7 +229,7 @@ class Room extends Component {
 			stateCopy.user.name = name;
 			if (this.state.user.isSpymaster) {
 				stateCopy.user.isSpymaster=false;
-				stateCopy.room[spyTeam] = '';
+				stateCopy.room.info[spyTeam] = '';
 			}
 			var i = stateCopy.room.users.findIndex(o => o.userId === stateCopy.user.userId);
 			if (stateCopy.room.users[i]) { stateCopy.room.users[i] = stateCopy.user} else { stateCopy.room.users.push(stateCopy.user)}
@@ -262,7 +274,6 @@ class Room extends Component {
 		// this.changeNameInput(name)
 		this.joinTeam(this.state.user.team, name)
 	};
-
 	changeNameInput = (name) => {
 		// localStorage.setItem('name', name)
 		this.setState({
@@ -271,7 +282,13 @@ class Room extends Component {
 			})
 		}, ()=> socket.emit('update user list', this.state.room))
 	};
-
+	disableSpymasterView = () => {
+		this.setState(prevState => {
+			let stateCopy = Object.assign({}, prevState);
+			stateCopy.spymasterView = false;
+			return {...stateCopy};
+		})
+	};
 	getUserInfo = (userId, room) => {
 		let u = this.state.user;
 		room.users.map((user) => {
@@ -281,7 +298,6 @@ class Room extends Component {
 		})
 		return u;
 	};
-
 	getUserFromLocalStorage = () => {
 		const user = {
 			name: '',
@@ -312,17 +328,14 @@ class Room extends Component {
 				return { room };
 			})
 		})
-		socket.on('receive end game', (team) => {
-			let room = this.state.room
-			this.toggleVisibility();
-			if (team) {
-				const teamWins = team + "Wins";
-				room[teamWins]++;
-				room.game.currentWinner = team;
-			}
-			room.game.gameActive = false;
-			room.game.spymasterClue="";
-			this.setState({ room })
+		socket.on('receive end game', (info, game) => {
+			this.setState(prevState => {
+				let room = Object.assign({}, prevState.room);
+				room.game = game;
+				room.info = info;
+				return { room };
+			})
+			this.disableSpymasterView();
 		})
 		socket.on('room', (room) => {
 			let user = this.state.user
@@ -385,8 +398,8 @@ class Room extends Component {
 						toggleSpymaster={this.handleToggleSpymaster}
 						history={this.props.history}
 						room={this.state.room}
-						blueSpymaster={this.state.room.blueSpymaster}
-						redSpymaster={this.state.room.redSpymaster}
+						blueSpymaster={this.state.room.info.blueSpymaster}
+						redSpymaster={this.state.room.info.redSpymaster}
 						game={this.state.room.game}
 						users={this.state.room.users}
 						user={this.state.user}
@@ -396,8 +409,8 @@ class Room extends Component {
 						joinTeam={this.handleJoinTeam}
 						switchTeam={this.handleSwitchTeam}
 						changeNameInput = {this.handleChangeNameInput}
-						blueWins = {this.state.room.blueWins}
-						redWins = {this.state.room.redWins}
+						blueWins = {this.state.room.info.blueWins}
+						redWins = {this.state.room.info.redWins}
 					>
 					</Lobby>
 				</div>
