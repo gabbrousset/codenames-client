@@ -111,28 +111,21 @@ io.on("connection", (socket) => {
 	})
 
 	// Cuando se crea un nuevo juego
-	socket.on('new game', (r)=> {
-		console.log('game update', r)		
-		var i = rooms.findIndex(o => o.id === r.id);
-			// console.log('new game >>>>', r)
-		if (rooms[i]) { rooms[i] = r} else { rooms.push(r)}
-			console.log('new game >>>>', r)
-			socket.broadcast.to(r.id).emit('update room', r)
+	socket.on('update game', (room)=> {
+		var i = rooms.findIndex(o => o.id === room.id);
+		if (rooms[i]) { rooms[i] = room } else { rooms.push(room)}
+			io.sockets.in(room.id).emit('game', room.game)
 			console.log(rooms)
 	})
-	socket.on('game update', (room)=> {
-		console.log('game update', room)
+	socket.on('end game', (room, team)=> {
 		var i = rooms.findIndex(o => o.id === room.id);
 		if (rooms[i]) { rooms[i] = room} else { rooms.push(room)}
-			console.log('room', room)
-			socket.broadcast.to(room.id).emit('update game', room)
+			io.sockets.in(room.id).emit('receive end game', team)
 	})
 	socket.on('update user list', (room)=> {
-		// console.log('room', room)		
-		// console.log('user', user)
 		var i = rooms.findIndex(o => o.id === room.id);
 		if (rooms[i]) { rooms[i] = room} else { rooms.push(room)}
-			socket.broadcast.to(room.id).emit('update game', room)
+			io.sockets.in(room.id).emit('room', room)
 	})
 	socket.on('send message', (roomId, text)=> {
 		io.sockets.in(roomId).emit('receive message', text)
