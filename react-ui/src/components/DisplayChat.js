@@ -44,10 +44,12 @@ export default class DisplayChat extends Component {
 	}
 	render(){
 		let messages = [];
-		this.props.messages.map((message)=> {
-			messages.unshift(this.formatMessage(message))
-			// messages.push(this.formatMessage(message))
-		})
+		if (this.props.messages){
+			this.props.messages.map((message)=> {
+				messages.unshift(this.formatMessage(message))
+				// messages.push(this.formatMessage(message))
+			})
+		}
 		return(
 			<div className="chatWindow">
 				{messages}

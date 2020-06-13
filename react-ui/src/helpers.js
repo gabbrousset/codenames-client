@@ -29,12 +29,12 @@ const newGame = () => {
 	let blueCount = 8;
 	let redCount = 8;
 	firstTurn === "blue" ? blueCount++ : redCount++;
-
+	let words = palabrasRandom();
 	const clues = [];
-	createClues("blue",blueCount, false, clues);
-	createClues("red",redCount ,false, clues);
-	createClues(null, 1, true, clues);	
-	createClues(null, 7, false, clues);
+	createClues("blue",blueCount, false, clues, words);
+	createClues("red",redCount ,false, clues, words);
+	createClues(null, 1, true, clues, words);	
+	createClues(null, 7, false, clues, words);
 	shuffle(clues);
 
 	const game = {
@@ -57,13 +57,13 @@ function shuffle(array) {
 const decideFirstTurn = () => {
 	return Math.random() <0.5 ? "blue" : "red";
 }
-const createClues = (team, count, assassin, clues) => {
-	let palabras = palabrasRandom();
+const createClues = (team, count, assassin, clues, words) => {
 	for(let i = 0; i < count; i++){
 		const clue = {
 			id: uuid.v4(),
-			title: palabras[i]
+			title: words.shift()
 		}
+		console.log("palabras", words)
 		if (assassin) {
 			clue.assassin = true;
 		} else if (team) {
