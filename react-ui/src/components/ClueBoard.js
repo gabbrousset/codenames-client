@@ -20,19 +20,21 @@ export default class ClueBoard extends Component {
 
 	render(){
 		return(
-		<div className="boardGame twelve wide column">
-			  <div className="ui centered grid">
-			    {this.props.clues.map((clue) => (
-					<div className="three wide column" key={clue.id}>
-			     		<Clue
-			     			{...clue}
-			     			onSelectClick={this.props.onSelectClick}
-			     			spymasterView={this.props.spymasterView}
-			     		/>
-			     	</div>
-			    ))}
-			  </div>
-		 </div>
+			<div className="boardGame twelve wide column">
+				<div className="ui centered grid">
+					{this.props.clues &&
+						this.props.clues.map((clue) => (
+							<div className="three wide column" key={clue.id}>
+								<Clue
+						 			{...clue}
+						 			onSelectClick={this.props.onSelectClick}
+						 			spymasterView={this.props.spymasterView}
+						 		/>
+							</div>
+						))
+					}
+				</div>
+			</div>
 		);
 	}
 }

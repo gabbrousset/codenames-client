@@ -1,13 +1,19 @@
 import React, { Component } from "react";
+import ReactGA from 'react-ga';
 import "./App.css";
 import "semantic-ui-css/semantic.min.css";
-import { BrowserRouter, Route, } from "react-router-dom";
+import { BrowserRouter, Route, Router } from "react-router-dom";
+// import { createBrowserHistory } from 'history';
 import LandingPage from "./components/LandingPage";
 import Room from "./components/Room";
 import Footer from "./components/Footer";
 import Header from "./components/Header";
 import { createRoom } from './client';
 
+function initializeReactGA() {
+	ReactGA.initialize('UA-169288507-2');
+	ReactGA.pageview(window.location.pathname + window.location.search);
+}
 
 export default class App extends Component {
 	state={
