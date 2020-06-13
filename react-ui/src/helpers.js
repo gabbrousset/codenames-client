@@ -63,7 +63,6 @@ const createClues = (team, count, assassin, clues, words) => {
 			id: uuid.v4(),
 			title: words.shift()
 		}
-		console.log("palabras", words)
 		if (assassin) {
 			clue.assassin = true;
 		} else if (team) {

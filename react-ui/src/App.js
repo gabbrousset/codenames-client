@@ -10,10 +10,8 @@ import Footer from "./components/Footer";
 import Header from "./components/Header";
 import { createRoom } from './client';
 
-function initializeReactGA() {
-	ReactGA.initialize('UA-169288507-2');
-	ReactGA.pageview(window.location.pathname + window.location.search);
-}
+ReactGA.initialize('UA-169288507-2');
+ReactGA.pageview(window.location.pathname + window.location.search);
 
 export default class App extends Component {
 	state={

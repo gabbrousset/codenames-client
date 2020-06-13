@@ -15,11 +15,9 @@ export default class SpymasterClue extends Component {
 			clue: "",
 		})
 		this.props.sendClue(clue);
-		console.log(clue)
 	};
 	render(){
 		let spymasterClue = this.props.spymasterClue;
-		console.log(this.props)
 		let content;
 		 if (this.props.spymasterClue) {
 		 	content =
