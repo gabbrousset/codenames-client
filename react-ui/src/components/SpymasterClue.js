@@ -44,9 +44,10 @@ export default class SpymasterClue extends Component {
 							value={this.state.selectValue} 
 							onChange={this.handleChange}
 						>
+							<option value="">#</option>
 							{options}
 					</select>
-					<Button type="submit" className="ui button" disabled={!this.state.clue}>Send</Button>
+					<Button type="submit" className="ui button" disabled={!this.state.clue || !this.state.selectValue}>Send</Button>
 				</form>
 			</div>
 		}

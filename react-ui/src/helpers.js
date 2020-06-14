@@ -44,6 +44,7 @@ const newGame = () => {
 		redCount: redCount,
 		gameActive: true,
 		spymasterClue: "",
+		selectedCluesCount: 0,
 	}
 	return game;
 };

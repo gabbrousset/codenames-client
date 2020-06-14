@@ -15,8 +15,6 @@ if (!process.env.NODE_ENV || process.env.NODE_ENV === 'development') {
 }
 const socket = socketIOClient(ENDPOINT);
 
-
-
 class Room extends Component {
 	state={
 		user: {
@@ -86,6 +84,7 @@ class Room extends Component {
 	endGame = (room, team) => {
 		room.game.gameActive = false;
 		room.game.spymasterClue="";
+		room.game.selectedCluesCount=0;
 		room.game.clues.map((clue) => {
 			clue.visible = true;
 		})
@@ -104,24 +103,27 @@ class Room extends Component {
 		this.sendMessage("end turn", "", "", this.state.user.team, this.state.user.name, this.state.user.userId);
 	};
 	endTurn = (room) => {
-		room.game.turn === "red" ? room.game.turn = "blue" : room.game.turn = "red"
-		room.game.spymasterClue=""
-		// this.setState({room})
+		room.game.turn === "red" ? room.game.turn = "blue" : room.game.turn = "red";
+		room.game.spymasterClue="";
+		room.game.selectedCluesCount=0;
 		socket.emit('update game', room);
 	};
 	reduceCount = (room, clueTeam) => {
 		const teamCount = clueTeam + "Count";
 		room.game[teamCount] = this.state.room.game[teamCount] -1;
-		socket.emit('update game', this.state.room);
-		this.shouldGameEnd(room, teamCount, clueTeam)
-
+		room.game.selectedCluesCount++;
+		this.shouldEnd(room, teamCount, clueTeam);
 	};
-	shouldGameEnd = (room, teamCount, team) => {
+	shouldEnd = (room, teamCount, team) => {
 		if (room.game[teamCount]===0) {
 			this.endGame(room, team);
+		} else if (this.state.room.game.selectedCluesCount===(parseInt(this.state.room.game.spymasterClue.number, 10)+1)) {
+			this.endTurn(room)
+		}else {
+			socket.emit('update game', room);
 		}
 	};
-	clueName = (clueId, clueTeam) => {
+	clueName = (clueId, clueTeam, isAssassin) => {
 		let clueName;
 		const clues = this.state.room.game.clues;
 		clues.map((clue) => {
@@ -129,25 +131,25 @@ class Room extends Component {
 				clueName = clue.title
 			};
 		});
-		this.sendMessage("select clue", clueName, "", this.state.user.team, this.state.user.name, this.state.user.userId, clueTeam);
+		this.sendMessage("select clue", clueName, "", this.state.user.team, this.state.user.name, this.state.user.userId, clueTeam, isAssassin);
 	};
 	handleSelectClick = (clueId, clueTeam, isAssassin) => {
 		// Revisa si no eres spymaster
 		if (!this.state.user.isSpymaster && this.state.room.game.gameActive && this.state.user.team===this.state.room.game.turn) {
-			this.clueName(clueId, clueTeam)
-		// Entonces muestras la pista
+			this.clueName(clueId, clueTeam, isAssassin)
+			// Entonces muestras la pista
 			const room = this.revealClue(clueId);
-			if(clueTeam) {
-				this.reduceCount(room,clueTeam);
+			if(clueTeam===this.state.user.team) {
+				this.reduceCount(room, clueTeam);
 			}	
-			if (isAssassin) {
+			else if (isAssassin) {
 				let team;
 				this.state.room.game.turn === "red" ? team = "blue" : team = "red";
 				this.endGame(room, team);
 			}
-			if (clueTeam !== this.state.room.game.turn) {
+			else if (clueTeam !== this.state.room.game.turn) {
 				this.endTurn(room);
-			}			
+			}	
 		}
 	};
 	revealClue = (clueId) => {
@@ -248,7 +250,7 @@ class Room extends Component {
 	};
 	handleSendClue = (clue, number) => {
 		this.sendClue(clue, number, this.state.user.team);
-		this.sendMessage("spymasterClue", clue, number, this.state.user.team, this.state.userId)
+		this.sendMessage("spymasterClue", clue, number, this.state.user.team, this.state.userId);
 	};
 	sendClue = (clue, number, color) => {
 		const spymasterClue = {
@@ -261,7 +263,7 @@ class Room extends Component {
 	handleSendMessage = (message) => {
 		this.sendMessage("message", message, "", this.state.user.team, this.state.user.name, this.state.user.userId);
 	};
-	sendMessage = (type, message, number, color, name, userId, clueColor) => {
+	sendMessage = (type, message, number, color, name, userId, clueColor, isAssassin) => {
 		const text = {
 			type: type,
 			message: message,
@@ -271,6 +273,7 @@ class Room extends Component {
 			userId: userId,
 			timestamp: Date.now(),
 			clueColor: clueColor,
+			isAssassin: isAssassin,
 		}
 		socket.emit('send message', this.state.room.id, text);
 	};
@@ -362,7 +365,7 @@ class Room extends Component {
 				let room = Object.assign({}, prevState.room);
 				room.game.spymasterClue = spymasterClue;
 				return { room };
-			  }, () => console.log("state", this.state))
+			})
 		})
 	};
 	render(){
