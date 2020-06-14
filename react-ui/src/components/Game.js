@@ -86,6 +86,7 @@ export default class Game extends Component {
 						spymasterClue={this.props.spymasterClue}
 						turn={this.props.turn}
 						gameActive={this.props.gameActive}
+						teamCount={this.props.teamCount}
 					/>
 					<div className="ui grid game stackable">
 						<ClueBoard

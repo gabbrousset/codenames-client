@@ -4,6 +4,7 @@ import { Button, Input } from "semantic-ui-react";
 export default class SpymasterClue extends Component {
 	state={
 		clue: "",
+		selectValue: "",
 	};
 	handleChangeClue = (clue) => {
 		this.setState({clue: clue.target.value})
@@ -11,25 +12,41 @@ export default class SpymasterClue extends Component {
 	handleSendClue = (e) => {
 		e.preventDefault();
 		const clue = this.state.clue;
+		const number = this.state.selectValue;
 		this.setState({
 			clue: "",
+			selectValue: "",
 		})
-		this.props.sendClue(clue);
+		this.props.sendClue(clue, number);
 	};
+	handleChange = (e) => {
+		this.setState({selectValue: e.target.value})
+	}
 	render(){
 		let spymasterClue = this.props.spymasterClue;
 		let content;
-		 if (this.props.spymasterClue) {
+		let options = [];
+		for(let i = 1; i < (this.props.teamCount + 1); i++){
+			options.push(<option value={i}>{i}</option>)
+		}
+		if (this.props.spymasterClue) {
 		 	content =
 			<div className="spymasterClue">
-				<span className={spymasterClue.color+"Count"}>Current Clue: {spymasterClue.clue}</span>
+				<span className={spymasterClue.color+"Count"}>Current Clue: {spymasterClue.clue} {spymasterClue.number}</span>
 			</div>
 		} else if (this.props.user.isSpymaster && (this.props.user.team===this.props.turn) && this.props.gameActive) {
 			content =
 			<div className="spymasterClueInput">
 				<form  onSubmit={this.handleSendClue}  className="clueInput ui action input">
 					<Input type="text" placeholder="Message" className="inputChat" onChange={this.handleChangeClue} value={this.state.clue}></Input>
-					<Button type="submit" className="ui button">Send</Button>
+						<select
+							class="ui compact selection dropdown"
+							value={this.state.selectValue} 
+							onChange={this.handleChange}
+						>
+							{options}
+					</select>
+					<Button type="submit" className="ui button" disabled={!this.state.clue}>Send</Button>
 				</form>
 			</div>
 		}

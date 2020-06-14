@@ -12,7 +12,7 @@ export default class DisplayChat extends Component {
 		} else if (message.type==="spymasterClue") {
 			return(
 				<div className={"messageClue-" + message.color} key={uuid.v4()}>
-					{message.message}
+					<span>{message.message} {message.number}</span>
 				</div>
 			);
 		} else if (message.type==="select clue") {

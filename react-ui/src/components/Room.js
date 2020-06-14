@@ -81,7 +81,7 @@ class Room extends Component {
 	handleEndGame = () => {
 		let room = this.state.room
 		this.endGame(room);
-		this.sendMessage("end game", "", this.state.user.team, this.state.user.name, this.state.user.userId);
+		this.sendMessage("end game", "", "", this.state.user.team, this.state.user.name, this.state.user.userId);
 	};
 	endGame = (room, team) => {
 		room.game.gameActive = false;
@@ -101,7 +101,7 @@ class Room extends Component {
 			const room = this.state.room
 			this.endTurn(room)
 		}
-		this.sendMessage("end turn", "", this.state.user.team, this.state.user.name, this.state.user.userId);
+		this.sendMessage("end turn", "", "", this.state.user.team, this.state.user.name, this.state.user.userId);
 	};
 	endTurn = (room) => {
 		room.game.turn === "red" ? room.game.turn = "blue" : room.game.turn = "red"
@@ -129,7 +129,7 @@ class Room extends Component {
 				clueName = clue.title
 			};
 		});
-		this.sendMessage("select clue", clueName, this.state.user.team, this.state.user.name, this.state.user.userId, clueTeam);
+		this.sendMessage("select clue", clueName, "", this.state.user.team, this.state.user.name, this.state.user.userId, clueTeam);
 	};
 	handleSelectClick = (clueId, clueTeam, isAssassin) => {
 		// Revisa si no eres spymaster
@@ -246,24 +246,26 @@ class Room extends Component {
 		this.state.user.team === "blue" ? team = "red" :  team = "blue"
 		this.joinTeam(team, this.state.user.name);
 	};
-	handleSendClue = (clue) => {
-		this.sendClue(clue, this.state.user.team);
-		this.sendMessage("spymasterClue", clue, this.state.user.team, this.state.userId)
+	handleSendClue = (clue, number) => {
+		this.sendClue(clue, number, this.state.user.team);
+		this.sendMessage("spymasterClue", clue, number, this.state.user.team, this.state.userId)
 	};
-	sendClue = (clue, color) => {
+	sendClue = (clue, number, color) => {
 		const spymasterClue = {
 			clue: clue,
+			number: number,
 			color: color,
 		}
 		socket.emit('send clue', this.state.room.id, spymasterClue)
 	};
 	handleSendMessage = (message) => {
-		this.sendMessage("message", message, this.state.user.team, this.state.user.name, this.state.user.userId);
+		this.sendMessage("message", message, "", this.state.user.team, this.state.user.name, this.state.user.userId);
 	};
-	sendMessage = (type, message, color, name, userId, clueColor) => {
+	sendMessage = (type, message, number, color, name, userId, clueColor) => {
 		const text = {
 			type: type,
 			message: message,
+			number: number,
 			color: color,
 			name: name,
 			userId: userId,
@@ -364,6 +366,7 @@ class Room extends Component {
 		})
 	};
 	render(){
+		let teamCount = this.state.user.team + "Count";
 		if (this.state.showGame && this.state.room.game){
 			return(
 				<div>
@@ -385,6 +388,7 @@ class Room extends Component {
 						handleBackLobby={this.handleBackLobby}
 						handleEndGame={this.handleEndGame}
 						currentWinner={this.state.room.game.currentWinner}
+						teamCount={this.state.room.game[teamCount]}
 					>
 					</Game>
 				</div>

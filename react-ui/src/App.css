@@ -335,6 +335,13 @@
     width: 100%;
     margin-top: 2rem;
 }
-.ui.message:first-child {
+.ui.message:first-child{
 	margin-top: 1em !important;
+}
+.ui.input>input{
+	border-top-right-radius: 0 !important;
+	border-bottom-right-radius: 0 !important;
+}
+.ui.selection.dropdown{
+	min-width: 78px !important;
 }
