@@ -49,7 +49,7 @@ export default class DisplayChat extends Component {
 				case "end turn":
 					return(
 						<div className="messageText messageLog" key={uuid.v4()}>
-							<span className={message.color+"Count"}>{message.name}</span><span> ended his team's turn</span>
+							<span className={message.color+"Count"}>{message.name}</span><span> ended its team's turn</span>
 						</div>
 					)
 					break;

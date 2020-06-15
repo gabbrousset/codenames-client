@@ -139,15 +139,15 @@ class Room extends Component {
 			this.clueName(clueId, clueTeam, isAssassin)
 			// Entonces muestras la pista
 			const room = this.revealClue(clueId);
-			if(clueTeam===this.state.user.team) {
+			if(clueTeam) {
 				this.reduceCount(room, clueTeam);
 			}
-			else if (isAssassin) {
+			if (isAssassin) {
 				let team;
 				this.state.room.game.turn === "red" ? team = "blue" : team = "red";
 				this.endGame(room, team);
 			}
-			else if (clueTeam !== this.state.room.game.turn) {
+			if (clueTeam !== this.state.room.game.turn) {
 				this.endTurn(room);
 			}	
 		}
