@@ -141,7 +141,7 @@ class Room extends Component {
 			const room = this.revealClue(clueId);
 			if(clueTeam===this.state.user.team) {
 				this.reduceCount(room, clueTeam);
-			}	
+			}
 			else if (isAssassin) {
 				let team;
 				this.state.room.game.turn === "red" ? team = "blue" : team = "red";

@@ -23,14 +23,14 @@ export default class DisplayChat extends Component {
 						return(
 							<div>
 								<div class="ui clearing divider"></div>
-								<div className="messageText" key={uuid.v4()}>
+								<div className="messageText messageLog" key={uuid.v4()}>
 									<b><span className={message.color+"Count"}>{message.name}</span> <em>clicked</em> <span className={message.clueColor+"Count"}>{message.message} and lost the game</span></b>
 								</div>
 							</div>
 						)
 					} else {
 						return(
-							<div className="messageText" key={uuid.v4()}>
+							<div className="messageText messageLog" key={uuid.v4()}>
 								<span className={message.color+"Count"}>{message.name}</span> <em>clicked</em> <span className={message.clueColor+"Count"}>{message.message}</span>
 							</div>
 						);
@@ -40,7 +40,7 @@ export default class DisplayChat extends Component {
 					return(
 						<div>
 							<div class="ui divider"></div>
-							<div className="messageText" key={uuid.v4()}>
+							<div className="messageText messageLog" key={uuid.v4()}>
 								<b><span className={message.color+"Count"}>{message.name}</span> ended the Game</b>
 							</div>
 						</div>
@@ -48,7 +48,7 @@ export default class DisplayChat extends Component {
 					break;
 				case "end turn":
 					return(
-						<div className="messageText" key={uuid.v4()}>
+						<div className="messageText messageLog" key={uuid.v4()}>
 							<span className={message.color+"Count"}>{message.name}</span><span> ended his team's turn</span>
 						</div>
 					)

@@ -82,6 +82,9 @@
 }
 .messageText{
 	padding: 7px 15px;
+	text-align: left;
+	color: #444444;
+	font-size: 17px;
 }
 .messageClue-blue{
 	background: #4696fe;
@@ -102,6 +105,12 @@
 .message{
 	width: 100%;
 	margin: 0 auto;
+}
+.messageLog{
+	text-align: center;
+	color: #8e8e8e;
+	font-weight: 200;
+	font-size: 15px;
 }
 .inputChat{
 	width: 90%;
