@@ -2,6 +2,15 @@ import React, { Component } from "react";
 import TeamToggleComponent from "./TeamToggleComponent"
 
 export default class TeamsPanel extends Component {
+	handleJoinBlue = (name) => {
+		this.joinTeam("blue", name)
+	};
+	handleJoinRed = (name) => {
+		this.joinTeam("red", name)
+	};
+	joinTeam = (team, name) => {
+		this.props.joinTeam(team, name);
+	};
 	render(){
 		let blueUsers = [];
 		let redUsers = [];
@@ -28,8 +37,11 @@ export default class TeamsPanel extends Component {
 						teamUsers={blueUsers}
 						gameActive={this.props.gameActive}
 						changeNameInput ={this.props.changeNameInput}
+						toggleSpymaster={this.props.toggleSpymaster}
+						joinTeam={this.handleJoinBlue}
 						switchTeam={this.props.switchTeam}
 						teamCount={this.props.blueCount}
+						teamSpymaster={this.props.blueSpymaster}
 						team="blue"
 					>
 					</TeamToggleComponent>
@@ -48,8 +60,11 @@ export default class TeamsPanel extends Component {
 						teamUsers={redUsers}
 						gameActive={this.props.gameActive}
 						changeNameInput ={this.props.changeNameInput}
+						toggleSpymaster={this.props.toggleSpymaster}
+						joinTeam={this.handleJoinRed}
 						switchTeam={this.props.switchTeam}
 						teamCount={this.props.redCount}
+						teamSpymaster={this.props.redSpymaster}
 						team="red"
 					>
 					</TeamToggleComponent>

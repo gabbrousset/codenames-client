@@ -43,20 +43,24 @@
 	align-items: center;
 	align-content: stretch;
 }
+.clueBoard{
+	margin: 0 auto !important;
+}
 .boardGame{
-	padding-top: 50px;
 	max-width: 1200px;
+	border-style: solid;
+}
+.dashboardSpymaster{
+	display: flex;
+	justify-content: center;
+	flex: 1 1 10px;
+	height: 45px;
 }
 .spymasterClueInput{
-	margin-top: -38.33px;
 	width: 450px;
 }
 .spymasterClue{
-	margin-top: -20px;
 	font-size: 17px;
-}
-.spymasterClueNothing{
-	margin-top: 68.33px;
 }
 .clueInput{
 	width: 100%;
@@ -128,16 +132,15 @@
 .dashboard{
 	font-size: 17px;
 	display: flex;
-	justify-content: space-between;
-	align-items: baseline;
-	align-content: stretch;
+	align-items: center;
+	justify-content: flex-end;
 	width: 100%;
-    max-width: 1120px;
     margin: 0 auto;	
+    padding: 10px 2px;
 }
 .dashboardItems{
-	max-width: 200px;
 	text-align: center;
+	position: absolute;
 }
 .bottomDashboard{
 	display: flex;
@@ -307,6 +310,7 @@
 }
 .content{
 	font-size: 20px;
+	width: auto !important;
 }
 .blueTeam{
 	display: flex;
@@ -382,6 +386,7 @@
     width: 100%;
     margin-top: 2rem;
     justify-content: space-around;
+    border-style: solid;
 }
 .ui.message:first-child{
 	margin-top: 1em !important;
@@ -391,5 +396,6 @@
 	border-bottom-right-radius: 0 !important;
 }
 .ui.selection.dropdown{
-	min-width: 78px !important;
+	min-width: 60px !important;
+	padding: 0px 10px !important;
 }

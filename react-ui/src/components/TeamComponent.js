@@ -22,11 +22,14 @@ export default class TeamComponent extends Component {
 			changeName: true,
 		})
 	};
+	toggleSpymaster = () => {
+		this.props.toggleSpymaster();
+	};
 
 	addNameToItem = (user, buttons) => {
 		return (
 			<div className="userPanel item" key={user.userId}>
-				{user.isSpymaster ? <img className="ui avatar image" src="/eye.png" alt="spymaster" /> : <img className="ui avatar image" src="/user.png" alt="user" />}
+				{user.isSpymaster ? <i className="large eye icon" /> : <i className="large user outline icon" />}
 				{(!this.state.changeName||this.props.gameActive) &&
 					<div className="content">
 						{user.name}
@@ -46,6 +49,13 @@ export default class TeamComponent extends Component {
 		 			</form>
 					:
 					<a><i className="pencil alternate icon" onClick={this.openChangeName}/></a>
+				}
+				{(!this.props.gameActive&&(!this.props.teamSpymaster||this.props.user.isSpymaster))&&
+					<a className={this.props.user.team + "Count"} color={this.props.user.isSpymaster? 'grey' : this.props.user.team} onClick={this.toggleSpymaster}>
+						{ this.props.user.isSpymaster ? 'Become a User' : 'Become Spymaster' }
+					</a>
+					// <Button color={this.props.user.isSpymaster? 'grey' : this.props.user.team} size="mini" onClick={this.toggleSpymaster} disabled={this.props[teamSpy] && !this.props.user.isSpymaster} >
+					// </Button>
 				}
 			</div>
 		)
