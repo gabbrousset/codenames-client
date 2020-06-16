@@ -6,7 +6,7 @@ const palabrasRandom = () => {
 	// const numberOfCards = 50;
 	// const rN = Math.floor(Math.random()*(palabras.length - numberOfCards));
 	// let rN = Math.floor(Math.random() * (25 + 1));
-	let selected = shuffle.slice(42, 67);
+	let selected = shuffle.slice(42, 66);
 	return selected;
 };
 

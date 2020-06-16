@@ -20,11 +20,9 @@ export default class Chat extends Component {
 	render(){
 		return(
 			<div className="chat four wide column">
-				<div>
-					<DisplayChat
-						messages={this.props.messages}
-					/>
-				</div>
+				<DisplayChat
+					messages={this.props.messages}
+				/>
 				<div>
 					<form  onSubmit={this.handleSendMessage}  className="message ui action input">
 						<Input type="text" placeholder="Message" className="inputChat" onChange={this.handleChangeMessage} value={this.state.message} disabled={!this.props.user.name}></Input>

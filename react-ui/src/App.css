@@ -1,16 +1,16 @@
-.App {
+.App{
 	margin: 0 auto;
 	align-items: center;
 	display: flex;
 	flex-direction: column;
 	padding:  0px 10px;
 }
-.container {
+.container{
 	display: flex;
 	align-items: center;
 	flex-direction: column;
 }
-.columnButtons {
+.columnButtons{
 	height: 200px;
 	display: flex;
 	flex-direction: column;
@@ -19,7 +19,7 @@
 	align-items: center;
 	align-content: stretch;
 }
-.rowButtons {
+.rowButtons{
 	max-width: 600px;
 	margin-top: 0px;
 	padding-top: 30px;
@@ -29,12 +29,12 @@
 	align-items: center;
     margin: 0 auto;	
 }
-.input-top {
+.input-top{
 	margin-top: 20px;
 	display: flex;
 	justify-content: center;
 }
-.input-bottom {
+.input-bottom{
 	margin-top: 20px;
 	display: flex;
 	flex-direction: row;
@@ -46,7 +46,6 @@
 .boardGame{
 	padding-top: 50px;
 	max-width: 1200px;
-	margin: 0 auto;
 }
 .spymasterClueInput{
 	margin-top: -38.33px;
@@ -62,19 +61,30 @@
 .clueInput{
 	width: 100%;
 }
+.rightPanel{
+	display: flex !important;
+	flex-direction: column;
+	justify-content: center;
+}
+.teamsPanel{
+	flex: 1 1 250px;
+	display: flex;
+	flex-direction: column;
+}
 .chat{
+	flex: 1 1 250px;
+	display: flex;
+	flex-direction: column;
 	padding-top: 50px;
-	margin: 0 auto;
-	max-width: 600px;
 	border: 1px solid #ddd;
 	box-shadow: 1px 3px 5px rgba(0,0,0,0.05);
 	border-radius: 2px;
 }
 .chatWindow{
-    height: 400px;
-    overflow: auto;
-    background: #f8f8f9;
-    border: 1px solid #ddd;
+	flex: 1 1 100px;
+	overflow: auto;
+	background: #f8f8f9;
+	border: 1px solid #ddd;
 	box-shadow: 1px 3px 5px rgba(0,0,0,0.05);
 	border-radius: 2px;
 	padding-top: 10px;
@@ -115,7 +125,7 @@
 .inputChat{
 	width: 90%;
 }
-.dashboard {
+.dashboard{
 	font-size: 17px;
 	display: flex;
 	justify-content: space-between;
@@ -125,11 +135,11 @@
     max-width: 1120px;
     margin: 0 auto;	
 }
-.dashboardItems {
+.dashboardItems{
 	max-width: 200px;
 	text-align: center;
 }
-.bottomDashboard {
+.bottomDashboard{
 	display: flex;
 	flex-direction: row;
 	justify-content: space-around;
@@ -137,8 +147,8 @@
 	max-width: 600px;
 	margin: 0 auto;
 }
-.clue {
-	height: 100px;
+.clue{
+	height: 110px;
 	background:  #cccccc;
 	justify-content:  center;
 	align-items:  center;
@@ -148,54 +158,54 @@
 	font-size: 17px;
 	cursor: pointer;
 }
-.selected {
+.selected{
 	background: #f7f0de;
 	cursor: default;
 }
-.blue {
+.blue{
 	background: #0f80ff;
 	color: #eee;
 }
-.red {
+.red{
 	background: #fd6666;
 	color: #eee;
 }
-.assassin {
+.assassin{
 	background: #2d2d26;
 	color: #eee;
 }
-.visible {
+.visible{
 	font-weight: 700;
 	cursor: default;
 }
-.visible-blue {
+.visible-blue{
 	background: #c5e0ff;
 	color: #0f80ff;
 }
-.visible-red {
+.visible-red{
 	background: #fdc5c5;
 	color: #fd6666;
 }
-.visible-assassin {
+.visible-assassin{
 	background: #525252;
 	color: #eee;
 }
-.blueCount { 
+.blueCount{ 
 	color: #0f80ff;
 }
-.redCount {
+.redCount{
  color: #fd6666;
 }
-.currentTurn {
+.currentTurn{
 	text-transform: capitalize;
 }
-.shareLink {
+.shareLink{
 	font-size: 16px;
 	text-align: center;
 	padding-top: 10px;
 	padding-bottom: 40px;
 }
-.buyCoffeeHolder {
+.buyCoffeeHolder{
 	display: flex;
 	flex-direction: row;
 	flex-wrap: nowrap;
@@ -216,11 +226,11 @@
 	margin-bottom: 40px;
 	width: 230px;
 }
-.buyCoffeeText {
+.buyCoffeeText{
 	margin-left:5px;
 	color:#ffffff;
 }
-.buyCoffeeImage {
+.buyCoffeeImage{
 	height: 34px;
 	width: 35px;
 	margin-bottom: 1px;
@@ -228,7 +238,7 @@
 	border: none;
 	vertical-align: middle;
 }
-.header {
+.header{
 	display: flex;
 	flex-direction: row;
 	flex-wrap: nowrap;
@@ -240,7 +250,7 @@
 	font-size: 40px;
 	font-weight: 600;
 }
-.joinGameError {
+.joinGameError{
 	display: flex;
 	flex-direction: row;
 	flex-wrap: nowrap;
@@ -250,7 +260,7 @@
 	color: #d43030;
 	margin-top: 25px;
 }
-.centerText {
+.centerText{
 	margin-top: 50px;
 	margin-bottom: 25px;
 	font-size: 25px;
@@ -259,7 +269,7 @@
 	align-items: baseline;
 	align-content: stretch;
 }
-.teams {
+.teams{
 	max-width: 600px;
 	font-size: 20px;
 	display: flex;
@@ -267,45 +277,64 @@
 	margin: 0 auto;
 	padding-bottom: 40px;
 }
-.blueTitle {
+.blueTitle{
 	color: #0f80ff;
-	padding-top: 10px;
-	padding-bottom: 10px;
-	padding-right: 20px;
-	padding-left: 20px;
+	padding: 10px 20px;
 	background: #f3f3f3;
+	text-align: center;
+	font-size: 19px;
+	font-weight: 600;
 }
-.redTitle {
+.redTitle{
 	color: #fd6666;
-	padding-top: 10px;
-	padding-bottom: 10px;
-	padding-right: 20px;
-	padding-left: 20px;
-	background: #eaeaea;
+	padding: 10px 20px;
+	background: #f3f3f3;
+	text-align: center;
+	font-size: 19px;
+	font-weight: 600;
 }
-.teamWins {
+.teamWins{
 	color: black;
 	padding-left: 30px;
 }
-.blueTeam {
+.teamContent{
 	display: flex;
+	flex: 1 1 10px;
+	justify-content: center;
+}
+.joinTeam{
+	padding: 30px;
+}
+.content{
+	font-size: 20px;
+}
+.blueTeam{
+	display: flex;
+	flex: 1 1 50px;
 	flex-direction: column;
 	flex-wrap: nowrap;
 	justify-content: flex-start;
 	/*align-items: center;*/
 	align-content: stretch;
-	width: 50%;
 }
-.redTeam {
+.redTeam{
 	display: flex;
+	flex: 1 1 50px;
 	flex-direction: column;
 	flex-wrap: nowrap;
 	justify-content: flex-start;
 	/*align-items: center;*/
 	align-content: stretch;
-	width: 50%;
 }
-.teamUsers {
+.scoreboard{
+	display: flex;
+	justify-content: center;
+	align-items: center;
+	font-size: 60px;
+	flex: 1 1 10px;
+	height: 100%;
+}
+.teamUsers{
 	display: flex;
 	flex-direction: column;
 	flex-wrap: nowrap;
@@ -313,7 +342,16 @@
 	align-items: center;
 	align-content: stretch;
 }
-.joinTeamButtons {
+.userPanel{
+	display: flex !important;
+	padding: 5px !important;
+}
+.userPanelButtons{
+	display: flex;
+	margin-left: 10px;
+	align-items: center;
+}
+.joinTeamButtons{
 	/*height: 200px;*/
 	margin: 0 auto;
 	display: flex;
@@ -322,8 +360,7 @@
 	justify-content: center;
 	padding-top: 40px;
 }
-#nameLobby {
-	padding-top: 30px;
+#nameLobby{
 	display: flex;
 	flex-direction: row;
 	flex-wrap: nowrap;
@@ -331,18 +368,20 @@
 	align-content: stretch;
 	margin: 0 auto;
 }
-.ui.middle.aligned.divided.list {
+.ui.middle.aligned.divided.list{
     padding-left: 5px;
+    width: 75%;
 }
-.eight.wide.mobile.three.wide.tablet.three.wide.computer.column {
+.eight.wide.mobile.three.wide.tablet.three.wide.computer.column{
 	padding: 2px;
 }
-.three.wide.column{
+.four.wide.column{
 	padding: 2px !important;
 }
 .ui.grid.game{
     width: 100%;
     margin-top: 2rem;
+    justify-content: space-around;
 }
 .ui.message:first-child{
 	margin-top: 1em !important;

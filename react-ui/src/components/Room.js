@@ -139,7 +139,11 @@ class Room extends Component {
 			this.clueName(clueId, clueTeam, isAssassin)
 			// Entonces muestras la pista
 			const room = this.revealClue(clueId);
-			if(clueTeam) {
+			if (clueTeam !== this.state.room.game.turn) {
+				console.log("...data")
+				this.reduceCount(room, clueTeam);
+				this.endTurn(room);
+			} else {
 				this.reduceCount(room, clueTeam);
 			}
 			if (isAssassin) {
@@ -147,9 +151,6 @@ class Room extends Component {
 				this.state.room.game.turn === "red" ? team = "blue" : team = "red";
 				this.endGame(room, team);
 			}
-			if (clueTeam !== this.state.room.game.turn) {
-				this.endTurn(room);
-			}	
 		}
 	};
 	revealClue = (clueId) => {
@@ -281,14 +282,14 @@ class Room extends Component {
 		// this.changeNameInput(name)
 		this.joinTeam(this.state.user.team, name)
 	};
-	changeNameInput = (name) => {
-		// localStorage.setItem('name', name)
-		this.setState({
-			user: Object.assign({}, this.state.user, {
-				name
-			})
-		}, ()=> socket.emit('update user list', this.state.room))
-	};
+	// changeNameInput = (name) => {
+	// 	// localStorage.setItem('name', name)
+	// 	this.setState({
+	// 		user: Object.assign({}, this.state.user, {
+	// 			name
+	// 		})
+	// 	}, ()=> socket.emit('update user list', this.state.room))
+	// };
 	disableSpymasterView = () => {
 		this.setState(prevState => {
 			let stateCopy = Object.assign({}, prevState);
@@ -392,6 +393,23 @@ class Room extends Component {
 						handleEndGame={this.handleEndGame}
 						currentWinner={this.state.room.game.currentWinner}
 						teamCount={this.state.room.game[teamCount]}
+
+						shuffleTeams={this.handleShuffleTeams}
+						toggleSpymaster={this.handleToggleSpymaster}
+						history={this.props.history}
+						room={this.state.room}
+						blueSpymaster={this.state.room.info.blueSpymaster}
+						redSpymaster={this.state.room.info.redSpymaster}
+						game={this.state.room.game}
+						users={this.state.room.users}
+						showGame={this.handleShowGame}
+						openNewGame={this.handleOpenNewGame}
+						roomId={this.props.match.params.id}
+						joinTeam={this.handleJoinTeam}
+						switchTeam={this.handleSwitchTeam}
+						changeNameInput = {this.handleChangeNameInput}
+						blueWins = {this.state.room.info.blueWins}
+						redWins = {this.state.room.info.redWins}
 					>
 					</Game>
 				</div>

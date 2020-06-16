@@ -15,7 +15,6 @@ export default class TeamsList extends Component {
 		let blueList = [];
 		let redList = [];
 		this.props.users.map((user) => {
-			// user.team === 'blue' ? this.addNameToItem(user.name) : this.addNameToItem(user.name)
 			if (user.team === "blue") {
 				blueList.push(this.addNameToItem(user));
 			} else {

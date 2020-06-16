@@ -34,7 +34,7 @@ const newGame = () => {
 	createClues("blue",blueCount, false, clues, words);
 	createClues("red",redCount ,false, clues, words);
 	createClues(null, 1, true, clues, words);	
-	createClues(null, 7, false, clues, words);
+	createClues(null, 6, false, clues, words);
 	shuffle(clues);
 
 	const game = {

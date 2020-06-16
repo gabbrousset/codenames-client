@@ -2,7 +2,7 @@ import React, { Component } from "react";
 import GameDashboard from "./GameDashboard";
 import SpymasterClue from "./SpymasterClue"
 import ClueBoard from "./ClueBoard";
-import Chat from "./Chat";
+import RightPanel from "./RightPanel";
 import { Button } from "semantic-ui-react";
 import Confetti from 'react-dom-confetti';
 // import Lobby from "./Lobby";
@@ -94,12 +94,26 @@ export default class Game extends Component {
 							clues={this.props.clues}
 							onSelectClick={this.props.onSelectClick}
 						/>
-						<Chat
+						<RightPanel
 							sendMessage={this.props.sendMessage}
 							messages={this.props.messages}
 							user={this.props.user}
+							toggleSpymaster={this.props.toggleSpymaster}
+							becomeSpymaster={this.props.becomeSpymaster}
+							blueSpymaster={this.props.blueSpymaster}
+							redSpymaster={this.props.redSpymaster}
+							users={this.props.users}
+							joinTeam={this.props.joinTeam}
+							switchTeam={this.props.switchTeam}
+							changeNameInput ={this.props.changeNameInput}
+							game={this.props.room.game}
+							blueWins={this.props.blueWins}
+							redWins={this.props.redWins}
+							blueCount={this.props.blueCount}
+							redCount={this.props.redCount}
+							gameActive={this.props.gameActive}
 						>
-						</Chat>
+						</RightPanel>
 					</div>
 					<Confetti active={ !this.props?.gameActive && (this.props.user.team === this.props.currentWinner)} config={ this.state.config }/>
 					<div className="bottomDashboard">
