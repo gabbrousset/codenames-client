@@ -3,7 +3,6 @@
 	align-items: center;
 	display: flex;
 	flex-direction: column;
-	padding:  0px 10px;
 }
 .container{
 	display: flex;
@@ -48,7 +47,6 @@
 }
 .boardGame{
 	max-width: 1200px;
-	border-style: solid;
 }
 .dashboardSpymaster{
 	display: flex;
@@ -74,6 +72,7 @@
 	flex: 1 1 250px;
 	display: flex;
 	flex-direction: column;
+	padding-top: 20px;
 }
 .chat{
 	flex: 1 1 250px;
@@ -88,8 +87,8 @@
 	flex: 1 1 100px;
 	overflow: auto;
 	background: #f8f8f9;
-	border: 1px solid #ddd;
-	box-shadow: 1px 3px 5px rgba(0,0,0,0.05);
+	/* border: 1px solid #ddd; */
+	/* box-shadow: 1px 3px 5px rgba(0,0,0,0.05); */
 	border-radius: 2px;
 	padding-top: 10px;
 	font-size: 17px;
@@ -146,19 +145,19 @@
 	display: flex;
 	flex-direction: row;
 	justify-content: space-around;
-	padding-top: 50px;
+	padding-top: 10px;
 	max-width: 600px;
 	margin: 0 auto;
 }
 .clue{
-	height: 110px;
+	height: 120px;
 	background:  #cccccc;
 	justify-content:  center;
 	align-items:  center;
 	display:  flex;
 	text-transform:  uppercase;
 	font-weight: 500;
-	font-size: 17px;
+	font-size: 1.2em;
 	cursor: pointer;
 }
 .selected{
@@ -206,7 +205,6 @@
 	font-size: 16px;
 	text-align: center;
 	padding-top: 10px;
-	padding-bottom: 40px;
 }
 .buyCoffeeHolder{
 	display: flex;
@@ -242,7 +240,7 @@
 	vertical-align: middle;
 }
 .header{
-	display: flex;
+	display: none;
 	flex-direction: row;
 	flex-wrap: nowrap;
 	justify-content: center;
@@ -336,6 +334,7 @@
 	align-items: center;
 	font-size: 60px;
 	flex: 1 1 10px;
+	min-height: 120px;
 	height: 100%;
 }
 .teamUsers{
@@ -384,12 +383,10 @@
 }
 .ui.grid.game{
     width: 100%;
-    margin-top: 2rem;
     justify-content: space-around;
-    border-style: solid;
 }
 .ui.message:first-child{
-	margin-top: 1em !important;
+	/* margin-top: 1em !important; */
 }
 .ui.input>input{
 	border-top-right-radius: 0 !important;
@@ -399,3 +396,25 @@
 	min-width: 60px !important;
 	padding: 0px 10px !important;
 }
+.ui.message {
+    padding: 0px;
+    line-height: 1.4285em;
+    border-radius: 0px;
+    box-shadow: none;
+}
+
+form.message.ui.action.input{
+    padding: 0px;
+    line-height: 1.4285em;
+    border-radius: 0px;
+    box-shadow: none;
+}
+
+
+@media (max-width: 600px) {
+	.clue{
+		height: 60px;
+		font-size: .7em	;
+	}
+}
+  
