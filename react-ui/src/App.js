@@ -2,7 +2,7 @@ import React, { Component } from "react";
 // import ReactGA from 'react-ga';
 import "./App.css";
 import "semantic-ui-css/semantic.min.css";
-import { BrowserRouter, Route, Router } from "react-router-dom";
+import { BrowserRouter, Route } from "react-router-dom";
 // import { createBrowserHistory } from 'history';
 import LandingPage from "./components/LandingPage";
 import Room from "./components/Room";
@@ -15,13 +15,12 @@ import { createRoom } from './client';
 
 export default class App extends Component {
 	state={
-		rooms: [],
 	};
 	//clicked landing new game
-	handleClickCreateGameSession = (room) => {
+	handleClickCreateGameSession = (game) => {
 		this.setState({
-			rooms: this.state.rooms.concat(room),
-			}, () => createRoom(room));		
+			game: game,
+		});		
 	};
 	render(){
 		// console.log(this.state.rooms);
@@ -35,7 +34,7 @@ export default class App extends Component {
 						/>
 						<Route
 							exact path="/:id"
-							render={(props)=> <Room {...props} room={this.state.room}  />}
+							render={(props)=> <Room {...props} game={this.state.game}  />}
 						/>
 						<Footer />					
 					</div>

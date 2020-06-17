@@ -2,14 +2,14 @@ import React, { Component } from "react";
 import TeamToggleComponent from "./TeamToggleComponent"
 
 export default class TeamsPanel extends Component {
-	handleJoinBlue = (name) => {
-		this.joinTeam("blue", name)
+	handleJoinBlue = () => {
+		this.joinTeam("blue")
 	};
-	handleJoinRed = (name) => {
-		this.joinTeam("red", name)
+	handleJoinRed = () => {
+		this.joinTeam("red")
 	};
-	joinTeam = (team, name) => {
-		this.props.joinTeam(team, name);
+	joinTeam = (team) => {
+		this.props.joinTeam(team, this.props.user.name);
 	};
 	render(){
 		let blueUsers = [];

@@ -19,8 +19,7 @@ const newRoom = () => {
 		gameCount:0,
 		redWinCount:0,
 		blueWinCount:0,
-		game:{
-		}
+		game: newGame(),
 	}
 	return room;
 }

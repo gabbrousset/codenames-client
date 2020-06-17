@@ -1,4 +1,5 @@
 import React, { Component } from "react";
+import { Button } from "semantic-ui-react";
 import Chat from "./Chat";
 import TeamsPanel from "./TeamsPanel";
 
@@ -33,6 +34,15 @@ export default class RightPanel extends Component {
 					gameActive={this.props.gameActive}
 				>
 				</TeamsPanel>
+				<div className="rightPanelButtons">
+					<Button
+						color="grey"
+						size="large"
+						onClick={this.props.shuffleTeams}
+					>
+						Shuffle Teams
+					</Button>
+				</div>
 			</div>
 		);
 	};

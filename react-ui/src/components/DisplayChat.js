@@ -4,20 +4,18 @@ import uuid from "uuid";
 export default class DisplayChat extends Component {
 	formatMessage = (message) => {
 		switch (message.type){
-			case "message":
+			default:
 				return(
 					<div className="messageText" key={uuid.v4()}>
 						<span className={message.color+"Count"}>{message.name}:</span> {message.message}
 					</div>
 				);
-				break;
 			case "spymasterClue":
 				return(
 					<div className={"messageClue-" + message.color} key={uuid.v4()}>
 						<span>{message.message} {message.number}</span>
 					</div>
 				);
-				break;
 				case "select clue":
 					if (message.isAssassin) {
 						return(
@@ -35,7 +33,6 @@ export default class DisplayChat extends Component {
 							</div>
 						);
 					}
-					break;
 				case "end game":
 					return(
 						<div>
@@ -45,14 +42,12 @@ export default class DisplayChat extends Component {
 							</div>
 						</div>
 					)
-					break;
 				case "end turn":
 					return(
 						<div className="messageText messageLog" key={uuid.v4()}>
 							<span className={message.color+"Count"}>{message.name}</span><span> ended its team's turn</span>
 						</div>
 					)
-					break;
 		};
 	};
 	scrollToBottom = () => {

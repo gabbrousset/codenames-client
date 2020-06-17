@@ -1,6 +1,6 @@
 import React, { Component } from "react";
 import Game from "./Game";
-import Lobby from "./Lobby";
+
 import { newGame, createUserId } from '../helpers';
 
 import socketIOClient from "socket.io-client";
@@ -34,38 +34,38 @@ class Room extends Component {
 			},
 			//timer: false
 			messages: [],
+			game: this.props.game
 		},
 		id: this.props.match.params.id,
 		showGame: true,
-		spymasterView: false
+		spymasterView: false,
 	};
 
 	// Toggle between game and lobby
-	handleOpenNewGame = () => {
-		// this.openGame();
-		this.newGame();
-		this.openGame();
-	};
-	handleShowGame = () => {
-		this.openGame();
-	};
-	openGame = () => {
-		this.setState({
-			showGame: true,
-		});
-	};
-	handleBackLobby = () => {
-		this.openLobby();
-	};
-	openLobby = () => {
-		if (this.state.user.spymasterView) {
-			this.toggleVisibility();
-		}
-		this.setState({
-			showGame: false,
-			spymasterView: false,
-		})
-	};
+	// handleOpenNewGame = () => {
+	// 	// this.openGame();
+	// 	this.newGame();
+	// };
+	// handleShowGame = () => {
+	// 	this.openGame();
+	// };
+	// openGame = () => {
+	// 	this.setState({
+	// 		showGame: true,
+	// 	});
+	// };
+	// handleBackLobby = () => {
+	// 	this.openLobby();
+	// };
+	// openLobby = () => {
+	// 	if (this.state.user.spymasterView) {
+	// 		this.toggleVisibility();
+	// 	}
+	// 	this.setState({
+	// 		showGame: false,
+	// 		spymasterView: false,
+	// 	})
+	// };
 	// Imported from game
 	handleNewGame = () => {
 		this.newGame();
@@ -117,7 +117,7 @@ class Room extends Component {
 	shouldEnd = (room, teamCount, team) => {
 		if (room.game[teamCount]===0) {
 			this.endGame(room, team);
-		} else if (this.state.room.game.selectedCluesCount===(parseInt(this.state.room.game.spymasterClue.number, 10)+1)) {
+		} else if (this.state.room.game.selectedCluesCount>=(parseInt(this.state.room.game.spymasterClue.number, 10)+1)) {
 			this.endTurn(room)
 		}else {
 			socket.emit('update game', room);
@@ -135,12 +135,11 @@ class Room extends Component {
 	};
 	handleSelectClick = (clueId, clueTeam, isAssassin) => {
 		// Revisa si no eres spymaster
-		if (!this.state.user.isSpymaster && this.state.room.game.gameActive && this.state.user.team===this.state.room.game.turn) {
+		if (!this.state.user.isSpymaster && this.state.room.game.gameActive && this.state.user.team===this.state.room.game.turn && this.state.room.game.spymasterClue) {
 			this.clueName(clueId, clueTeam, isAssassin)
 			// Entonces muestras la pista
 			const room = this.revealClue(clueId);
 			if (clueTeam !== this.state.room.game.turn) {
-				console.log("...data")
 				this.reduceCount(room, clueTeam);
 				this.endTurn(room);
 			} else {
@@ -317,7 +316,14 @@ class Room extends Component {
 		// user.name = localStorage.getItem('name')  ? localStorage.getItem('name') : '';
 		this.setState({user}, () => socket.emit('join room', this.state));
 	};
-
+	handleLeaveRoom = () => {
+		this.leaveRoom()
+	};
+	leaveRoom = () => {
+		 this.props.history.push({
+		 	pathname: '/',
+		 })
+	};
 	componentDidMount(){
 		this.getUserFromLocalStorage();
 		socket.on('joined room', (room) => {
@@ -370,79 +376,77 @@ class Room extends Component {
 		})
 	};
 	render(){
-		let teamCount = this.state.user.team + "Count";
-		if (this.state.showGame && this.state.room.game){
-			return(
-				<div>
-					<div className="shareLink">
-						<span>Share this link to play with your friends: <a href="google.com">https://codename-online.herokuapp.com{this.props.history.location.pathname}</a></span>
-					</div>
-					<Game
-						{...this.state.room.game}
-						user={this.state.user}
-						sendClue={this.handleSendClue}
-						spymasterClue={this.state.room.game.spymasterClue}
-						messages={this.state.room.messages}
-						sendMessage={this.handleSendMessage}
-						handleNewGame={this.handleNewGame}
-						endTurn={this.handleEndTurn}
-						spymasterView={this.state.spymasterView}
-						onSelectClick={this.handleSelectClick}
-						handleViewToggle={this.handleViewToggle}
-						handleBackLobby={this.handleBackLobby}
-						handleEndGame={this.handleEndGame}
-						currentWinner={this.state.room.game.currentWinner}
-						teamCount={this.state.room.game[teamCount]}
+		return(
+			<div>
+				<div className="shareLink">
+					<span>Share this link to play with your friends: <a href="">https://codename-online.herokuapp.com{this.props.history.location.pathname}</a></span>
+				</div>
+				<Game
+					{...this.state.room.game}
+					user={this.state.user}
+					sendClue={this.handleSendClue}
+					// spymasterClue={this.state.room.game.spymasterClue}
+					messages={this.state.room.messages}
+					sendMessage={this.handleSendMessage}
+					handleNewGame={this.handleNewGame}
+					endTurn={this.handleEndTurn}
+					spymasterView={this.state.spymasterView}
+					onSelectClick={this.handleSelectClick}
+					handleViewToggle={this.handleViewToggle}
+					// handleBackLobby={this.handleBackLobby}
+					handleEndGame={this.handleEndGame}
+					// currentWinner={this.state.room.game.currentWinner}
+					// teamCount={this.state.room.game[teamCount]}
 
-						shuffleTeams={this.handleShuffleTeams}
-						toggleSpymaster={this.handleToggleSpymaster}
-						history={this.props.history}
-						room={this.state.room}
-						blueSpymaster={this.state.room.info.blueSpymaster}
-						redSpymaster={this.state.room.info.redSpymaster}
-						game={this.state.room.game}
-						users={this.state.room.users}
-						showGame={this.handleShowGame}
-						openNewGame={this.handleOpenNewGame}
-						roomId={this.props.match.params.id}
-						joinTeam={this.handleJoinTeam}
-						switchTeam={this.handleSwitchTeam}
-						changeNameInput = {this.handleChangeNameInput}
-						blueWins = {this.state.room.info.blueWins}
-						redWins = {this.state.room.info.redWins}
-					>
-					</Game>
-				</div>
-			);
-		} else {
-			return(
-				<div>
-					<div className="shareLink">
-						<span>Share this link to play with your friends: <a href={"https://codename-online.herokuapp.com"+this.props.history.location.pathname}>codename-online.herokuapp.com{this.props.history.location.pathname}</a></span>
-					</div>
-					<Lobby
-						shuffleTeams={this.handleShuffleTeams}
-						toggleSpymaster={this.handleToggleSpymaster}
-						history={this.props.history}
-						room={this.state.room}
-						blueSpymaster={this.state.room.info.blueSpymaster}
-						redSpymaster={this.state.room.info.redSpymaster}
-						game={this.state.room.game}
-						users={this.state.room.users}
-						user={this.state.user}
-						showGame={this.handleShowGame}
-						openNewGame={this.handleOpenNewGame}
-						roomId={this.props.match.params.id}
-						joinTeam={this.handleJoinTeam}
-						switchTeam={this.handleSwitchTeam}
-						changeNameInput = {this.handleChangeNameInput}
-						blueWins = {this.state.room.info.blueWins}
-						redWins = {this.state.room.info.redWins}
-					>
-					</Lobby>
-				</div>
-			);
-		}
+					leaveRoom={this.handleLeaveRoom}
+					shuffleTeams={this.handleShuffleTeams}
+					toggleSpymaster={this.handleToggleSpymaster}
+					history={this.props.history}
+					room={this.state.room}
+					blueSpymaster={this.state.room.info.blueSpymaster}
+					redSpymaster={this.state.room.info.redSpymaster}
+					// game={this.state.room.game}
+					users={this.state.room.users}
+					showGame={this.handleShowGame}
+					roomId={this.props.match.params.id}
+					joinTeam={this.handleJoinTeam}
+					switchTeam={this.handleSwitchTeam}
+					changeNameInput = {this.handleChangeNameInput}
+					blueWins = {this.state.room.info.blueWins}
+					redWins = {this.state.room.info.redWins}
+				>
+				</Game>
+			</div>
+		);
+	// 	else {
+	// 		return(
+	// 			<div>
+	// 				<div className="shareLink">
+	// 					<span>Share this link to play with your friends: <a href={"https://codename-online.herokuapp.com"+this.props.history.location.pathname}>codename-online.herokuapp.com{this.props.history.location.pathname}</a></span>
+	// 				</div>
+	// 				<Lobby
+	// 					shuffleTeams={this.handleShuffleTeams}
+	// 					toggleSpymaster={this.handleToggleSpymaster}
+	// 					history={this.props.history}
+	// 					room={this.state.room}
+	// 					blueSpymaster={this.state.room.info.blueSpymaster}
+	// 					redSpymaster={this.state.room.info.redSpymaster}
+	// 					game={this.state.room.game}
+	// 					users={this.state.room.users}
+	// 					user={this.state.user}
+	// 					showGame={this.handleShowGame}
+	// 					openNewGame={this.handleOpenNewGame}
+	// 					roomId={this.props.match.params.id}
+	// 					joinTeam={this.handleJoinTeam}
+	// 					switchTeam={this.handleSwitchTeam}
+	// 					changeNameInput = {this.handleChangeNameInput}
+	// 					blueWins = {this.state.room.info.blueWins}
+	// 					redWins = {this.state.room.info.redWins}
+	// 				>
+	// 				</Lobby>
+	// 			</div>
+	// 		);
+	// 	}
 	}
 }
 

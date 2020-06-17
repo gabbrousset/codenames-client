@@ -1,8 +1,8 @@
 import React, { Component } from "react";
 import ClueBoard from "./ClueBoard";
 import RightPanel from "./RightPanel";
-import { Button } from "semantic-ui-react";
-import Confetti from 'react-dom-confetti';
+import NameModal from "./NameModal"
+import Confetti from "react-dom-confetti";
 
 export default class Game extends Component {
 	state={
@@ -17,21 +17,25 @@ export default class Game extends Component {
 			width: "18px",
 			height: "22px",
 			colors: ["#f00", "#00f"],
-		}
+		},
 	};
 	componentDidMount() {
-		let config = this.state.config;
+		let stateCopy = this.state;
 		if (this.props.user.team==="blue") {
-			config.colors = ['#154360', '#21618C', '#3498DB' ,'#58CCED', '#12261A0']
+			stateCopy.config.colors = ['#154360', '#21618C', '#3498DB' ,'#58CCED', '#12261A0']
 		} else {
-			config.colors = ['#8B0000', '#FA8072', '#FF0000', '#EA3C53', '#CD5C5C']
+			stateCopy.config.colors = ['#8B0000', '#FA8072', '#FF0000', '#EA3C53', '#CD5C5C']
 		}
-		this.setState({config})
+		this.setState({stateCopy})
 	}
-
 	render(){
+		let teamCount = this.props.user.team + "Count";
 		return (
 			<div className="App">
+				<NameModal
+					user={this.props.user}
+					changeNameInput ={this.props.changeNameInput}
+				/>
 				<div className="ui grid game stackable">
 					<ClueBoard
 						spymasterView={this.props.spymasterView}
@@ -46,11 +50,12 @@ export default class Game extends Component {
 						user={this.props.user}
 						sendClue={this.props.sendClue}
 						spymasterClue={this.props.spymasterClue}
-						teamCount={this.props.teamCount}
+						teamCount={this.props[teamCount]}
 						handleNewGame={this.props.handleNewGame}
 						handleEndGame={this.props.handleEndGame}
 						handleViewToggle={this.props.handleViewToggle}
 						handleBackLobby={this.props.handleBackLobby}
+						leaveRoom={this.props.leaveRoom}
 					/>
 					<RightPanel
 						sendMessage={this.props.sendMessage}
@@ -70,6 +75,7 @@ export default class Game extends Component {
 						blueCount={this.props.blueCount}
 						redCount={this.props.redCount}
 						gameActive={this.props.gameActive}
+						shuffleTeams={this.props.shuffleTeams}
 					>
 					</RightPanel>
 				</div>

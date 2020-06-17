@@ -15,13 +15,12 @@ export default class TeamToggleComponent extends Component {
 		};
 	};
 	handleJoinTeam = () => {
-		this.props.joinTeam("a");
+		this.props.joinTeam();
 	};
 	render(){
-		if (!this.props.user.team && !this.props.gameActive) {
+		if (!this.props.user.team) {
 			return(
 				<div className="teamContent joinTeam"
-					onMouseEnter={this.handleMouseHover}
 					onMouseLeave={this.handleMouseHover}
 				>
 					<Button  type="submit" size="big" className="ui button" onClick={this.handleJoinTeam}>Join Team</Button>
