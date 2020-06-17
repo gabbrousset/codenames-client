@@ -148,7 +148,7 @@ class Room extends Component {
 			}
 			if (isAssassin) {
 				let team;
-				this.state.room.game.turn === "red" ? team = "blue" : team = "red";
+				this.state.user.team === "red" ? team = "blue" : team = "red";
 				this.endGame(room, team);
 			}
 		}
