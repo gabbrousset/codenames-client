@@ -95,7 +95,7 @@ export default class Teams extends Component {
 				);
 			};
 		return(
-			<div>
+			<div style={{margin: '30px'}}>
 				<TeamsList
 					users = {this.props.users}
 					blueWins={this.props.blueWins}

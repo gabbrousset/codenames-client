@@ -68,6 +68,9 @@ export default class ClueBoard extends Component {
 				<div className="bottomDashboard">
 					{spymasterButton}
 					{button}
+					<Button onClick={this.props.handleBackLobby} >
+						Show Lobby
+					</Button>
 				</div>
 			</div>
 		);
