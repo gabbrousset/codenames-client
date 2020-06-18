@@ -402,6 +402,10 @@
 	display: flex;
 	justify-content: center;
 }
+.nameModalButton{
+	width: 0;
+	flex: 1 1 100px !important;
+}
 .ui.middle.aligned.divided.list{
     padding-left: 5px;
     width: 75%;
