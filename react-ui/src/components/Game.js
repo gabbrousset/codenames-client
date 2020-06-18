@@ -1,7 +1,6 @@
 import React, { Component } from "react";
 import ClueBoard from "./ClueBoard";
 import RightPanel from "./RightPanel";
-import NameModal from "./NameModal"
 import Confetti from "react-dom-confetti";
 
 export default class Game extends Component {
@@ -32,10 +31,6 @@ export default class Game extends Component {
 		let teamCount = this.props.user.team + "Count";
 		return (
 			<div className="App">
-				<NameModal
-					user={this.props.user}
-					changeNameInput ={this.props.changeNameInput}
-				/>
 				<div className="ui grid game stackable">
 					<ClueBoard
 						spymasterView={this.props.spymasterView}

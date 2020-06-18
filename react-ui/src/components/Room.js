@@ -1,5 +1,6 @@
 import React, { Component } from "react";
 import Game from "./Game";
+import NameModal from "./NameModal"
 
 import { newGame, createUserId } from '../helpers';
 
@@ -378,6 +379,10 @@ class Room extends Component {
 	render(){
 		return(
 			<div>
+				<NameModal
+					user={this.state.user}
+					changeNameInput ={this.handleChangeNameInput}
+				/>
 				<div className="shareLink">
 					<span>Share this link to play with your friends: <a href="">https://codename-online.herokuapp.com{this.props.history.location.pathname}</a></span>
 				</div>

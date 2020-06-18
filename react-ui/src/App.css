@@ -5,10 +5,11 @@
 	flex-direction: column;
 	margin-top: 20px;
 }
-.container{
+.joinGame{
 	display: flex;
 	align-items: center;
 	flex-direction: column;
+	margin-top: 100px;
 }
 .columnButtons{
 	margin-top: 100px;
@@ -46,6 +47,11 @@
 }
 .clueBoard{
 	margin: 0 auto !important;
+	display: flex;
+	flex-direction: row;
+	flex-wrap: wrap;
+	align-items: stretch;
+	padding: 0
 }
 .boardGame{
 	max-width: 1200px;
@@ -169,6 +175,9 @@
 	font-weight: 500;
 	font-size: 1.2em;
 	cursor: pointer;
+}
+.clueEmpty{
+	cursor: default;
 }
 .selected{
 	background: #f7f0de;

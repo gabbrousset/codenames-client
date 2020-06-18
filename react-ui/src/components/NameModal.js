@@ -2,23 +2,35 @@ import React, { Component } from "react";
 import { Button, Header, Input, Modal } from 'semantic-ui-react'
 
 export default class NameModal extends Component {
+	// constructor(props) {
+	// 	super(props);
+	// 	this.state = { mode: undefined } ;
+	// }
 	state={
 		name: this.props.user.name,
-		openNameModal: true,
+		// openNameModal: true
 	};
 	handleChangeNameInput = (name) => {
 		this.setState({name: name.target.value})
 	};
 	handleSubmit = (e) => {
 		e.preventDefault();
-		this.setState({
-			openNameModal: false,
-		})
+		// this.setState({
+		// 	openNameModal: false,
+		// })
 		this.props.changeNameInput(this.state.name);
 	};
+	checkName = (props) => {
+		if (this.props.user.name) {
+			return false
+		} else {
+			return true
+		}
+	}
 	render(){
+		console.log("state", this.state)
 		return(
-			<Modal open={this.state.openNameModal} size="mini">
+			<Modal open={this.checkName()} size="mini">
 				<Modal.Header>Welcome!</Modal.Header>
 				<Modal.Content image>
 					<Modal.Description>

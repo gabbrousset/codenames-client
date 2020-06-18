@@ -7,7 +7,7 @@ export default class LandingButtons extends Component {
 		const game = newGame();
 		const room = newRoom();
 		this.props.history.push(room.id)
-		this.props.clickCreateGameSession(game)
+		// this.props.clickCreateGameSession(game)
 	};
 	render(){
 		return(

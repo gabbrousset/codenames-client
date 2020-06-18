@@ -54,7 +54,7 @@ export default class JoinGame extends Component {
 			// 			onChange={this.handleChangeNameInput}
 			// 		/>
 			// 	</div>
-			<div className="container">
+			<div className="joinGame">
 				<form onSubmit={this.handleClickJoinGameSession}>
 					<div className="input-top">
 						<Input

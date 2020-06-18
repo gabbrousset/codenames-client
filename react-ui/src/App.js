@@ -14,27 +14,29 @@ import { createRoom } from './client';
 // ReactGA.pageview(window.location.pathname + window.location.search);
 
 export default class App extends Component {
-	state={
-	};
-	//clicked landing new game
-	handleClickCreateGameSession = (game) => {
-		this.setState({
-			game: game,
-		});		
-	};
+	// state={
+	// };
+	// //clicked landing new game
+	// handleClickCreateGameSession = (game) => {
+		// this.setState({
+		// 	game: game,
+		// });	
+	// };
 	render(){
-		// console.log(this.state.rooms);
 		return (
 				<BrowserRouter>
 					<div>
 						<Header />
 						<Route
 							exact path="/"
-							render={(props) => <LandingPage {...props} clickCreateGameSession={this.handleClickCreateGameSession} rooms={this.state.rooms}/>}
+							render={(props) => <LandingPage {...props} />}
+							// render={(props) => <LandingPage {...props} clickCreateGameSession={this.handleClickCreateGameSession} rooms={this.state.rooms} />}
 						/>
 						<Route
 							exact path="/:id"
-							render={(props)=> <Room {...props} game={this.state.game}  />}
+							render={(props)=> <Room {...props} />}
+							// render={(props)=> <Room {...props} game={this.state.game} />}
+
 						/>
 						<Footer />					
 					</div>

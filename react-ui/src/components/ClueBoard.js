@@ -6,6 +6,28 @@ import { Button } from "semantic-ui-react";
 
 export default class ClueBoard extends Component {
 	render(){
+		let clueBoard = []
+		if (this.props.clues) {
+			this.props.clues.map((clue) => (
+				clueBoard.push(
+				<div className="four wide column" key={clue.id}>
+					<Clue
+			 			{...clue}
+			 			onSelectClick={this.props.onSelectClick}
+			 			spymasterView={this.props.spymasterView}
+			 			info={true}
+			 		/>
+				</div>
+			)))
+		} else {
+			for(let i = 0; i < 24; i++){
+				clueBoard.push(<div className="four wide column">
+					<Clue
+						info={false}
+					/>
+				</div>)
+			}
+		}
 		let spymasterButton;
 		if (this.props.user.isSpymaster) {
 			spymasterButton = (
@@ -52,7 +74,7 @@ export default class ClueBoard extends Component {
 					>
 					</GameDashboard>
 				</div>
-				<div className="ui centered grid clueBoard">
+{/*				<div className="ui centered grid clueBoard">
 					{this.props.clues &&
 						this.props.clues.map((clue) => (
 							<div className="four wide column" key={clue.id}>
@@ -64,6 +86,10 @@ export default class ClueBoard extends Component {
 							</div>
 						))
 					}
+				</div>
+*/}
+				<div className="ui centered grid clueBoard">
+					{clueBoard}
 				</div>
 				<div className="bottomDashboard">
 					<Button
