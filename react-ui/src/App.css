@@ -119,9 +119,10 @@
 	border-radius: 25px;
 }
 .message{
-	width: 100%;
 	margin: 0 auto;
 	display: flex !important;
+	flex: 1 1 10px;
+	width: 0;
 }
 .messageLog{
 	text-align: center;
@@ -130,10 +131,12 @@
 	font-size: 15px;
 }
 .inputChat{
-	flex: 10 1 10px;
+	width: 0;
+	flex: 20 1 90px;
 }
 .messageButton{
-	flex: 1 1 1px !important;
+	width: 0;
+	flex: 1 1 60px !important;
 }
 .dashboard{
 	font-size: 17px;
@@ -211,7 +214,7 @@
 .shareLink{
 	font-size: 16px;
 	text-align: center;
-	padding-top: 10px;
+	padding-top: 25px;
 }
 .buyCoffeeHolder{
 	display: flex;
@@ -309,6 +312,7 @@
 	display: flex;
 	flex: 1 1 10px;
 	justify-content: center;
+	min-height: 160px;
 }
 .joinTeam{
 	padding: 30px;
@@ -375,6 +379,7 @@
 	display: flex;
 	justify-content: center;
 	align-items: center;
+	padding-top: 10px;
 }
 #nameLobby{
 	display: flex;
@@ -384,17 +389,9 @@
 	align-content: stretch;
 	margin: 0 auto;
 }
-.nameModal{
+.nameModalForm{
 	display: flex;
-	flex-direction: column;
-	align-items: center;
 	justify-content: center;
-}
-.nameModalSpan{
-	
-}
-.nameModalButton{
-	margin: 0 auto;
 }
 .ui.middle.aligned.divided.list{
     padding-left: 5px;
@@ -426,14 +423,16 @@
     padding: 0px;
     line-height: 1.4285em;
     border-radius: 0px;
-    box-shadow: none;
+    box-shadow: none !important;
 }
-
-form.message.ui.action.input{
-    padding: 0px;
-    line-height: 1.4285em;
-    border-radius: 0px;
-    box-shadow: none;
+.messageForm{
+	display: flex;
+}
+.form.message.ui.action.input{
+	padding: 0px;
+	line-height: 1.4285em;
+	border-radius: 0px;
+	box-shadow: none;
 }
 
 

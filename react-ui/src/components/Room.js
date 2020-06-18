@@ -34,7 +34,7 @@ class Room extends Component {
 			},
 			//timer: false
 			messages: [],
-			game: this.props.game
+			// game: this.props.game
 		},
 		id: this.props.match.params.id,
 		showGame: true,

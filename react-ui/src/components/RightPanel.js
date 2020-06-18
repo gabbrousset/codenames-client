@@ -35,13 +35,7 @@ export default class RightPanel extends Component {
 				>
 				</TeamsPanel>
 				<div className="rightPanelButtons">
-					<Button
-						color="grey"
-						size="large"
-						onClick={this.props.shuffleTeams}
-					>
-						Shuffle Teams
-					</Button>
+					<Button onClick={this.props.shuffleTeams}>Shuffle Teams</Button>
 				</div>
 			</div>
 		);

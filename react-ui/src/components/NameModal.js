@@ -18,19 +18,19 @@ export default class NameModal extends Component {
 	};
 	render(){
 		return(
-			<Modal open={this.state.openNameModal} size="mini" class="nameModal">
+			<Modal open={this.state.openNameModal} size="mini">
 				<Modal.Header>Welcome!</Modal.Header>
 				<Modal.Content image>
 					<Modal.Description>
-						<span class="nameModalSpan">
+						<span>
 							Please enter your username:
 						</span>
 					</Modal.Description>
 				</Modal.Content>
-				<Modal.Actions>
-					<form className=" ui action input nameModalButton" onSubmit={this.handleSubmit}>
+				<Modal.Actions className="nameModalForm">
+					<form className=" ui action input" onSubmit={this.handleSubmit}>
 						<Input type="text" placeholder="Name" value={this.state.name} size="large" onChange={this.handleChangeNameInput} />
-						<Button  type="submit" size="large" className="ui button">Submit</Button>
+						<Button  type="submit" size="large" className="ui button" disabled={!this.state.name}>Submit</Button>
 					</form>
 {/*
 						<div className="noNameError">
