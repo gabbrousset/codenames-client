@@ -27,7 +27,7 @@ export default class SpymasterClue extends Component {
 		let content;
 		let options = [];
 		for(let i = 1; i < (this.props.teamCount + 1); i++){
-			options.push(<option value={i}>{i}</option>)
+			options.push(<option value={i} key={i}>{i}</option>)
 		}
 		if (this.props.spymasterClue) {
 		 	content =
@@ -40,7 +40,7 @@ export default class SpymasterClue extends Component {
 				<form  onSubmit={this.handleSendClue}  className="clueInput ui action input">
 					<Input type="text" placeholder="Message" className="inputChat" onChange={this.handleChangeClue} value={this.state.clue}></Input>
 						<select
-							class="ui compact selection dropdown"
+							className="ui compact selection dropdown"
 							value={this.state.selectValue} 
 							onChange={this.handleChange}
 						>

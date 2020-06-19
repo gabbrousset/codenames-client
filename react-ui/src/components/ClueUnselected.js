@@ -16,7 +16,7 @@ export default class ClueUnselected extends Component {
 			classes += " clueEmpty";
 		}
 		return(
-			<div className={"clue " + classes} onClick={this.props.handleSelectClick}>
+			<div className={"clue " + classes} onClick={this.handleSelectClick}>
 				<span>
 					{this.props.title}
 				</span>

@@ -8,7 +8,7 @@ import LandingPage from "./components/LandingPage";
 import Room from "./components/Room";
 import Footer from "./components/Footer";
 import Header from "./components/Header";
-import { createRoom } from './client';
+// import { createRoom } from './client';
 
 // ReactGA.initialize('UA-169288507-2');
 // ReactGA.pageview(window.location.pathname + window.location.search);
@@ -36,7 +36,6 @@ export default class App extends Component {
 							exact path="/:id"
 							render={(props)=> <Room {...props} />}
 							// render={(props)=> <Room {...props} game={this.state.game} />}
-
 						/>
 						<Footer />					
 					</div>

@@ -136,7 +136,7 @@ class Room extends Component {
 	};
 	handleSelectClick = (clueId, clueTeam, isAssassin) => {
 		// Revisa si no eres spymaster
-		if (!this.state.user.isSpymaster && this.state.room.game.gameActive && this.state.user.team===this.state.room.game.turn && this.state.room.game.spymasterClue) {
+		if (!this.state.user.isSpymaster && this.state.room.game.gameActive && this.state.user.team===this.state.room.game.turn && this.state.room.game.spymasterClue.clue) {
 			this.clueName(clueId, clueTeam, isAssassin)
 			// Entonces muestras la pista
 			const room = this.revealClue(clueId);
@@ -377,6 +377,7 @@ class Room extends Component {
 		})
 	};
 	render(){
+		console.log("room", this.state)
 		return(
 			<div>
 				<NameModal

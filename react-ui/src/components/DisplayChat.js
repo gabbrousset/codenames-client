@@ -20,7 +20,7 @@ export default class DisplayChat extends Component {
 					if (message.isAssassin) {
 						return(
 							<div>
-								<div class="ui clearing divider"></div>
+								<div className="ui clearing divider"></div>
 								<div className="messageText messageLog" key={uuid.v4()}>
 									<b><span className={message.color+"Count"}>{message.name}</span> <em>clicked</em> <span className={message.clueColor+"Count"}>{message.message} and lost the game</span></b>
 								</div>
@@ -35,9 +35,9 @@ export default class DisplayChat extends Component {
 					}
 				case "end game":
 					return(
-						<div>
-							<div class="ui divider"></div>
-							<div className="messageText messageLog" key={uuid.v4()}>
+						<div key={uuid.v4()}>
+							<div className="ui divider"></div>
+							<div className="messageText messageLog">
 								<b><span className={message.color+"Count"}>{message.name}</span> ended the Game</b>
 							</div>
 						</div>

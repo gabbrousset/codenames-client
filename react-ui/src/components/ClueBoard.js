@@ -1,4 +1,5 @@
 import React, { Component } from "react";
+import uuid from "uuid";
 import GameDashboard from "./GameDashboard";
 import SpymasterClue from "./SpymasterClue"
 import Clue from "./Clue";
@@ -21,7 +22,7 @@ export default class ClueBoard extends Component {
 			)))
 		} else {
 			for(let i = 0; i < 24; i++){
-				clueBoard.push(<div className="four wide column">
+				clueBoard.push(<div className="four wide column" key={uuid.v4()}>
 					<Clue
 						info={false}
 					/>

@@ -1,10 +1,10 @@
 import React, { Component } from "react";
 import { Button } from "semantic-ui-react";
-import {newGame, newRoom} from "../helpers";
+import { newRoom} from "../helpers";
 
 export default class LandingButtons extends Component {
 	handleClickCreateGameSession = () => {
-		const game = newGame();
+		// const game = newGame();
 		const room = newRoom();
 		this.props.history.push(room.id)
 		// this.props.clickCreateGameSession(game)

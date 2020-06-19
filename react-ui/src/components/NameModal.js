@@ -1,5 +1,5 @@
 import React, { Component } from "react";
-import { Button, Header, Input, Modal } from 'semantic-ui-react'
+import { Button, Input, Modal } from 'semantic-ui-react'
 
 export default class NameModal extends Component {
 	// constructor(props) {
@@ -28,7 +28,6 @@ export default class NameModal extends Component {
 		}
 	}
 	render(){
-		console.log("state", this.state)
 		return(
 			<Modal open={this.checkName()} size="mini">
 				<Modal.Header>Welcome!</Modal.Header>
