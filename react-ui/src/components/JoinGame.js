@@ -20,9 +20,9 @@ export default class JoinGame extends Component {
 	// 	});
 	// };
 	handleRedirect = (result) => {
-		 this.props.history.push({
-		 	pathname: result,
-		 })
+		this.props.history.push({
+			pathname: result,
+		})
 	};
 	handleClickJoinGameSession = (e) => {
 		e.preventDefault();
