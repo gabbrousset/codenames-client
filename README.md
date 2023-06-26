@@ -2,4 +2,4 @@
 
 ![Website](codenames.png)
 
-https://codename-online.herokuapp.com/
+https://codenames.gabbrousset.dev/

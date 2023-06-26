@@ -1,0 +1,19 @@
+{
+    "name": "codenames",
+    "version": "4.0.0",
+    "description": "Codenames online",
+    "engines": {
+        "node": "12.x"
+    },
+    "scripts": {
+        "start": "node server.js"
+    },
+    "cacheDirectories": [
+        "node_modules",
+        "ui/node_modules"
+    ],
+    "dependencies": {
+        "express": "^4.17.1",
+        "socket.io": "^2.3.0"
+    }
+}
