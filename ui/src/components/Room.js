@@ -10,10 +10,11 @@ import { withRouter } from 'react-router-dom';
 let ENDPOINT;
 
 if (!process.env.NODE_ENV || process.env.NODE_ENV === 'development') {
-    ENDPOINT = 'http://127.0.0.1:5000';
+    ENDPOINT = 'http://127.0.0.1:3000';
 } else {
     ENDPOINT = 'https://codenames.gabbrousset.dev/';
 }
+
 const socket = socketIOClient(ENDPOINT);
 
 class Room extends Component {
@@ -465,7 +466,6 @@ class Room extends Component {
         });
     }
     render() {
-        console.log('room', this.state);
         return (
             <div>
                 <NameModal
