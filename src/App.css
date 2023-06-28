@@ -1,437 +1,437 @@
-.App{
-	margin: 0 auto;
-	align-items: center;
-	display: flex;
-	flex-direction: column;
-	margin-top: 20px;
+.App {
+    margin: 0 auto;
+    align-items: center;
+    display: flex;
+    flex-direction: column;
+    margin-top: 20px;
 }
-.joinGame{
-	display: flex;
-	align-items: center;
-	flex-direction: column;
-	margin-top: 100px;
+.joinGame {
+    display: flex;
+    align-items: center;
+    flex-direction: column;
+    margin-top: 100px;
 }
-.columnButtons{
-	margin-top: 100px;
-	height: 200px;
-	display: flex;
-	flex-direction: column;
-	flex-wrap: nowrap;
-	justify-content: space-around;
-	align-items: center;
-	align-content: stretch;
+.columnButtons {
+    padding-top: 120px;
+    height: 320px;
+    display: flex;
+    flex-direction: column;
+    flex-wrap: nowrap;
+    justify-content: space-around;
+    align-items: center;
+    align-content: stretch;
 }
-.rowButtons{
-	max-width: 600px;
-	margin-top: 0px;
-	padding-top: 30px;
-	padding-bottom: 30px;
-	display: flex;
-	justify-content: space-around;
-	align-items: center;
-    margin: 0 auto;	
+.rowButtons {
+    max-width: 600px;
+    margin-top: 0px;
+    padding-top: 30px;
+    padding-bottom: 30px;
+    display: flex;
+    justify-content: space-around;
+    align-items: center;
+    margin: 0 auto;
 }
-.input-top{
-	margin-top: 20px;
-	display: flex;
-	justify-content: center;
+.input-top {
+    margin-top: 20px;
+    display: flex;
+    justify-content: center;
 }
-.input-bottom{
-	margin-top: 20px;
-	display: flex;
-	flex-direction: row;
-	flex-wrap: nowrap;
-	justify-content: space-around;
-	align-items: center;
-	align-content: stretch;
+.input-bottom {
+    margin-top: 20px;
+    display: flex;
+    flex-direction: row;
+    flex-wrap: nowrap;
+    justify-content: space-around;
+    align-items: center;
+    align-content: stretch;
 }
-.clueBoard{
-	margin: 0 auto !important;
-	display: flex;
-	flex-direction: row;
-	flex-wrap: wrap;
-	align-items: stretch;
-	padding: 0
+.clueBoard {
+    margin: 0 auto !important;
+    display: flex;
+    flex-direction: row;
+    flex-wrap: wrap;
+    align-items: stretch;
+    padding: 0;
 }
-.boardGame{
-	max-width: 1200px;
-	padding: 0px !important;
+.boardGame {
+    max-width: 1200px;
+    padding: 0px !important;
 }
-.dashboardSpymaster{
-	display: flex;
-	justify-content: center;
-	flex: 1 1 10px;
-	height: 45px;
+.dashboardSpymaster {
+    display: flex;
+    justify-content: center;
+    flex: 1 1 10px;
+    height: 45px;
 }
-.spymasterClueInput{
-	width: 450px;
+.spymasterClueInput {
+    width: 450px;
 }
-.spymasterClue{
-	font-size: 17px;
+.spymasterClue {
+    font-size: 17px;
 }
-.clueInput{
-	width: 100%;
+.clueInput {
+    width: 100%;
 }
-.rightPanel{
-	display: flex !important;
-	flex-direction: column;
-	justify-content: center;
+.rightPanel {
+    display: flex !important;
+    flex-direction: column;
+    justify-content: center;
 }
-.teamsPanel{
-	flex: 1 1 250px;
-	display: flex;
-	flex-direction: column;
-	padding-top: 20px;
+.teamsPanel {
+    flex: 1 1 250px;
+    display: flex;
+    flex-direction: column;
+    padding-top: 20px;
 }
-.chat{
-	flex: 1 1 250px;
-	display: flex;
-	flex-direction: column;
-	padding-top: 50px;
-	border: 1px solid #ddd;
-	box-shadow: 1px 3px 5px rgba(0,0,0,0.05);
-	border-radius: 2px;
+.chat {
+    flex: 1 1 250px;
+    display: flex;
+    flex-direction: column;
+    padding-top: 50px;
+    border: 1px solid #ddd;
+    box-shadow: 1px 3px 5px rgba(0, 0, 0, 0.05);
+    border-radius: 2px;
 }
-.chatWindow{
-	flex: 1 1 100px;
-	overflow: auto;
-	background: #f8f8f9;
-	/* border: 1px solid #ddd; */
-	/* box-shadow: 1px 3px 5px rgba(0,0,0,0.05); */
-	border-radius: 2px;
-	padding-top: 10px;
-	font-size: 17px;
+.chatWindow {
+    flex: 1 1 100px;
+    overflow: auto;
+    background: #f8f8f9;
+    /* border: 1px solid #ddd; */
+    /* box-shadow: 1px 3px 5px rgba(0,0,0,0.05); */
+    border-radius: 2px;
+    padding-top: 10px;
+    font-size: 17px;
 }
-.messageText{
-	padding: 7px 15px;
-	text-align: left;
-	color: #444444;
-	font-size: 17px;
+.messageText {
+    padding: 7px 15px;
+    text-align: left;
+    color: #444444;
+    font-size: 17px;
 }
-.messageClue-blue{
-	background: #4696fe;
-	width: 170px;
-	margin: 10px auto;
-	color: white;
-	text-align: center;
-	border-radius: 25px;
+.messageClue-blue {
+    background: #4696fe;
+    width: 170px;
+    margin: 10px auto;
+    color: white;
+    text-align: center;
+    border-radius: 25px;
 }
-.messageClue-red{
-	background: #fd6666;
-	width: 170px;
-	margin: 10px auto;
-	color: white;
-	text-align: center;
-	border-radius: 25px;
+.messageClue-red {
+    background: #fd6666;
+    width: 170px;
+    margin: 10px auto;
+    color: white;
+    text-align: center;
+    border-radius: 25px;
 }
-.message{
-	margin: 0 auto;
-	display: flex !important;
-	flex: 1 1 10px;
-	width: 0;
+.message {
+    margin: 0 auto;
+    display: flex !important;
+    flex: 1 1 10px;
+    width: 0;
 }
-.messageLog{
-	text-align: center;
-	color: #8e8e8e;
-	font-weight: 200;
-	font-size: 15px;
+.messageLog {
+    text-align: center;
+    color: #8e8e8e;
+    font-weight: 200;
+    font-size: 15px;
 }
-.inputChat{
-	width: 0;
-	flex: 20 1 90px;
+.inputChat {
+    width: 0;
+    flex: 20 1 90px;
 }
-.messageButton{
-	width: 0;
-	flex: 1 1 60px !important;
+.messageButton {
+    width: 0;
+    flex: 1 1 60px !important;
 }
-.dashboard{
-	font-size: 17px;
-	display: flex;
-	align-items: center;
-	justify-content: flex-end;
-	width: 100%;
-    margin: 0 auto;	
+.dashboard {
+    font-size: 17px;
+    display: flex;
+    align-items: center;
+    justify-content: flex-end;
+    width: 100%;
+    margin: 0 auto;
     padding: 10px 2px;
 }
-.dashboardItems{
-	text-align: center;
-	position: absolute;
+.dashboardItems {
+    text-align: center;
+    position: absolute;
 }
-.bottomDashboard{
-	display: flex;
-	flex-direction: row;
-	justify-content: space-around;
-	padding-top: 10px;
-	max-width: 600px;
-	margin: 0 auto;
+.bottomDashboard {
+    display: flex;
+    flex-direction: row;
+    justify-content: space-around;
+    padding-top: 10px;
+    max-width: 600px;
+    margin: 0 auto;
 }
-.clue{
-	height: 120px;
-	background:  #cccccc;
-	justify-content:  center;
-	align-items:  center;
-	display:  flex;
-	text-transform:  uppercase;
-	font-weight: 500;
-	font-size: 1.2em;
-	cursor: pointer;
-	text-align: center;
+.clue {
+    height: 120px;
+    background: #cccccc;
+    justify-content: center;
+    align-items: center;
+    display: flex;
+    text-transform: uppercase;
+    font-weight: 500;
+    font-size: 1.2em;
+    cursor: pointer;
+    text-align: center;
 }
-.clueEmpty{
-	cursor: default;
+.clueEmpty {
+    cursor: default;
 }
-.selected{
-	background: #f7f0de;
-	cursor: default;
+.selected {
+    background: #f7f0de;
+    cursor: default;
 }
-.blue{
-	background: #0f80ff;
-	color: #eee;
+.blue {
+    background: #0f80ff;
+    color: #eee;
 }
-.red{
-	background: #fd6666;
-	color: #eee;
+.red {
+    background: #fd6666;
+    color: #eee;
 }
-.assassin{
-	background: #2d2d26;
-	color: #eee;
+.assassin {
+    background: #2d2d26;
+    color: #eee;
 }
-.visible{
-	font-weight: 700;
-	cursor: default;
+.visible {
+    font-weight: 700;
+    cursor: default;
 }
-.visible-blue{
-	background: #c5e0ff;
-	color: #0f80ff;
+.visible-blue {
+    background: #c5e0ff;
+    color: #0f80ff;
 }
-.visible-red{
-	background: #fdc5c5;
-	color: #fd6666;
+.visible-red {
+    background: #fdc5c5;
+    color: #fd6666;
 }
-.visible-assassin{
-	background: #525252;
-	color: #eee;
+.visible-assassin {
+    background: #525252;
+    color: #eee;
 }
-.blueCount{ 
-	color: #0f80ff;
+.blueCount {
+    color: #0f80ff;
 }
-.redCount{
- color: #fd6666;
+.redCount {
+    color: #fd6666;
 }
-.currentTurn{
-	text-transform: capitalize;
+.currentTurn {
+    text-transform: capitalize;
 }
-.shareLink{
-	font-size: 16px;
-	text-align: center;
-	padding-top: 25px;
+.shareLink {
+    font-size: 16px;
+    text-align: center;
+    padding-top: 25px;
 }
-.buyCoffeeHolder{
-	display: flex;
-	flex-direction: row;
-	flex-wrap: nowrap;
-	justify-content: center;
-	align-items: flex-end;
-	align-content: center;
-	padding: 8px 12px 8px 8px;
-	line-height: 35px;
-	height: 55px;
-	background-color:#FF813F;
-	border-radius: 5px;
-	border: 1px solid transparent;
-	font-size: 18px;
-	letter-spacing:-0.08px;
-	box-shadow: 0px 1px 2px;
-	margin: 0 auto;
-	margin-top: 100px;
-	margin-bottom: 40px;
-	width: 230px;
+.buyCoffeeHolder {
+    display: flex;
+    flex-direction: row;
+    flex-wrap: nowrap;
+    justify-content: center;
+    align-items: flex-end;
+    align-content: center;
+    padding: 8px 12px 8px 8px;
+    line-height: 35px;
+    height: 55px;
+    background-color: #ff813f;
+    border-radius: 5px;
+    border: 1px solid transparent;
+    font-size: 18px;
+    letter-spacing: -0.08px;
+    box-shadow: 0px 1px 2px;
+    margin: 0 auto;
+    margin-top: 100px;
+    margin-bottom: 40px;
+    width: 230px;
 }
-.buyCoffeeText{
-	margin-left:5px;
-	color:#ffffff;
+.buyCoffeeText {
+    margin-left: 5px;
+    color: #ffffff;
 }
-.buyCoffeeImage{
-	height: 34px;
-	width: 35px;
-	margin-bottom: 1px;
-	box-shadow: none;
-	border: none;
-	vertical-align: middle;
+.buyCoffeeImage {
+    height: 34px;
+    width: 35px;
+    margin-bottom: 1px;
+    box-shadow: none;
+    border: none;
+    vertical-align: middle;
 }
-.header{
-	display: none;
-	flex-direction: row;
-	flex-wrap: nowrap;
-	justify-content: center;
-	align-items: center;
-	align-content: center;
-	margin-top: 60px;
-	margin-bottom: 40px;
-	font-size: 40px;
-	font-weight: 600;
+.header {
+    display: none;
+    flex-direction: row;
+    flex-wrap: nowrap;
+    justify-content: center;
+    align-items: center;
+    align-content: center;
+    margin-top: 60px;
+    margin-bottom: 40px;
+    font-size: 40px;
+    font-weight: 600;
 }
-.joinGameError{
-	display: flex;
-	flex-direction: row;
-	flex-wrap: nowrap;
-	justify-content: center;
-	align-items: center;
-	font-size: 20px;
-	color: #d43030;
-	margin-top: 25px;
+.joinGameError {
+    display: flex;
+    flex-direction: row;
+    flex-wrap: nowrap;
+    justify-content: center;
+    align-items: center;
+    font-size: 20px;
+    color: #d43030;
+    margin-top: 25px;
 }
-.centerText{
-	margin-top: 50px;
-	margin-bottom: 25px;
-	font-size: 25px;
-	display: flex;
-	justify-content: center;
-	align-items: baseline;
-	align-content: stretch;
+.centerText {
+    margin-top: 50px;
+    margin-bottom: 25px;
+    font-size: 25px;
+    display: flex;
+    justify-content: center;
+    align-items: baseline;
+    align-content: stretch;
 }
-.teams{
-	max-width: 600px;
-	font-size: 20px;
-	display: flex;
-	justify-content: center;
-	margin: 0 auto;
-	padding-bottom: 40px;
+.teams {
+    max-width: 600px;
+    font-size: 20px;
+    display: flex;
+    justify-content: center;
+    margin: 0 auto;
+    padding-bottom: 40px;
 }
-.blueTitle{
-	color: #0f80ff;
-	padding: 10px 20px;
-	background: #f3f3f3;
-	text-align: center;
-	font-size: 19px;
-	font-weight: 600;
+.blueTitle {
+    color: #0f80ff;
+    padding: 10px 20px;
+    background: #f3f3f3;
+    text-align: center;
+    font-size: 19px;
+    font-weight: 600;
 }
-.redTitle{
-	color: #fd6666;
-	padding: 10px 20px;
-	background: #f3f3f3;
-	text-align: center;
-	font-size: 19px;
-	font-weight: 600;
+.redTitle {
+    color: #fd6666;
+    padding: 10px 20px;
+    background: #f3f3f3;
+    text-align: center;
+    font-size: 19px;
+    font-weight: 600;
 }
-.teamWins{
-	color: black;
-	padding-left: 30px;
+.teamWins {
+    color: black;
+    padding-left: 30px;
 }
-.teamContent{
-	display: flex;
-	flex: 1 1 10px;
-	justify-content: center;
-	min-height: 160px;
+.teamContent {
+    display: flex;
+    flex: 1 1 10px;
+    justify-content: center;
+    min-height: 160px;
 }
-.joinTeam{
-	padding: 30px;
+.joinTeam {
+    padding: 30px;
 }
-.content{
-	font-size: 20px;
-	width: auto !important;
+.content {
+    font-size: 20px;
+    width: auto !important;
 }
-.blueTeam{
-	display: flex;
-	flex: 1 1 50px;
-	flex-direction: column;
-	flex-wrap: nowrap;
-	justify-content: flex-start;
-	/*align-items: center;*/
-	align-content: stretch;
+.blueTeam {
+    display: flex;
+    flex: 1 1 50px;
+    flex-direction: column;
+    flex-wrap: nowrap;
+    justify-content: flex-start;
+    /*align-items: center;*/
+    align-content: stretch;
 }
-.redTeam{
-	display: flex;
-	flex: 1 1 50px;
-	flex-direction: column;
-	flex-wrap: nowrap;
-	justify-content: flex-start;
-	/*align-items: center;*/
-	align-content: stretch;
+.redTeam {
+    display: flex;
+    flex: 1 1 50px;
+    flex-direction: column;
+    flex-wrap: nowrap;
+    justify-content: flex-start;
+    /*align-items: center;*/
+    align-content: stretch;
 }
-.scoreboard{
-	display: flex;
-	justify-content: center;
-	align-items: center;
-	font-size: 60px;
-	flex: 1 1 10px;
-	min-height: 160px;
-	height: 100%;
+.scoreboard {
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    font-size: 60px;
+    flex: 1 1 10px;
+    min-height: 160px;
+    height: 100%;
 }
-.teamUsers{
-	display: flex;
-	flex-direction: column;
-	flex-wrap: nowrap;
-	justify-content: center;
-	align-items: center;
-	align-content: stretch;
+.teamUsers {
+    display: flex;
+    flex-direction: column;
+    flex-wrap: nowrap;
+    justify-content: center;
+    align-items: center;
+    align-content: stretch;
 }
-.userPanel{
-	display: flex !important;
-	padding: 5px !important;
-	align-items: center;
+.userPanel {
+    display: flex !important;
+    padding: 5px !important;
+    align-items: center;
 }
-.userPanelButtons{
-	display: flex;
-	margin-left: 10px;
-	align-items: center;
+.userPanelButtons {
+    display: flex;
+    margin-left: 10px;
+    align-items: center;
 }
-.joinTeamButtons{
-	/*height: 200px;*/
-	margin: 0 auto;
-	display: flex;
-	flex-direction: row;
-	max-width: 600px;
-	justify-content: center;
-	padding-top: 40px;
+.joinTeamButtons {
+    /*height: 200px;*/
+    margin: 0 auto;
+    display: flex;
+    flex-direction: row;
+    max-width: 600px;
+    justify-content: center;
+    padding-top: 40px;
 }
-.rightPanelButtons{
-	display: flex;
-	justify-content: center;
-	align-items: center;
-	padding-top: 10px;
+.rightPanelButtons {
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    padding-top: 10px;
 }
-#nameLobby{
-	display: flex;
-	flex-direction: row;
-	flex-wrap: nowrap;
-	justify-content: center;
-	align-content: stretch;
-	margin: 0 auto;
+#nameLobby {
+    display: flex;
+    flex-direction: row;
+    flex-wrap: nowrap;
+    justify-content: center;
+    align-content: stretch;
+    margin: 0 auto;
 }
-.nameModalForm{
-	display: flex;
-	justify-content: center;
+.nameModalForm {
+    display: flex;
+    justify-content: center;
 }
-.nameModalButton{
-	width: 0;
-	flex: 1 1 100px !important;
+.nameModalButton {
+    width: 0;
+    flex: 1 1 100px !important;
 }
-.ui.middle.aligned.divided.list{
+.ui.middle.aligned.divided.list {
     padding-left: 5px;
     width: 75%;
 }
-.eight.wide.mobile.three.wide.tablet.three.wide.computer.column{
-	padding: 2px;
+.eight.wide.mobile.three.wide.tablet.three.wide.computer.column {
+    padding: 2px;
 }
-.four.wide.column{
-	padding: 2px !important;
+.four.wide.column {
+    padding: 2px !important;
 }
-.ui.grid.game{
+.ui.grid.game {
     width: 100%;
     justify-content: space-around;
     margin: 0px;
 }
-.ui.message:first-child{
-	/* margin-top: 1em !important; */
+.ui.message:first-child {
+    /* margin-top: 1em !important; */
 }
-.ui.input>input{
-	border-top-right-radius: 0 !important;
-	border-bottom-right-radius: 0 !important;
+.ui.input > input {
+    border-top-right-radius: 0 !important;
+    border-bottom-right-radius: 0 !important;
 }
-.ui.selection.dropdown{
-	min-width: 60px !important;
-	padding: 0px 10px !important;
+.ui.selection.dropdown {
+    min-width: 60px !important;
+    padding: 0px 10px !important;
 }
 .ui.message {
     padding: 0px;
@@ -439,21 +439,19 @@
     border-radius: 0px;
     box-shadow: none !important;
 }
-.messageForm{
-	display: flex;
+.messageForm {
+    display: flex;
 }
-.form.message.ui.action.input{
-	padding: 0px;
-	line-height: 1.4285em;
-	border-radius: 0px;
-	box-shadow: none;
+.form.message.ui.action.input {
+    padding: 0px;
+    line-height: 1.4285em;
+    border-radius: 0px;
+    box-shadow: none;
 }
-
 
 @media (max-width: 600px) {
-	.clue{
-		height: 60px;
-		font-size: .7em	;
-	}
+    .clue {
+        height: 60px;
+        font-size: 0.7em;
+    }
 }
- 
