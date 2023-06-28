@@ -1,12 +1,12 @@
 import React, { Component } from 'react';
-import uuid from 'uuid';
+import { v4 as uuidv4 } from 'uuid';
 
 export default class DisplayChat extends Component {
     formatMessage = (message) => {
         switch (message.type) {
             default:
                 return (
-                    <div className='messageText' key={uuid.v4()}>
+                    <div className='messageText' key={uuidv4()}>
                         <span className={message.color + 'Count'}>
                             {message.name}:
                         </span>{' '}
@@ -17,7 +17,7 @@ export default class DisplayChat extends Component {
                 return (
                     <div
                         className={'messageClue-' + message.color}
-                        key={uuid.v4()}
+                        key={uuidv4()}
                     >
                         <span>
                             {message.message} {message.number}
@@ -31,7 +31,7 @@ export default class DisplayChat extends Component {
                             <div className='ui clearing divider'></div>
                             <div
                                 className='messageText messageLog'
-                                key={uuid.v4()}
+                                key={uuidv4()}
                             >
                                 <b>
                                     <span className={message.color + 'Count'}>
@@ -49,7 +49,7 @@ export default class DisplayChat extends Component {
                     );
                 } else {
                     return (
-                        <div className='messageText messageLog' key={uuid.v4()}>
+                        <div className='messageText messageLog' key={uuidv4()}>
                             <span className={message.color + 'Count'}>
                                 {message.name}
                             </span>{' '}
@@ -62,7 +62,7 @@ export default class DisplayChat extends Component {
                 }
             case 'end game':
                 return (
-                    <div key={uuid.v4()}>
+                    <div key={uuidv4()}>
                         <div className='ui divider'></div>
                         <div className='messageText messageLog'>
                             <b>
@@ -76,7 +76,7 @@ export default class DisplayChat extends Component {
                 );
             case 'end turn':
                 return (
-                    <div className='messageText messageLog' key={uuid.v4()}>
+                    <div className='messageText messageLog' key={uuidv4()}>
                         <span className={message.color + 'Count'}>
                             {message.name}
                         </span>
