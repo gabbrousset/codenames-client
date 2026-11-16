@@ -9,7 +9,7 @@ import { withRouter } from 'react-router-dom';
 
 let ENDPOINT;
 
-if (!process.env.NODE_ENV || process.env.NODE_ENV === 'development') {
+if (import.meta.env.DEV) {
     ENDPOINT = 'http://127.0.0.1:3000';
 } else {
     ENDPOINT = 'https://codenames.gabbrousset.dev/';
