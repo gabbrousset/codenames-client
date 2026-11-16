@@ -2,7 +2,6 @@
     "name": "codenames",
     "version": "0.2.0",
     "private": true,
-    "type": "module",
     "dependencies": {
         "random-words": "^1.1.1",
         "react": "^16.13.1",
