@@ -8,6 +8,11 @@ export default defineConfig({
         // (e.g. ":after .header"); drop them instead of failing the minify.
         lightningcss: { errorRecovery: true },
     },
+    server: {
+        proxy: {
+            '/socket.io': { target: 'http://127.0.0.1:3000', ws: true },
+        },
+    },
     build: {
         // server.js serves ../ui/build
         outDir: 'build',

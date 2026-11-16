@@ -4,18 +4,11 @@ import NameModal from './NameModal';
 
 import { newGame, createUserId } from '../helpers';
 
-import socketIOClient from 'socket.io-client';
+import { io } from 'socket.io-client';
 import { withRouter } from 'react-router-dom';
 
-let ENDPOINT;
-
-if (import.meta.env.DEV) {
-    ENDPOINT = 'http://127.0.0.1:3000';
-} else {
-    ENDPOINT = 'https://codenames.gabbrousset.dev/';
-}
-
-const socket = socketIOClient(ENDPOINT);
+// Same origin as the page; in dev, Vite proxies /socket.io to the server.
+const socket = io();
 
 class Room extends Component {
     state = {
