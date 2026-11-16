@@ -38,7 +38,7 @@ export default class SpymasterClue extends Component {
 			content =
 			<div className="spymasterClueInput">
 				<form  onSubmit={this.handleSendClue}  className="clueInput ui action input">
-					<Input type="text" placeholder="Message" className="inputChat" onChange={this.handleChangeClue} value={this.state.clue}></Input>
+					<Input type="text" placeholder="Message" maxLength={40} className="inputChat" onChange={this.handleChangeClue} value={this.state.clue}></Input>
 						<select
 							className="ui compact selection dropdown"
 							value={this.state.selectValue} 

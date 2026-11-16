@@ -1,13 +1,20 @@
 import React, { Component } from "react";
 import { Button } from "semantic-ui-react";
-import { newRoom} from "../helpers";
+import socket from "../socket";
 
 export default class LandingButtons extends Component {
+	state = {
+		errorMsg: "",
+	};
 	handleClickCreateGameSession = () => {
-		// const game = newGame();
-		const room = newRoom();
-		this.props.history.push(room.id)
-		// this.props.clickCreateGameSession(game)
+		// The server picks the room id.
+		socket.timeout(5000).emit("create room", (err, res) => {
+			if (!err && res && res.ok) {
+				this.props.history.push("/" + res.id);
+			} else {
+				this.setState({ errorMsg: "Could not create a room, try again later" });
+			}
+		});
 	};
 	render(){
 		return(
@@ -26,6 +33,9 @@ export default class LandingButtons extends Component {
 				>
 					Join Game
 				</Button>
+				<div className="joinGameError">
+					{this.state.errorMsg ? <span>{this.state.errorMsg}</span> : ''}
+				</div>
 			</div>
 		);
 	}

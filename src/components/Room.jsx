@@ -1,23 +1,30 @@
 import React, { Component } from 'react';
+import { Button } from 'semantic-ui-react';
+import { v4 as uuidv4 } from 'uuid';
 import Game from './Game';
 import NameModal from './NameModal';
+import socket from '../socket';
 
-import { newGame, createUserId } from '../helpers';
-
-import { io } from 'socket.io-client';
 import { withRouter } from 'react-router-dom';
 
-// Same origin as the page; in dev, Vite proxies /socket.io to the server.
-const socket = io();
+const noUser = { userId: '', name: '', team: '', isSpymaster: false };
 
+// The secret that identifies this browser to the server across reloads. It is
+// never shown to other players; the server gives everyone a separate public id.
+const getToken = () => {
+    let token = localStorage.getItem('codenamesToken');
+    if (!token) {
+        token = uuidv4();
+        localStorage.setItem('codenamesToken', token);
+    }
+    return token;
+};
+
+// The server owns the room: every handler below sends an intent, and the
+// server checks it, applies it and sends each player their view back.
 class Room extends Component {
     state = {
-        user: {
-            userId: '',
-            name: '',
-            team: '',
-            isSpymaster: false,
-        },
+        user: noUser,
         room: {
             id: this.props.match.params.id,
             users: [],
@@ -27,438 +34,125 @@ class Room extends Component {
                 blueSpymaster: '',
                 redSpymaster: '',
             },
-            //timer: false
             messages: [],
-            // game: this.props.game
+            game: null,
         },
-        id: this.props.match.params.id,
-        showGame: true,
+        joinError: '',
         spymasterView: false,
     };
 
-    // Toggle between game and lobby
-    // handleOpenNewGame = () => {
-    // 	// this.openGame();
-    // 	this.newGame();
-    // };
-    // handleShowGame = () => {
-    // 	this.openGame();
-    // };
-    // openGame = () => {
-    // 	this.setState({
-    // 		showGame: true,
-    // 	});
-    // };
-    // handleBackLobby = () => {
-    // 	this.openLobby();
-    // };
-    // openLobby = () => {
-    // 	if (this.state.user.spymasterView) {
-    // 		this.toggleVisibility();
-    // 	}
-    // 	this.setState({
-    // 		showGame: false,
-    // 		spymasterView: false,
-    // 	})
-    // };
-    // Imported from game
     handleNewGame = () => {
-        this.newGame();
-    };
-    newGame = () => {
-        const gameInfo = newGame();
-        let room = this.state.room;
-        room.game = gameInfo;
-        socket.emit('update game', room);
+        socket.emit('new game');
     };
     handleEndGame = () => {
-        let room = this.state.room;
-        this.endGame(room);
-        this.sendMessage(
-            'end game',
-            '',
-            '',
-            this.state.user.team,
-            this.state.user.name,
-            this.state.user.userId
-        );
-    };
-    endGame = (room, team) => {
-        room.game.gameActive = false;
-        room.game.spymasterClue = '';
-        room.game.selectedCluesCount = 0;
-        room.game.clues.forEach((clue) => {
-            clue.visible = true;
-        });
-        if (team) {
-            const teamWins = team + 'Wins';
-            room.info[teamWins]++;
-            room.game.currentWinner = team;
-        }
-        socket.emit('end game', room);
+        socket.emit('end game');
     };
     handleEndTurn = () => {
-        if (this.state.user.team === this.state.room.game.turn) {
-            const room = this.state.room;
-            this.endTurn(room);
-        }
-        this.sendMessage(
-            'end turn',
-            '',
-            '',
-            this.state.user.team,
-            this.state.user.name,
-            this.state.user.userId
-        );
+        socket.emit('end turn');
     };
-    endTurn = (room) => {
-        room.game.turn === 'red'
-            ? (room.game.turn = 'blue')
-            : (room.game.turn = 'red');
-        room.game.spymasterClue = '';
-        room.game.selectedCluesCount = 0;
-        socket.emit('update game', room);
-    };
-    reduceCount = (room, clueTeam) => {
-        const teamCount = clueTeam + 'Count';
-        room.game[teamCount] = this.state.room.game[teamCount] - 1;
-        room.game.selectedCluesCount++;
-        this.shouldEnd(room, teamCount, clueTeam);
-    };
-    shouldEnd = (room, teamCount, team) => {
-        if (room.game[teamCount] === 0) {
-            this.endGame(room, team);
-        } else if (
-            this.state.room.game.selectedCluesCount >=
-            parseInt(this.state.room.game.spymasterClue.number, 10) + 1
-        ) {
-            this.endTurn(room);
-        } else {
-            socket.emit('update game', room);
-        }
-    };
-    clueName = (clueId, clueTeam, isAssassin) => {
-        let clueName;
-        const clues = this.state.room.game.clues;
-        clues.forEach((clue) => {
-            if (clue.id === clueId) {
-                clueName = clue.title;
-            }
-        });
-        this.sendMessage(
-            'select clue',
-            clueName,
-            '',
-            this.state.user.team,
-            this.state.user.name,
-            this.state.user.userId,
-            clueTeam,
-            isAssassin
-        );
-    };
-    handleSelectClick = (clueId, clueTeam, isAssassin) => {
-        // Revisa si no eres spymaster
-        if (
-            !this.state.user.isSpymaster &&
-            this.state.room.game.gameActive &&
-            this.state.user.team === this.state.room.game.turn &&
-            this.state.room.game.spymasterClue.clue
-        ) {
-            this.clueName(clueId, clueTeam, isAssassin);
-            // Entonces muestras la pista
-            const room = this.revealClue(clueId);
-            if (clueTeam !== this.state.room.game.turn) {
-                this.reduceCount(room, clueTeam);
-                this.endTurn(room);
-            } else {
-                this.reduceCount(room, clueTeam);
-            }
-            if (isAssassin) {
-                let team;
-                this.state.user.team === 'red'
-                    ? (team = 'blue')
-                    : (team = 'red');
-                this.endGame(room, team);
-            }
-        }
-    };
-    revealClue = (clueId) => {
-        const room = { ...this.state.room };
-        room.game.clues.forEach((clue) => {
-            if (clueId === clue.id) {
-                clue.selected = true;
-            }
-        });
-        return room;
+    handleSelectClick = (clueId) => {
+        socket.emit('guess', { index: clueId });
     };
     handleViewToggle = () => {
-        this.toggleVisibility();
         this.setState((prevState) => ({
             spymasterView: !prevState.spymasterView,
         }));
     };
-    toggleVisibility = () => {
-        const room = { ...this.state.room };
-        this.state.room.game.clues.forEach((clue) => {
-            clue.visible = !this.state.spymasterView;
-        });
-        this.setState({ room });
-        // this.setState({game}, () => socket.emit('game update', this.state));
-    };
     handleToggleSpymaster = () => {
-        this.toggleSpymaster(this.state.user.team);
-    };
-    toggleSpymaster = (team) => {
-        const spyTeam = team + 'Spymaster';
-        this.setState(
-            (prevState) => {
-                let stateCopy = Object.assign({}, prevState);
-                if (this.state.user.isSpymaster) {
-                    stateCopy.user.isSpymaster = false;
-                    stateCopy.room.info[spyTeam] = '';
-                    var i = stateCopy.room.users.findIndex(
-                        (o) => o.userId === stateCopy.user.userId
-                    );
-                    if (stateCopy.room.users[i]) {
-                        stateCopy.room.users[i] = stateCopy.user;
-                    } else {
-                        stateCopy.room.users.push(stateCopy.user);
-                    }
-                } else {
-                    stateCopy.user.isSpymaster = true;
-                    stateCopy.room.info[spyTeam] = this.state.user.userId;
-                    var j = stateCopy.room.users.findIndex(
-                        (o) => o.userId === stateCopy.user.userId
-                    );
-                    if (stateCopy.room.users[j]) {
-                        stateCopy.room.users[j] = stateCopy.user;
-                    } else {
-                        stateCopy.room.users.push(stateCopy.user);
-                    }
-                }
-                return { ...stateCopy };
-            },
-            () => socket.emit('update user list', this.state.room)
-        );
-    };
-    userId = () => {
-        const userId = createUserId();
-        localStorage.setItem('userId', userId);
-        localStorage.setItem('userIdSaved', 'true');
-        return userId;
+        socket.emit('set spymaster', { on: !this.state.user.isSpymaster });
     };
     handleShuffleTeams = () => {
-        const room = this.state.room;
-        // console.log("handle", users)
-        this.splitTeams(this.shuffleTeams(room));
+        socket.emit('shuffle teams');
     };
-    shuffleTeams = (room) => {
-        // console.log("shuffle team", users)
-        let users = room.users;
-        room.users = users.sort(() => 0.5 - Math.random());
-        return room;
-    };
-    splitTeams = (room) => {
-        const firstTeam = Math.random() < 0.5 ? 'blue' : 'red';
-        const secondTeam = firstTeam === 'blue' ? 'red' : 'blue';
-        room.users.forEach((user, i) => {
-            user.team = i & 1 ? secondTeam : firstTeam;
-            user.isSpymaster = i === 0 || i === 1 ? true : false;
-        });
-        room.info[firstTeam + 'Spymaster'] = room.users[0];
-        room.info[secondTeam + 'Spymaster'] = room.users[1];
-        this.setState({ room }, () =>
-            socket.emit('update user list', this.state.room)
-        );
-    };
-    handleJoinTeam = (team, name) => {
-        this.joinTeam(team, name);
-    };
-    joinTeam = (team, name) => {
-        const spyTeam = this.state.user.team + 'Spymaster';
-        this.setState(
-            (prevState) => {
-                let stateCopy = Object.assign({}, prevState);
-                stateCopy.user.team = team;
-                stateCopy.user.name = name;
-                if (this.state.user.isSpymaster) {
-                    stateCopy.user.isSpymaster = false;
-                    stateCopy.room.info[spyTeam] = '';
-                }
-                var i = stateCopy.room.users.findIndex(
-                    (o) => o.userId === stateCopy.user.userId
-                );
-                if (stateCopy.room.users[i]) {
-                    stateCopy.room.users[i] = stateCopy.user;
-                } else {
-                    stateCopy.room.users.push(stateCopy.user);
-                }
-                return { ...stateCopy };
-            },
-            () => socket.emit('update user list', this.state.room)
-        );
+    handleJoinTeam = (team) => {
+        socket.emit('join team', { team });
     };
     handleSwitchTeam = () => {
-        this.switchTeam();
-    };
-    switchTeam = () => {
-        let team;
-        this.state.user.team === 'blue' ? (team = 'red') : (team = 'blue');
-        this.joinTeam(team, this.state.user.name);
+        socket.emit('join team', {
+            team: this.state.user.team === 'blue' ? 'red' : 'blue',
+        });
     };
     handleSendClue = (clue, number) => {
-        this.sendClue(clue, number, this.state.user.team);
-        this.sendMessage(
-            'spymasterClue',
-            clue,
-            number,
-            this.state.user.team,
-            this.state.userId
-        );
-    };
-    sendClue = (clue, number, color) => {
-        const spymasterClue = {
-            clue: clue,
-            number: number,
-            color: color,
-        };
-        socket.emit('send clue', this.state.room.id, spymasterClue);
+        socket.emit('give clue', { clue, number: parseInt(number, 10) });
     };
     handleSendMessage = (message) => {
-        this.sendMessage(
-            'message',
-            message,
-            '',
-            this.state.user.team,
-            this.state.user.name,
-            this.state.user.userId
-        );
-    };
-    sendMessage = (
-        type,
-        message,
-        number,
-        color,
-        name,
-        userId,
-        clueColor,
-        isAssassin
-    ) => {
-        const text = {
-            type: type,
-            message: message,
-            number: number,
-            color: color,
-            name: name,
-            userId: userId,
-            timestamp: Date.now(),
-            clueColor: clueColor,
-            isAssassin: isAssassin,
-        };
-        socket.emit('send message', this.state.room.id, text);
+        socket.emit('chat', { text: message });
     };
     handleChangeNameInput = (name) => {
-        // this.changeNameInput(name)
-        this.joinTeam(this.state.user.team, name);
-    };
-    // changeNameInput = (name) => {
-    // 	// localStorage.setItem('name', name)
-    // 	this.setState({
-    // 		user: Object.assign({}, this.state.user, {
-    // 			name
-    // 		})
-    // 	}, ()=> socket.emit('update user list', this.state.room))
-    // };
-    disableSpymasterView = () => {
-        this.setState((prevState) => {
-            let stateCopy = Object.assign({}, prevState);
-            stateCopy.spymasterView = false;
-            return { ...stateCopy };
-        });
-    };
-    getUserInfo = (userId, room) => {
-        let u = this.state.user;
-        room.users.forEach((user) => {
-            if (user.userId === userId) {
-                u = user;
-            }
-        });
-        return u;
-    };
-    getUserFromLocalStorage = () => {
-        const user = {
-            name: '',
-            team: '',
-        };
-        user.userId =
-            localStorage.getItem('userIdSaved') === 'true'
-                ? localStorage.getItem('userId')
-                : this.userId();
-        // const user = this.getUserInfo(userId);
-        // console.log('useri',user);
-        // user.name = localStorage.getItem('name')  ? localStorage.getItem('name') : '';
-        this.setState({ user }, () => socket.emit('join room', this.state));
+        socket.emit('rename', { name });
     };
     handleLeaveRoom = () => {
-        this.leaveRoom();
-    };
-    leaveRoom = () => {
         this.props.history.push({
             pathname: '/',
         });
     };
+    joinRoom = () => {
+        socket.emit('join room', {
+            roomId: this.props.match.params.id,
+            token: getToken(),
+        });
+    };
+    onRoom = (view) => {
+        const { me, ...room } = view;
+        this.setState((prevState) => ({
+            room: { ...room, messages: prevState.room.messages },
+            user: me || noUser,
+            spymasterView:
+                prevState.spymasterView &&
+                Boolean(room.game && room.game.gameActive),
+        }));
+    };
+    onMessages = (messages) => {
+        this.setState((prevState) => ({
+            room: { ...prevState.room, messages },
+        }));
+    };
+    onMessage = (message) => {
+        this.setState((prevState) => ({
+            room: {
+                ...prevState.room,
+                messages: [...prevState.room.messages, message],
+            },
+        }));
+    };
+    onJoinFailed = (error) => {
+        this.setState({
+            joinError:
+                error === 'room_full'
+                    ? 'This room is full.'
+                    : 'This room does not exist or has expired.',
+        });
+    };
     componentDidMount() {
-        this.getUserFromLocalStorage();
-        socket.on('joined room', (room) => {
-            const user = this.getUserInfo(this.state.user.userId, room);
-            this.setState((prevState) => {
-                let stateCopy = Object.assign({}, prevState);
-                stateCopy.room = room;
-                stateCopy.user = user;
-                return { ...stateCopy };
-            });
-        });
-        socket.on('game', (game) => {
-            this.setState((prevState) => {
-                let room = Object.assign({}, prevState.room);
-                room.game = game;
-                return { room };
-            });
-        });
-        socket.on('receive end game', (info, game) => {
-            this.setState((prevState) => {
-                let room = Object.assign({}, prevState.room);
-                room.game = game;
-                room.info = info;
-                return { room };
-            });
-            this.disableSpymasterView();
-        });
-        socket.on('room', (room) => {
-            let user = this.state.user;
-            room.users.forEach((u) => {
-                if (u.userId === user.userId) {
-                    user = u;
-                }
-            });
-            this.setState({ user, room });
-        });
-        socket.on('receive message', (text) => {
-            this.setState((prevState) => {
-                let room = Object.assign({}, prevState.room);
-                room.messages.push(text);
-                return { room };
-            });
-        });
-        socket.on('receive clue', (spymasterClue) => {
-            this.setState((prevState) => {
-                let room = Object.assign({}, prevState.room);
-                room.game.spymasterClue = spymasterClue;
-                return { room };
-            });
-        });
+        socket.on('room', this.onRoom);
+        socket.on('messages', this.onMessages);
+        socket.on('receive message', this.onMessage);
+        socket.on('join failed', this.onJoinFailed);
+        // Join now and again after every reconnect.
+        socket.on('connect', this.joinRoom);
+        if (socket.connected) this.joinRoom();
+    }
+    componentWillUnmount() {
+        socket.off('room', this.onRoom);
+        socket.off('messages', this.onMessages);
+        socket.off('receive message', this.onMessage);
+        socket.off('join failed', this.onJoinFailed);
+        socket.off('connect', this.joinRoom);
+        socket.emit('leave room');
     }
     render() {
+        if (this.state.joinError) {
+            return (
+                <div className='columnButtons'>
+                    <div className='joinGameError'>
+                        <span>{this.state.joinError}</span>
+                    </div>
+                    <Button color='grey' size='massive' onClick={this.handleLeaveRoom}>
+                        Back
+                    </Button>
+                </div>
+            );
+        }
         return (
             <div>
                 <NameModal

@@ -55,6 +55,7 @@ export default class TeamComponent extends Component {
                         <Input
                             type='text'
                             placeholder='Name'
+                            maxLength={24}
                             value={this.state.name}
                             size='mini'
                             onChange={this.handleChangeNameInput}

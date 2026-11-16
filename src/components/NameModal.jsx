@@ -40,7 +40,7 @@ export default class NameModal extends Component {
 				</Modal.Content>
 				<Modal.Actions className="nameModalForm">
 					<form className="message ui action input" onSubmit={this.handleSubmit}>
-						<Input type="text" placeholder="Name" value={this.state.name} size="large" className="inputChat" onChange={this.handleChangeNameInput} />
+						<Input type="text" placeholder="Name" maxLength={24} value={this.state.name} size="large" className="inputChat" onChange={this.handleChangeNameInput} />
 						<Button  type="submit" size="large" className="ui button nameModalButton" disabled={!this.state.name}>Submit</Button>
 					</form>
 {/*

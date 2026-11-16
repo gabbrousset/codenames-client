@@ -29,6 +29,7 @@ export default class Chat extends Component {
                         <Input
                             type='text'
                             placeholder='Message'
+                            maxLength={300}
                             className='inputChat'
                             onChange={this.handleChangeMessage}
                             value={this.state.message}

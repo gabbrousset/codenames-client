@@ -1,6 +1,5 @@
 import React, { Component } from "react";
 import LandingButtons from "./LandingButtons";
-import NewGame from "./NewGame";
 import JoinGame from "./JoinGame";
 
 export default class LandingPage extends Component {
@@ -8,10 +7,7 @@ export default class LandingPage extends Component {
 		show:"landing buttons",
 	};
 	
-	//Toggle between landing, join and create buttons
-	handleClickNewGame= () => {
-		this.newGame();
-	};
+	//Toggle between landing and join buttons
 	handleClickJoinGame= () => {
 		this.joinGame();
 	};
@@ -23,11 +19,6 @@ export default class LandingPage extends Component {
 			show: "landing buttons"
 		});
 	};
-	newGame = () => {
-		this.setState({
-			show: "new game",
-		})
-	};
 	joinGame = () => {
 		this.setState({
 			show: "join game",
@@ -37,21 +28,11 @@ export default class LandingPage extends Component {
 		if (this.state.show==="landing buttons") {
 			return(
 				<LandingButtons
-					clickNewGame={this.handleClickNewGame}
 					clickJoinGame={this.handleClickJoinGame}
 					// clickCreateGameSession={this.props.clickCreateGameSession}
 					history={this.props.history}
 				>
 				</LandingButtons>
-			);
-		} else if (this.state.show==="new game") {
-			return(
-				<NewGame
-					clickLandingButtons={this.handleClickLandingButtons}
-					clickCreateGameSession={this.props.clickCreateGameSession}
-					history={this.props.history}
-				>
-				</NewGame>
 			);
 		} else if (this.state.show==="join game") {
 			return(
